@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-TARGET = QtOME
+TARGET = ../Build/QtOME
 TEMPLATE = app
 
 OBJECTS_DIR=../QtOME-Objects
