@@ -57,6 +57,8 @@ public:
 
     void setCompleter(QCompleter *c);
     QCompleter *completer() const;
+    QAbstractItemModel* completerModelFromFile(const QString& fileName);
+
 
 protected:
     void keyPressEvent(QKeyEvent *e);

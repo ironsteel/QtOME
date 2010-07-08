@@ -49,6 +49,7 @@
 #include <QAbstractItemModel>
 #include <QScrollBar>
 #include <QStringListModel>
+#include <QFile>
 
 //! [0]
 CodeEditor::CodeEditor(QWidget *parent)
@@ -182,8 +183,31 @@ void CodeEditor::setupCurrentCompleter()
 
     QStringList wordindex; // Index of words for the autocompleter
     wordindex << "float" << "double" << "mat4x4" << "void" << "averylongword" ;
-    QAbstractItemModel *wordList = new  QStringListModel(wordindex, currentCompleter);
+    QAbstractItemModel *wordList = completerModelFromFile(":/Build/Data/wordlist.txt");
 
     currentCompleter->setModel( wordList );
     this->setCompleter(currentCompleter);
+}
+
+QAbstractItemModel *CodeEditor::completerModelFromFile(const QString &fileName)
+{
+    QFile file(fileName);
+    if (!file.open(QFile::ReadOnly))
+        return new QStringListModel(currentCompleter);
+
+#ifndef QT_NO_CURSOR
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+#endif
+    QStringList words;
+
+    while (!file.atEnd()) {
+        QByteArray line = file.readLine();
+        if (!line.isEmpty())
+            words << line.trimmed();
+    }
+
+#ifndef QT_NO_CURSOR
+    QApplication::restoreOverrideCursor();
+#endif
+    return new QStringListModel(words, currentCompleter);
 }
