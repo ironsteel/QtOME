@@ -8,6 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->textEdit_2->setupCurrentCompleter(":/Build/Data/wordlist.txt");
+    ui->textEdit_3->setupCurrentCompleter(":/Build/Data/wordlist.txt");
+    ui->textEdit_4->setupCurrentCompleter(":/Build/Data/wordlist.txt");
     //QSplitter *splitter = new QSplitter(Qt::Horizontal,ui->widget);
     //QTabWidget *tabW_1 = new QTabWidget;
     //QTabWidget *tabW_2 = new QTabWidget;

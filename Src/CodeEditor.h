@@ -58,6 +58,7 @@ public:
     void setCompleter(QCompleter *c);
     QCompleter *completer() const;
     QStringList wordindexFromFile(const QString& fileName);
+    void setupCurrentCompleter(const QString& wordListFile);
 
 
 protected:
@@ -70,13 +71,13 @@ private slots:
 private:
     QString textUnderCursor() const;
     void setupHighlighter();
-    void setupCurrentCompleter();
+
 
 private:
     Highlighter *highlighter; // Syntax highlighter
     QCompleter *c;
     QCompleter *currentCompleter;
-	QAbstractItemModel *wordList;
+    QAbstractItemModel *wordList;
 };
 //! [0]
 

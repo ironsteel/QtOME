@@ -56,7 +56,7 @@ CodeEditor::CodeEditor(QWidget *parent)
 : QTextEdit(parent), c(0)
 {
     setupHighlighter();
-    setupCurrentCompleter();
+    //setupCurrentCompleter(":/Build/Data/wordlist.txt");
 }
 //! [0]
 
@@ -177,14 +177,11 @@ void CodeEditor::setupHighlighter()
 	highlighter = new Highlighter( this->document() );
 }
 
-void CodeEditor::setupCurrentCompleter()
+void CodeEditor::setupCurrentCompleter(const QString& wordListFile)
 {
-    currentCompleter = new QCompleter(this);
+   currentCompleter = new QCompleter(this);
 
-   // QStringList wordindex;
-   QStringList wordindex = wordindexFromFile(":/Build/Data/wordlist.txt"); // Index of words for the autocompleter
-   // wordindex << "float" << "double" << "mat4x4" << "void" << "averylongword" ;
-   // wordList = new QStringListModel(completerModelFromFile(":/Build/Data/wordlist.txt"), currentCompleter);
+   QStringList wordindex = wordindexFromFile( wordListFile ); // Index of words for the autocompleter
    wordList = new QStringListModel(wordindex, currentCompleter);	
 
     currentCompleter->setModel( wordList );
