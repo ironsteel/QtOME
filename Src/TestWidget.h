@@ -4,6 +4,7 @@
 // --- Includes ---
 //
 #include "QOgreWidget.h"
+#include "SdkCameraMan.h"
 #include <QtGui/QSplashScreen>
 //
 // --- Class Definition ---
@@ -25,6 +26,8 @@ public:
 	  m_sceneMgr = NULL;
 	  m_vp = NULL;
 	  m_mousePressed = false;
+
+          //sdkCam->setTarget(m_mainNode);
 	}
         ~TestWidget(void);
         void setSplash(QSplashScreen * splash);
@@ -52,6 +55,7 @@ protected:
 	Ogre::SceneNode *m_mainNode;
 	Ogre::SceneManager *m_sceneMgr;
 	Ogre::Camera *m_camera;
+        SdkCameraMan *sdkCam;
 	Ogre::Viewport *m_vp;
 	//
 	// ########## Private constants ##########

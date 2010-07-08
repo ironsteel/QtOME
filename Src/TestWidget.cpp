@@ -7,6 +7,7 @@
 // --- Functions ---
 //
 #include <QtGui/QSplashScreen>
+
 Qt::Alignment topRight = Qt::AlignRight | Qt::AlignTop;
 
 ///
@@ -58,11 +59,14 @@ void TestWidget::timerEvent(QTimerEvent *) {
 /// The user pressed a mouse button, start tracking
 /// \param e The event data
 ///
+
 void TestWidget::mousePressEvent(QMouseEvent *e) {
     m_mousePressPos = e->pos();
 	if (m_mainNode)
 		m_orientationPressed = m_mainNode->getOrientation();
     m_mousePressed = true;
+
+    sdkCam->setStartPos(e->x(),e->y());
 }
 ///
 /// The user released a mouse button, stop tracking
@@ -70,6 +74,7 @@ void TestWidget::mousePressEvent(QMouseEvent *e) {
 ///
 void TestWidget::mouseReleaseEvent(QMouseEvent *) {
     m_mousePressed = false;
+    sdkCam->resetRel();
 }
 ///
 /// The user moved the mouse, if tracking process it
@@ -77,8 +82,12 @@ void TestWidget::mouseReleaseEvent(QMouseEvent *) {
 ///
 void TestWidget::mouseMoveEvent(QMouseEvent *e) {
     if (m_mousePressed) {
-        QPoint curPos = e->pos();
-		
+
+        sdkCam->setRelPos(e->x(),e->y());
+        sdkCam->Rotate();
+
+        /*      QPoint curPos = e->pos();
+
         double w = width();
         double h = height();
 		
@@ -116,7 +125,7 @@ void TestWidget::mouseMoveEvent(QMouseEvent *e) {
 		
         m_mousePressPos = curPos;
         m_orientationPressed = m_mainNode->getOrientation();
-
+*/
         update();
     }
 }
@@ -136,6 +145,8 @@ void TestWidget::createScene(void) {
 	m_mainNode = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
 	m_mainNode->attachObject(mesh);
 	
+        sdkCam->setTarget(m_mainNode);
+
 	m_camera->setAutoTracking(true, m_mainNode);
 
         splash->finish(this);
@@ -186,9 +197,10 @@ void TestWidget::setupScene(void) {
 	// Create the camera
 	m_camera = m_sceneMgr->createCamera("PlayerCam");
 	m_camera->setPosition(Ogre::Vector3(0, 0, 200));
+        sdkCam = new SdkCameraMan(m_camera);
 	
 	// Look back along -Z
-	m_camera->lookAt(Ogre::Vector3(0, 0, -300));
+        //m_camera->lookAt(Ogre::Vector3(0, 0, -300));
 	m_camera->setNearClipDistance(5);
 	
 	// Create one viewport, entire window

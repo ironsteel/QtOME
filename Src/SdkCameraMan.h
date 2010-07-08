@@ -54,17 +54,7 @@ struct mousePos
 		SdkCameraMan(Ogre::Camera* cam)
 		: mCamera(0)
 		, mTarget(0)
-//		, mOrbiting(false)
-//		, mZooming(false)
-//		, mTopSpeed(150)
-//		, mVelocity(Ogre::Vector3::ZERO)
-//		, mGoingForward(false)
-//		, mGoingBack(false)
-//		, mGoingLeft(false)
-//		, mGoingRight(false)
-//		, mGoingUp(false)
-//		, mGoingDown(false)
-//		, mFastMove(false)
+
 		{
 
                         setCamera(cam);
@@ -128,35 +118,6 @@ struct mousePos
 		}
 
 
-		/*-----------------------------------------------------------------------------
-		| Sets the movement style of our camera man.
-		-----------------------------------------------------------------------------*/
-                /*virtual void setStyle(CameraStyle style)
-		{
-			if (mStyle != CS_ORBIT && style == CS_ORBIT)
-			{
-                                setTarget(mTarget ? mTarget : mCamera->getSceneManager()->getRootSceneNode());
-                                mCamera->setFixedYawAxis(true);
-                                manualStop();
-                                setYawPitchDist(Ogre::Degree(0), Ogre::Degree(15), 150);
-
-                        }
-                        /*
-			else if (mStyle != CS_FREELOOK && style == CS_FREELOOK)
-			{
-				mCamera->setAutoTracking(false);
-				mCamera->setFixedYawAxis(true);
-			}
-			else if (mStyle != CS_MANUAL && style == CS_MANUAL)
-			{
-				mCamera->setAutoTracking(false);
-				manualStop();
-                        }
-			mStyle = style;
-
-                }*/
-
-
                 void Rotate()
 		{
 
@@ -164,8 +125,8 @@ struct mousePos
 
                                 mCamera->setPosition(mTarget->_getDerivedPosition());
 
-                                mCamera->yaw(Ogre::Degree(-relPos.X * 0.01f));
-                                mCamera->pitch(Ogre::Degree(-relPos.Y * 0.01f));
+                                mCamera->yaw(Ogre::Degree(-relPos.X * 0.25f));
+                                mCamera->pitch(Ogre::Degree(-relPos.Y * 0.25f));
 
                                 mCamera->moveRelative(Ogre::Vector3(0, 0, dist));
 
@@ -199,8 +160,8 @@ struct mousePos
                 {
                     relPos.X =  x - startPos.X;
                     relPos.Y =  y - startPos.Y;
-                    startPos.X=startPos.X;
-                    startPos.Y=startPos.Y;
+                    startPos.X=x;
+                    startPos.Y=y;
                 }
 
                 void resetRel() /// When camera has already been moved the values are reset to zero
@@ -215,19 +176,8 @@ struct mousePos
                 mousePos startPos;
                 mousePos relPos;
 		Ogre::Camera* mCamera;
-                //CameraStyle mStyle;
 		Ogre::SceneNode* mTarget;
-                //bool mOrbiting;
-                //bool mZooming;
-                //Ogre::Real mTopSpeed;
-                //Ogre::Vector3 mVelocity;
-                //bool mGoingForward;
-                //bool mGoingBack;
-                //bool mGoingLeft;
-                //bool mGoingRight;
-                //bool mGoingUp;
-                //bool mGoingDown;
-                //bool mFastMove;
+
     };
 
 
