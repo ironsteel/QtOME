@@ -139,7 +139,7 @@ struct mousePos
                         if (z != 0)  // move the camera toward or away from the target
                         {
                                 // the further the camera is, the faster it moves
-                                mCamera->moveRelative(Ogre::Vector3(0, 0, -z * 0.08f ));
+                                mCamera->moveRelative(Ogre::Vector3(0, 0, -z * 0.12f ));
                         }
                     }
                 }
