@@ -3,6 +3,7 @@
 //
 #include "TestWidget.h"
 #include <QMouseEvent>
+#include <QWheelEvent>
 //
 // --- Functions ---
 //
@@ -85,50 +86,16 @@ void TestWidget::mouseMoveEvent(QMouseEvent *e) {
 
         sdkCam->setRelPos(e->x(),e->y());
         sdkCam->Rotate();
-
-        /*      QPoint curPos = e->pos();
-
-        double w = width();
-        double h = height();
-		
-        double curX = (curPos.x() * 2. - w) / w;
-        double curY = (h - curPos.y() * 2.) / h;
-        double x0 = (m_mousePressPos.x() * 2. - w) / w;
-        double y0 = (h - m_mousePressPos.y() * 2.) / h;
-		
-        Ogre::Vector3 v1(x0, y0, 0);
-        Ogre::Vector3 v2(curX, curY, 0);
-		
-        double radiusSqr = m_RADIUS * m_RADIUS;
-        double cutoff = radiusSqr * 0.5;
-        double Rho = v1[0] * v1[0] + v1[1] * v1[1];
-        v1[2] = (Rho < cutoff) ? sqrt(radiusSqr - Rho) : (cutoff / sqrt(Rho));
-		
-        Rho = v2[0] * v2[0] + v2[1] * v2[1];
-        v2[2] = (Rho < cutoff) ? sqrt(radiusSqr - Rho) : (cutoff / sqrt(Rho));
-		
-        // v_cross is the normal of rotating plane
-        Ogre::Vector3 cross = v2.crossProduct(v1);
-        cross.normalise();
-
-        // compute the angle
-        v1.normalise();
-        v2.normalise();
-        double cosAngle = v1.dotProduct(v2);
-        if (cosAngle < -1.0)
-            cosAngle = -1.0;
-        else if(cosAngle > 1.0)
-            cosAngle = 1.0;
-        double angle = acos(cosAngle);
-		
-        m_mainNode->rotate(cross, Ogre::Radian(angle));
-		
-        m_mousePressPos = curPos;
-        m_orientationPressed = m_mainNode->getOrientation();
-*/
         update();
     }
 }
+
+void TestWidget::wheelEvent(QWheelEvent* w)
+{
+    sdkCam->Zoom(w->delta());
+}
+
+
 ///
 /// Create the Ogre scene
 ///
@@ -144,7 +111,7 @@ void TestWidget::createScene(void) {
 	Ogre::Entity* mesh = m_sceneMgr->createEntity("mesh", "dwarf.mesh");
 	m_mainNode = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
 	m_mainNode->attachObject(mesh);
-	
+
         sdkCam->setTarget(m_mainNode);
 
 	m_camera->setAutoTracking(true, m_mainNode);

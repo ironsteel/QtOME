@@ -26,8 +26,6 @@ public:
 	  m_sceneMgr = NULL;
 	  m_vp = NULL;
 	  m_mousePressed = false;
-
-          //sdkCam->setTarget(m_mainNode);
 	}
         ~TestWidget(void);
         void setSplash(QSplashScreen * splash);
@@ -41,6 +39,7 @@ protected:
 	void mousePressEvent(QMouseEvent *e);
 	void mouseReleaseEvent(QMouseEvent *e);
 	void mouseMoveEvent(QMouseEvent *e);
+        void wheelEvent(QWheelEvent* w);
 	void createScene(void);
 	void setupResources(void);
 	void setupScene(void);

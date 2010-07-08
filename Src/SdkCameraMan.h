@@ -110,7 +110,7 @@ struct mousePos
 		-----------------------------------------------------------------------------*/
 		virtual void setYawPitchDist(Ogre::Radian yaw, Ogre::Radian pitch, Ogre::Real dist)
 		{
-                        mCamera->setPosition(mTarget->_getDerivedPosition());
+                    mCamera->setPosition(mTarget->_getDerivedPosition()+Ogre::Vector3(0,3,0));
                         mCamera->setOrientation(mTarget->_getDerivedOrientation());
 			mCamera->yaw(yaw);
 			mCamera->pitch(-pitch);
@@ -120,36 +120,30 @@ struct mousePos
 
                 void Rotate()
 		{
+                        Ogre::Real dist = (mCamera->getPosition() - mTarget->_getDerivedPosition()).length();
 
-				Ogre::Real dist = (mCamera->getPosition() - mTarget->_getDerivedPosition()).length();
+                        mCamera->setPosition(mTarget->_getDerivedPosition());
 
-                                mCamera->setPosition(mTarget->_getDerivedPosition());
+                        mCamera->yaw(Ogre::Degree(-relPos.X * 0.25f));
+                        mCamera->pitch(Ogre::Degree(-relPos.Y * 0.25f));
 
-                                mCamera->yaw(Ogre::Degree(-relPos.X * 0.25f));
-                                mCamera->pitch(Ogre::Degree(-relPos.Y * 0.25f));
+                        mCamera->moveRelative(Ogre::Vector3(0, 0, dist));
 
-                                mCamera->moveRelative(Ogre::Vector3(0, 0, dist));
-
-                                resetRel();
+                        resetRel();
 		}
-                /*
-                void Zoom()
+
+                void Zoom(int z)
                 {
-                    if (mStyle == CS_ORBIT)
+
                     {
-                        else if (mZooming)  // move the camera toward or away from the target
+                        if (z != 0)  // move the camera toward or away from the target
                         {
                                 // the further the camera is, the faster it moves
-                                mCamera->moveRelative(Ogre::Vector3(0, 0, evt.state.Y.rel * 0.004f * dist));
-                        }
-                        else if (evt.state.Z.rel != 0)  // move the camera toward or away from the target
-                        {
-                                // the further the camera is, the faster it moves
-                                mCamera->moveRelative(Ogre::Vector3(0, 0, -evt.state.Z.rel * 0.0008f * dist));
+                                mCamera->moveRelative(Ogre::Vector3(0, 0, -z * 0.08f ));
                         }
                     }
                 }
-                */
+
                 void setStartPos(int x, int y)/// Used to set where the cursor was when rotation began
                 {
                     startPos.X=x;
