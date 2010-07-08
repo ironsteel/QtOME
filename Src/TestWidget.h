@@ -4,6 +4,7 @@
 // --- Includes ---
 //
 #include "QOgreWidget.h"
+#include "SdkCameraMan.h"
 #include <QtGui/QSplashScreen>
 //
 // --- Class Definition ---
@@ -38,6 +39,7 @@ protected:
 	void mousePressEvent(QMouseEvent *e);
 	void mouseReleaseEvent(QMouseEvent *e);
 	void mouseMoveEvent(QMouseEvent *e);
+        void wheelEvent(QWheelEvent* w);
 	void createScene(void);
 	void setupResources(void);
 	void setupScene(void);
@@ -52,6 +54,7 @@ protected:
 	Ogre::SceneNode *m_mainNode;
 	Ogre::SceneManager *m_sceneMgr;
 	Ogre::Camera *m_camera;
+        SdkCameraMan *sdkCam;
 	Ogre::Viewport *m_vp;
 	//
 	// ########## Private constants ##########

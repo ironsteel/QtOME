@@ -24,7 +24,8 @@ HEADERS  += mainwindow.h \
     TestWidget.h \
     QOgreWidget.h \
     Highlighter.h \
-    CodeEditor.h
+    CodeEditor.h \
+    SdkCameraMan.h
 
 FORMS    += mainwindow.ui
 
