@@ -181,19 +181,21 @@ void CodeEditor::setupCurrentCompleter()
 {
     currentCompleter = new QCompleter(this);
 
-    QStringList wordindex; // Index of words for the autocompleter
-    wordindex << "float" << "double" << "mat4x4" << "void" << "averylongword" ;
-    QAbstractItemModel *wordList = completerModelFromFile(":/Build/Data/wordlist.txt");
+   // QStringList wordindex;
+   QStringList wordindex = wordindexFromFile(":/Build/Data/wordlist.txt"); // Index of words for the autocompleter
+   // wordindex << "float" << "double" << "mat4x4" << "void" << "averylongword" ;
+   // wordList = new QStringListModel(completerModelFromFile(":/Build/Data/wordlist.txt"), currentCompleter);
+   wordList = new QStringListModel(wordindex, currentCompleter);	
 
     currentCompleter->setModel( wordList );
     this->setCompleter(currentCompleter);
 }
 
-QAbstractItemModel *CodeEditor::completerModelFromFile(const QString &fileName)
+QStringList CodeEditor::wordindexFromFile(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly))
-        return new QStringListModel(currentCompleter);
+        return QStringList("");
 
 #ifndef QT_NO_CURSOR
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -201,7 +203,7 @@ QAbstractItemModel *CodeEditor::completerModelFromFile(const QString &fileName)
     QStringList words;
 
     while (!file.atEnd()) {
-        QByteArray line = file.readLine();
+        QString line = file.readLine();
         if (!line.isEmpty())
             words << line.trimmed();
     }
@@ -209,5 +211,6 @@ QAbstractItemModel *CodeEditor::completerModelFromFile(const QString &fileName)
 #ifndef QT_NO_CURSOR
     QApplication::restoreOverrideCursor();
 #endif
-    return new QStringListModel(words, currentCompleter);
+    return words;
+
 }

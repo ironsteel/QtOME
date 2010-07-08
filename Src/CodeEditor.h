@@ -57,7 +57,7 @@ public:
 
     void setCompleter(QCompleter *c);
     QCompleter *completer() const;
-    QAbstractItemModel* completerModelFromFile(const QString& fileName);
+    QStringList wordindexFromFile(const QString& fileName);
 
 
 protected:
@@ -76,6 +76,7 @@ private:
     Highlighter *highlighter; // Syntax highlighter
     QCompleter *c;
     QCompleter *currentCompleter;
+	QAbstractItemModel *wordList;
 };
 //! [0]
 
