@@ -50,13 +50,18 @@
 #include <QScrollBar>
 #include <QStringListModel>
 #include <QFile>
+#include <QTextLayout>
+#include <QPainter>
+#include <QAbstractTextDocumentLayout>
 
 //! [0]
 CodeEditor::CodeEditor(QWidget *parent)
 : QTextEdit(parent), c(0)
 {
     setupHighlighter();
-    //setupCurrentCompleter(":/Build/Data/wordlist.txt");
+
+
+    //lineNumbers = new LineNumberWidget(this,parent);
 }
 //! [0]
 
@@ -191,8 +196,11 @@ void CodeEditor::setupCurrentCompleter(const QString& wordListFile)
 QStringList CodeEditor::wordindexFromFile(const QString &fileName)
 {
     QFile file(fileName);
+
     if (!file.open(QFile::ReadOnly))
         return QStringList("");
+
+
 
 #ifndef QT_NO_CURSOR
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -208,6 +216,58 @@ QStringList CodeEditor::wordindexFromFile(const QString &fileName)
 #ifndef QT_NO_CURSOR
     QApplication::restoreOverrideCursor();
 #endif
+
+    //QByteArray document_array;
+    //document_array = file.readAll();
+
+
     return words;
 
 }
+
+void CodeEditor::setFile(const QString& filename)
+{
+    fileForEdit = new QFile(filename);
+    fileForEdit->open(QFile::ReadOnly);
+    this->setText(fileForEdit->readAll());
+
+}
+
+
+/**************************** Line Number Widget ***************************************
+*
+*                    Taken from Lumina's source: sourceedit.cpp
+*                    http://lumina.sourceforge.net/
+*
+****************************************************************************************/
+
+LineNumberWidget::LineNumberWidget(QTextEdit *_editor, QWidget *parent) : QWidget(parent){
+        editor = _editor;
+        setFixedWidth(fontMetrics().width(QLatin1String("000")));
+        connect(editor->document()->documentLayout(), SIGNAL(update(const QRectF &)), this, SLOT(update()));
+        connect(editor->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(update()));
+        }
+
+void LineNumberWidget::paintEvent(QPaintEvent *){
+        int contentsY = editor->verticalScrollBar()->value();
+        qreal pageBottom = contentsY + editor->viewport()->height();
+        int lineNumber = 1;
+        const QFontMetrics fm = fontMetrics();
+        const int ascent = fontMetrics().ascent() + 1; // height = ascent + descent + 1
+
+        QPainter p(this);
+
+        for (QTextBlock block = editor->document()->begin();block.isValid();block = block.next(), ++lineNumber) {
+                QTextLayout *layout = block.layout();
+
+                const QRectF boundingRect = layout->boundingRect();
+                QPointF position = layout->position();
+                if (position.y() + boundingRect.height() < contentsY)
+                        continue;
+                if (position.y() > pageBottom)
+                        break;
+
+                const QString txt = QString::number(lineNumber);
+                p.drawText(width() - fm.width(txt), qRound(position.y()) - contentsY + ascent, txt);
+                }
+        }

@@ -2,23 +2,14 @@
 #include "ui_mainwindow.h"
 #include <QtGui/QSplitter>
 #include <QtGui/QTabWidget>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->textEdit_2->setupCurrentCompleter(":/Build/Data/wordlist.txt");
-    ui->textEdit_3->setupCurrentCompleter(":/Build/Data/wordlist.txt");
-    ui->textEdit_4->setupCurrentCompleter(":/Build/Data/wordlist.txt");
-    //QSplitter *splitter = new QSplitter(Qt::Horizontal,ui->widget);
-    //QTabWidget *tabW_1 = new QTabWidget;
-    //QTabWidget *tabW_2 = new QTabWidget;
-    //splitter->addWidget(tabW_1);
-    //splitter->addWidget(tabW_2);
-    //splitter->setMaximumWidth(400);
-    //splitter->setMinimumHeight(300);
-    //splitter->show();
+    ui->matEditor->setupCurrentCompleter(":/Build/Data/wordlist.txt");
 
 }
 
@@ -35,4 +26,10 @@ MainWindow::~MainWindow()
 void MainWindow::on_dockProperties_destroyed()
 {
 
+}
+
+void MainWindow::loadFile()
+{
+    ui->matEditor->setFile(QFileDialog::getOpenFileName(this,
+          tr("Open Material Script"), "./", tr("Material scripts (*.material )")));
 }

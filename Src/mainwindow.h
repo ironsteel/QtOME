@@ -14,6 +14,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+
     ~MainWindow();
 
 public:
@@ -21,7 +22,7 @@ public:
     Ui::MainWindow *ui;
 
 private slots:
-
+    void loadFile();
     void on_dockProperties_destroyed();
 };
 

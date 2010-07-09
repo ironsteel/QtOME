@@ -44,6 +44,26 @@
 #include "Highlighter.h"
 #include <QTextEdit>
 #include <QCompleter>
+#include <QFile>
+/**************************** Line Number Widget ***************************************
+*
+*                    Taken from Lumina's source: sourceedit.h
+*                    http://lumina.sourceforge.net/
+*
+****************************************************************************************/
+
+
+class LineNumberWidget : public QWidget{
+        Q_OBJECT
+public:
+        LineNumberWidget(QTextEdit *editor, QWidget *parent = 0);
+protected:
+        virtual void paintEvent(QPaintEvent *);
+
+private:
+        QTextEdit *editor;
+        };
+//---------------------------------------------------------------------------------------
 
 
 //! [0]
@@ -59,6 +79,7 @@ public:
     QCompleter *completer() const;
     QStringList wordindexFromFile(const QString& fileName);
     void setupCurrentCompleter(const QString& wordListFile);
+    void setFile(const QString& filename);
 
 
 protected:
@@ -78,6 +99,8 @@ private:
     QCompleter *c;
     QCompleter *currentCompleter;
     QAbstractItemModel *wordList;
+    QFile *fileForEdit;
+    //LineNumberWidget* lineNumbers;
 };
 //! [0]
 

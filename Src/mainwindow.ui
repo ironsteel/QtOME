@@ -33,29 +33,9 @@
        <property name="windowTitle">
         <string>Subwindow</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_7">
+       <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="CodeEditor" name="textEdit_3"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="subwindow_2">
-       <property name="windowTitle">
-        <string>Subwindow</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_8">
-        <item>
-         <widget class="CodeEditor" name="textEdit_4"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="subwindow_3">
-       <property name="windowTitle">
-        <string>Subwindow</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="CodeEditor" name="textEdit_2"/>
+         <widget class="CodeEditor" name="matEditor"/>
         </item>
        </layout>
       </widget>
@@ -316,5 +296,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_Open</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>loadFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>583</x>
+     <y>345</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>loadFile()</slot>
+ </slots>
 </ui>
