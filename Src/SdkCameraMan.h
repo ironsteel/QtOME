@@ -137,7 +137,8 @@ struct mousePos
                     {
                         if (z != 0)  // move the camera toward or away from the target
                         {
-                                mCamera->moveRelative(Ogre::Vector3(0, 0, -z * 0.12f ));
+                            Dist = mCamera->getPosition().distance(mTarget->getPosition());
+                                mCamera->moveRelative(Ogre::Vector3(0, 0, -z * 0.001f *Dist ));
                         }
                     }
                 }
@@ -164,7 +165,7 @@ struct mousePos
 
 
     protected:
-
+                Ogre::Real Dist;
                 mousePos startPos;
                 mousePos relPos;
 		Ogre::Camera* mCamera;
