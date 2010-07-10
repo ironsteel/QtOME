@@ -4,6 +4,7 @@
 #include "TestWidget.h"
 #include <QMouseEvent>
 #include <QWheelEvent>
+#include <QChar>
 //
 // --- Functions ---
 //
@@ -14,7 +15,9 @@ Qt::Alignment topRight = Qt::AlignRight | Qt::AlignTop;
 ///
 /// Destructor
 ///
-TestWidget::~TestWidget(void) {
+TestWidget::~TestWidget(void)
+{
+    m_sceneMgr->destroyAllManualObjects();
 }
 ///
 ///
@@ -63,8 +66,7 @@ void TestWidget::timerEvent(QTimerEvent *) {
 
 void TestWidget::mousePressEvent(QMouseEvent *e) {
     m_mousePressPos = e->pos();
-	if (m_mainNode)
-		m_orientationPressed = m_mainNode->getOrientation();
+
     m_mousePressed = true;
 
     sdkCam->setStartPos(e->x(),e->y());
@@ -99,22 +101,59 @@ void TestWidget::wheelEvent(QWheelEvent* w)
 ///
 /// Create the Ogre scene
 ///
-void TestWidget::createScene(void) {
-
-    splash->showMessage(QObject::tr("Creating Scene..."), topRight, Qt::black);
+void TestWidget::createScene(void)
+{
+        splash->showMessage(QObject::tr("Creating Scene..."), topRight, Qt::black);
         m_sceneMgr->setAmbientLight(Ogre::ColourValue(0.6, 0.6, 0.6));
-	
+
 	// Setup the actual scene
 	Ogre::Light* l = m_sceneMgr->createLight("MainLight");
-	l->setPosition(0, 100, 500);
-	
-	Ogre::Entity* mesh = m_sceneMgr->createEntity("mesh", "dwarf.mesh");
-	m_mainNode = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
-	m_mainNode->attachObject(mesh);
+        l->setPosition(100, 100, 200);
 
-        sdkCam->setTarget(m_mainNode);
+        // Init camera target ================================>
+        Ogre::ManualObject* target = m_sceneMgr->createManualObject("target");
+        target->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
 
-	m_camera->setAutoTracking(true, m_mainNode);
+        target->position(  1.0,  0.0,  1.0);
+        target->position(  1.0,  0.0, -1.0);
+        target->position(  1.0,  0.0, -1.0);
+        target->position( -1.0,  0.0, -1.0);
+        target->position( -1.0,  0.0, -1.0);
+        target->position( -1.0,  0.0,  1.0);
+        target->position( -1.0,  0.0,  1.0);
+        target->position(  1.0,  0.0,  1.0);
+        target->end();
+
+        camTarget = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
+        camTarget->attachObject(target);
+        sdkCam->setTarget(camTarget);
+
+        // Create center with arrows ================================>
+        Ogre::ManualObject* center = m_sceneMgr->createManualObject("center");
+        center->begin("BaseWhiteNoLighting", Ogre::RenderOperation::OT_LINE_LIST);
+
+        center->position(  5.0,  0.0,  0.0);
+        center->position( -5.0,  0.0,  0.0);
+        center->position(  0.0,  0.0,  5.0);
+        center->position(  0.0,  0.0, -5.0);
+        center->position(  0.0,  0.0,  0.0);
+        center->position(  0.0,  5.0,  0.0);
+        center->position(  5.0,  0.0,  0.0);
+        center->position(  4.0,  0.0, -0.5);
+        center->position(  5.0,  0.0,  0.0);
+        center->position(  4.0,  0.0,  0.5);
+        center->position(  4.0,  0.0,  0.5);
+        center->position(  4.0,  0.0, -0.5);
+        center->position(  0.0,  0.0,  5.0);
+        center->position( -0.5,  0.0,  4.0);
+        center->position(  0.0,  0.0,  5.0);
+        center->position(  0.5,  0.0,  4.0);
+        center->position(  0.5,  0.0,  4.0);
+        center->position( -0.5,  0.0,  4.0);
+        center->end();
+
+        sceneCenter = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
+        sceneCenter->attachObject(center);
 
         splash->finish(this);
         delete splash;
@@ -132,7 +171,7 @@ void TestWidget::setupResources(void) {
 	
 	// Go through all sections & settings in the file
 	Ogre::ConfigFile::SectionIterator it = config.getSectionIterator();
-	
+
 	Ogre::String secName, typeName, archName;
 	while (it.hasMoreElements()) {
 		secName = it.peekNextKey();
@@ -205,3 +244,60 @@ const float TestWidget::m_RADIUS = 0.8;
 //@}
 //
 //
+
+QString TestWidget::changeMesh(QString fullname)
+{
+    QString Qname;
+    Ogre::String name;
+    QString Qpath;
+    Ogre::String path;
+    QString::iterator It = fullname.end();
+    // We will iterate through the fullname backwards until we find '/' because the filename starts there
+    while ( *It != '/' )
+    {
+        Qname.push_front(*It);
+        It--;
+    }
+    // The rest of the fullname is the path
+    while ( It != fullname.begin() - 1)
+    {
+        Qpath.push_front(*It);
+        It--;
+    }
+    It = Qpath.begin();
+    // Here we convert the QString (Qpath) to Ogre::String (path)
+    while ( It != Qpath.end())
+    {
+        path.push_back(It->toAscii());
+        It++;
+    }
+    It = Qname.begin();
+    // Here we convert the QString (Qname) to Ogre::String (name)
+    while ( It != Qname.end()+1)
+    {
+        name.push_back(It->toAscii());
+        It++;
+    }
+
+    //Ogre::ResourceGroupManager::initialiseResourceGroup("ImportedMeshes")
+    Ogre::ResourceGroupManager::getSingleton().addResourceLocation( path ,"FileSystem","ImportedMeshes");
+    Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("ImportedMeshes");
+
+    if(meshName == "mesh1")
+    {
+        mesh = m_sceneMgr->createEntity( name, name);
+        m_mainNode = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
+        m_mainNode->attachObject(mesh);
+        meshName=name;
+    }
+    else
+    {
+        m_mainNode->detachObject(meshName);
+        mesh = m_sceneMgr->createEntity( name, name);
+        m_sceneMgr->destroyEntity(meshName);
+        m_mainNode->attachObject(mesh);
+        meshName=name;
+    }
+
+    return Qname;
+}

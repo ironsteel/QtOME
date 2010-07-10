@@ -56,7 +56,6 @@ struct mousePos
 		, mTarget(0)
 
 		{
-
                         setCamera(cam);
                         startPos.X=0;startPos.Y=0;
                         relPos.X=0;relPos.Y=0;
@@ -138,7 +137,6 @@ struct mousePos
                     {
                         if (z != 0)  // move the camera toward or away from the target
                         {
-                                // the further the camera is, the faster it moves
                                 mCamera->moveRelative(Ogre::Vector3(0, 0, -z * 0.12f ));
                         }
                     }
@@ -171,7 +169,6 @@ struct mousePos
                 mousePos relPos;
 		Ogre::Camera* mCamera;
 		Ogre::SceneNode* mTarget;
-
     };
 
 

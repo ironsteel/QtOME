@@ -23,7 +23,7 @@ public:
 
 private slots:
     void loadFile();
-    void on_dockProperties_destroyed();
+    void importMesh();
 };
 
 #endif // MAINWINDOW_H
