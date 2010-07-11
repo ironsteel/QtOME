@@ -46,9 +46,7 @@ protected:
 	void createScene(void);
 	void setupResources(void);
         void setupScene(void);
-        void keyPressEvent(QKeyEvent* e);
-        void keyReleaseEvent(QKeyEvent* e);
-	//
+        //
 	// ########## Private variables ##########
 	//
 	bool m_mousePressed;
