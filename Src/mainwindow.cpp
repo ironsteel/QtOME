@@ -23,13 +23,30 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_dockProperties_destroyed()
+void MainWindow::keyPressEvent(QKeyEvent * e)
 {
+    if(e->key() == Qt::Key_Shift)
+        ui->OgreWidget->sdkCam->setShift(true);
+}
 
+void MainWindow::keyReleaseEvent(QKeyEvent* e)
+{
+    if(e->key() == Qt::Key_Shift)
+        ui->OgreWidget->sdkCam->setShift(false);
 }
 
 void MainWindow::loadFile()
 {
-    ui->matEditor->setFile(QFileDialog::getOpenFileName(this,
-          tr("Open Material Script"), "./", tr("Material scripts (*.material )")));
+    QString s = QFileDialog::getOpenFileName(this,
+       tr("Open Material Script"), "./", tr("Material scripts (*.material )"));
+    ui->matEditor->setFile(s);
+    this->setWindowTitle(s);
+}
+
+void MainWindow::importMesh()
+{
+    QString s = QFileDialog::getOpenFileName(this,
+       tr("Import *.mesh file"), "./", tr("Meshes (*.mesh )"));
+    s=ui->OgreWidget->changeMesh(s);
+    this->setWindowTitle(s);
 }

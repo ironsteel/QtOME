@@ -20,10 +20,13 @@ public:
 public:
     void setSplash(QSplashScreen * spl);
     Ui::MainWindow *ui;
+private:
+    void keyPressEvent(QKeyEvent* e);
+    void keyReleaseEvent(QKeyEvent* e);
 
 private slots:
     void loadFile();
-    void on_dockProperties_destroyed();
+    void importMesh();
 };
 
 #endif // MAINWINDOW_H
