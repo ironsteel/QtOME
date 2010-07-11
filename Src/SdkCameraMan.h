@@ -119,8 +119,9 @@ struct mousePos
 
                 void Rotate()
 		{
-                        Ogre::Real dist = (mCamera->getPosition() - mTarget->_getDerivedPosition()).length();
-
+                    Ogre::Real dist = (mCamera->getPosition() - mTarget->_getDerivedPosition()).length();
+                    if(!shiftDown)
+                    {
                         mCamera->setPosition(mTarget->_getDerivedPosition());
 
                         mCamera->yaw(Ogre::Degree(-relPos.X * 0.25f));
@@ -129,18 +130,25 @@ struct mousePos
                         mCamera->moveRelative(Ogre::Vector3(0, 0, dist));
 
                         resetRel();
+                    }
+                    if(shiftDown)
+                    {
+                        mTarget->setPosition(Ogre::Vector3(0,relPos.Y * 0.0009f * dist,0) + mTarget->getPosition());
+                    }
 		}
 
                 void Zoom(int z)
                 {
-
-                    {
-                        if (z != 0)  // move the camera toward or away from the target
+                        if (z != 0 && !shiftDown)  // move the camera toward or away from the target
                         {
                             Dist = mCamera->getPosition().distance(mTarget->getPosition());
                                 mCamera->moveRelative(Ogre::Vector3(0, 0, -z * 0.001f *Dist ));
                         }
-                    }
+                        if (z != 0 && shiftDown)  // move the camera target up/down
+                        {
+                            //Dist = mCamera->getPosition().distance(mTarget->getPosition());
+                                mTarget->setPosition(Ogre::Vector3(0,  -z * 0.0001f *Dist, 0) + mTarget->getPosition());
+                        }
                 }
 
                 void setStartPos(int x, int y)/// Used to set where the cursor was when rotation began
@@ -161,8 +169,10 @@ struct mousePos
                 {
                     relPos.X=0;relPos.Y=0;
                 }
-
-
+                void setShift(bool a)
+                {
+                    shiftDown = a;
+                }
 
     protected:
                 Ogre::Real Dist;
@@ -170,6 +180,7 @@ struct mousePos
                 mousePos relPos;
 		Ogre::Camera* mCamera;
 		Ogre::SceneNode* mTarget;
+                bool shiftDown;
     };
 
 

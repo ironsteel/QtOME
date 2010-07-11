@@ -5,6 +5,8 @@
 #include <QMouseEvent>
 #include <QWheelEvent>
 #include <QChar>
+#include <QKeyEvent>
+
 //
 // --- Functions ---
 //
@@ -64,11 +66,10 @@ void TestWidget::timerEvent(QTimerEvent *) {
 /// \param e The event data
 ///
 
-void TestWidget::mousePressEvent(QMouseEvent *e) {
+void TestWidget::mousePressEvent(QMouseEvent *e)
+{
     m_mousePressPos = e->pos();
-
     m_mousePressed = true;
-
     sdkCam->setStartPos(e->x(),e->y());
 }
 ///
@@ -90,6 +91,18 @@ void TestWidget::mouseMoveEvent(QMouseEvent *e) {
         sdkCam->Rotate();
         update();
     }
+}
+
+void TestWidget::keyPressEvent(QKeyEvent* e)
+{
+    //if(e->key() == Qt::Key_Shift)
+        sdkCam->setShift(true);
+    }
+
+void TestWidget::keyReleaseEvent(QKeyEvent* e)
+{
+    //if(e->key() == Qt::Key_Shift)
+        sdkCam->setShift(false);
 }
 
 void TestWidget::wheelEvent(QWheelEvent* w)
@@ -207,7 +220,7 @@ void TestWidget::setupScene(void) {
 	
 	// Look back along -Z
         //m_camera->lookAt(Ogre::Vector3(0, 0, -300));
-	m_camera->setNearClipDistance(5);
+        m_camera->setNearClipDistance(0.1);
 	
 	// Create one viewport, entire window
 	m_vp = m_renderWindow->addViewport(m_camera);

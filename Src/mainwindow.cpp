@@ -23,6 +23,18 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::keyPressEvent(QKeyEvent * e)
+{
+    if(e->key() == Qt::Key_Shift)
+        ui->OgreWidget->sdkCam->setShift(true);
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent* e)
+{
+    if(e->key() == Qt::Key_Shift)
+        ui->OgreWidget->sdkCam->setShift(false);
+}
+
 void MainWindow::loadFile()
 {
     QString s = QFileDialog::getOpenFileName(this,

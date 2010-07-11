@@ -12,6 +12,7 @@
 class TestWidget : public QOgreWidget {
 	Q_OBJECT
 public:
+    SdkCameraMan          *sdkCam;
 	//
 	// ########## Public functions ##########
 	//
@@ -45,6 +46,8 @@ protected:
 	void createScene(void);
 	void setupResources(void);
         void setupScene(void);
+        void keyPressEvent(QKeyEvent* e);
+        void keyReleaseEvent(QKeyEvent* e);
 	//
 	// ########## Private variables ##########
 	//
@@ -54,7 +57,7 @@ protected:
         Ogre::SceneNode       *m_mainNode;
         Ogre::SceneManager    *m_sceneMgr;
         Ogre::Camera          *m_camera;
-        SdkCameraMan          *sdkCam;
+
         Ogre::Viewport        *m_vp;
         Ogre::Entity          *mesh;
         Ogre::SceneNode       *camTarget;
