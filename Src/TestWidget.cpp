@@ -93,18 +93,6 @@ void TestWidget::mouseMoveEvent(QMouseEvent *e) {
     }
 }
 
-void TestWidget::keyPressEvent(QKeyEvent* e)
-{
-    //if(e->key() == Qt::Key_Shift)
-        sdkCam->setShift(true);
-    }
-
-void TestWidget::keyReleaseEvent(QKeyEvent* e)
-{
-    //if(e->key() == Qt::Key_Shift)
-        sdkCam->setShift(false);
-}
-
 void TestWidget::wheelEvent(QWheelEvent* w)
 {
     sdkCam->Zoom(w->delta());
