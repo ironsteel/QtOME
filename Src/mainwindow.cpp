@@ -37,10 +37,13 @@ void MainWindow::keyReleaseEvent(QKeyEvent* e)
 
 void MainWindow::loadFile()
 {
-    QString s = QFileDialog::getOpenFileName(this,
+   QString fullFilePath = QFileDialog::getOpenFileName(this,
        tr("Open Material Script"), "./", tr("Material scripts (*.material )"));
-    ui->matEditor->setFile(s);
-    this->setWindowTitle(s);
+
+   QString fileName = fullFilePath.section('/', -1);
+
+    ui->matEditor->openFile(fullFilePath);
+    this->ui->subwindow->setWindowTitle(fileName);
 }
 
 void MainWindow::importMesh()
@@ -49,4 +52,9 @@ void MainWindow::importMesh()
        tr("Import *.mesh file"), "./", tr("Meshes (*.mesh )"));
     s=ui->OgreWidget->changeMesh(s);
     this->setWindowTitle(s);
+}
+
+void MainWindow::saveMatScript()
+{
+    this->ui->matEditor->saveFile();
 }

@@ -62,7 +62,7 @@ protected:
 
 private:
         QTextEdit *editor;
-        };
+};
 //---------------------------------------------------------------------------------------
 
 
@@ -79,8 +79,8 @@ public:
     QCompleter *completer() const;
     QStringList wordindexFromFile(const QString& fileName);
     void setupCurrentCompleter(const QString& wordListFile);
-    void setFile(const QString& filename);
-
+    void openFile(const QString& filename);
+    void saveFile();
 
 protected:
     void keyPressEvent(QKeyEvent *e);
@@ -97,10 +97,9 @@ private:
 private:
     Highlighter *highlighter; // Syntax highlighter
     QCompleter *c;
-    QCompleter *currentCompleter;
-    QAbstractItemModel *wordList;
-    QFile *fileForEdit;
-    //LineNumberWidget* lineNumbers;
+    QCompleter *currentCompleter;// Auto completer
+    QAbstractItemModel *wordList; // wordlist for the autocompleter
+    QString matScriptFilename;
 };
 //! [0]
 
