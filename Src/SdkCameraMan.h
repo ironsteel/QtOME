@@ -59,6 +59,7 @@ struct mousePos
                         setCamera(cam);
                         startPos.X=0;startPos.Y=0;
                         relPos.X=0;relPos.Y=0;
+                        shiftDown = false;
 		}
 
 		virtual ~SdkCameraMan() {}
