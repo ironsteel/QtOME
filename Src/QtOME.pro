@@ -18,14 +18,16 @@ SOURCES += main.cpp\
     TestWidget.cpp \
     QOgreWidget.cpp \
     Highlighter.cpp \
-    CodeEditor.cpp
+    CodeEditor.cpp \
+    CodeEditor2.cpp
 
 HEADERS  += mainwindow.h \
     TestWidget.h \
     QOgreWidget.h \
     Highlighter.h \
     CodeEditor.h \
-    SdkCameraMan.h
+    SdkCameraMan.h \
+    CodeEditor2.h
 
 FORMS    += mainwindow.ui
 
