@@ -26,6 +26,7 @@ private:
 
 private slots:
     void loadFile();
+    void saveMatScript();
     void importMesh();
 };
 

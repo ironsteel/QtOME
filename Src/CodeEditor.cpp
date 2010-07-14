@@ -49,7 +49,6 @@
 #include <QAbstractItemModel>
 #include <QScrollBar>
 #include <QStringListModel>
-#include <QFile>
 #include <QTextLayout>
 #include <QPainter>
 #include <QAbstractTextDocumentLayout>
@@ -59,9 +58,6 @@ CodeEditor::CodeEditor(QWidget *parent)
 : QTextEdit(parent), c(0)
 {
     setupHighlighter();
-
-
-    //lineNumbers = new LineNumberWidget(this,parent);
 }
 //! [0]
 
@@ -184,23 +180,21 @@ void CodeEditor::setupHighlighter()
 
 void CodeEditor::setupCurrentCompleter(const QString& wordListFile)
 {
-   currentCompleter = new QCompleter(this);
+   currentCompleter = new QCompleter(this);// Create autoCompleter object
 
    QStringList wordindex = wordindexFromFile( wordListFile ); // Index of words for the autocompleter
    wordList = new QStringListModel(wordindex, currentCompleter);	
 
-    currentCompleter->setModel( wordList );
-    this->setCompleter(currentCompleter);
+   currentCompleter->setModel( wordList ); // Set the autocompleter's wordlist
+   this->setCompleter(currentCompleter); // Set's autocomplete for the CodeEditor
 }
 
 QStringList CodeEditor::wordindexFromFile(const QString &fileName)
-{
+{// Get's the words from a file for the autocompleter
     QFile file(fileName);
 
     if (!file.open(QFile::ReadOnly))
         return QStringList("");
-
-
 
 #ifndef QT_NO_CURSOR
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -216,23 +210,39 @@ QStringList CodeEditor::wordindexFromFile(const QString &fileName)
 #ifndef QT_NO_CURSOR
     QApplication::restoreOverrideCursor();
 #endif
-
-    //QByteArray document_array;
-    //document_array = file.readAll();
-
-
+    file.close();
     return words;
 
 }
 
-void CodeEditor::setFile(const QString& filename)
+void CodeEditor::openFile(const QString& filename)
 {
-    fileForEdit = new QFile(filename);
-    fileForEdit->open(QFile::ReadOnly);
-    this->setText(fileForEdit->readAll());
+    matScriptFilename = filename;
+
+    QFile fileForEdit(matScriptFilename);
+    fileForEdit.open(QFile::ReadOnly);
+    this->setText(fileForEdit.readAll());
+    fileForEdit.close();
 
 }
 
+void CodeEditor::saveFile()
+{
+    if ( matScriptFilename.isEmpty() ) {
+          return;
+       }
+
+    QString text = this->toPlainText();
+       QFile f( matScriptFilename );
+       if ( !f.open( QFile::WriteOnly ) ) {
+
+           return;
+       }
+
+       QTextStream t( &f );
+       t << text;
+       f.close();
+}
 
 /**************************** Line Number Widget ***************************************
 *
