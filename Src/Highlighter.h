@@ -79,6 +79,7 @@ private:
     QTextCharFormat multiLineCommentFormat;
     QTextCharFormat quotationFormat;
     QTextCharFormat functionFormat;
+    QTextCharFormat ogreMaterialVariablesFormat;
 };
 //! [0]
 
