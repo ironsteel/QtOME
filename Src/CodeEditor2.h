@@ -76,11 +76,11 @@ protected:
 
 private slots:
     void insertCompletion(const QString &completion);
+    void getMaterialsList();
 
 private:
     QString textUnderCursor() const;
     void setupHighlighter();
-
 
 private:
     Highlighter *highlighter; // Syntax highlighter

@@ -31,16 +31,11 @@
        <property name="windowTitle">
         <string>Subwindow</string>
        </property>
-       <widget class="CodeEditor2" name="textEdit">
-        <property name="geometry">
-         <rect>
-          <x>80</x>
-          <y>50</y>
-          <width>661</width>
-          <height>491</height>
-         </rect>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="CodeEditor2" name="textEdit"/>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -234,6 +229,9 @@
    <class>CodeEditor2</class>
    <extends>QTextEdit</extends>
    <header>CodeEditor2.h</header>
+   <slots>
+    <slot>getMaterialsList()</slot>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources/>
@@ -363,6 +361,22 @@
     <hint type="destinationlabel">
      <x>583</x>
      <y>345</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>matEditor</sender>
+   <signal>textChanged()</signal>
+   <receiver>textEdit</receiver>
+   <slot>getMaterialsList()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>465</x>
+     <y>161</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>747</x>
+     <y>161</y>
     </hint>
    </hints>
   </connection>

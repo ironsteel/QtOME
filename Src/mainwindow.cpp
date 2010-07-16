@@ -43,6 +43,7 @@ void MainWindow::loadFile()
    QString fileName = fullFilePath.section('/', -1);
 
     ui->matEditor->openFile(fullFilePath);
+    ui->textEdit->openFile(fullFilePath);
     this->ui->subwindow->setWindowTitle(fileName);
 }
 

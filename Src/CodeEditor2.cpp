@@ -52,6 +52,7 @@
 #include <QTextLayout>
 #include <QPainter>
 #include <QAbstractTextDocumentLayout>
+#include <QTextCursor>
 
 //! [0]
 CodeEditor2::CodeEditor2(QWidget *parent)
@@ -244,3 +245,18 @@ void CodeEditor2::saveFile()
        f.close();
 }
 
+void CodeEditor2::getMaterialsList()
+{
+    QTextCursor crs = this->document()->find("material");
+    QString     str = crs.selectedText();
+    this->append(str);
+    crs.movePosition(QTextCursor::NextWord,  QTextCursor::MoveAnchor, 1);
+    crs.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor, 1);
+    str = crs.selectedText();
+    this->append(str);
+    crs.movePosition(QTextCursor::NextWord,  QTextCursor::MoveAnchor, 1);
+    crs.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor, 1);
+    str = crs.selectedText();
+    if(str == ":")
+        this->append( "Base Class" + str );
+}

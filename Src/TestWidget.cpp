@@ -296,7 +296,6 @@ QString TestWidget::changeMesh(QString fullname)
         m_mainNode->detachObject(meshName);
         mesh = m_sceneMgr->createEntity( name, name);
         m_sceneMgr->destroyEntity(meshName);
-        mesh->setMaterialName("Material1");
         m_mainNode->attachObject(mesh);
         meshName=name;
     }
