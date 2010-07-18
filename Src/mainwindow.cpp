@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->matEditor->setupCurrentCompleter(":/Build/Data/wordlist.txt");
-
 }
 
 void MainWindow::setSplash(QSplashScreen * spl)
@@ -33,6 +32,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent* e)
 {
     if(e->key() == Qt::Key_Shift)
         ui->OgreWidget->sdkCam->setShift(false);
+
 }
 
 void MainWindow::loadFile()
@@ -43,8 +43,19 @@ void MainWindow::loadFile()
    QString fileName = fullFilePath.section('/', -1);
 
     ui->matEditor->openFile(fullFilePath);
-    ui->textEdit->openFile(fullFilePath);
     this->ui->subwindow->setWindowTitle(fileName);
+
+    QStringList places = fullFilePath.split("/");
+    places.pop_back();
+    QString pathOnly = places.join("/");
+
+    Ogre::ResourceGroupManager::getSingleton().addResourceLocation( pathOnly.toStdString() ,"FileSystem","ImportedMaterials");
+    Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("ImportedMaterials");
+
+    ui->listWidget->clear();
+    QStringList materials = ui->OgreWidget->manager->getMaterialList();
+    ui->listWidget->addItems(materials);
+
 }
 
 void MainWindow::importMesh()

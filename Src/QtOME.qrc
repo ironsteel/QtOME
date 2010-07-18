@@ -2,4 +2,7 @@
     <qresource prefix="/">
         <file>../Build/Data/wordlist.txt</file>
     </qresource>
+    <qresource prefix="/new">
+        <file>icons/apply.png</file>
+    </qresource>
 </RCC>

@@ -8,12 +8,12 @@
 int main(int argc, char *argv[])
 {
 
-    Q_INIT_RESOURCE(QtOME);
     QApplication a(argc, argv);
+    Q_INIT_RESOURCE(QtOME);
     MainWindow w;
 
     QSplashScreen *splash = new QSplashScreen;
-    splash->setPixmap(QPixmap("Data/splash.png"));
+    splash->setPixmap(QPixmap(":/ics/splash"));
 
     Qt::Alignment topRight = Qt::AlignRight | Qt::AlignTop;
     splash->show();splash->showMessage(QObject::tr("Setting up the main window..."), topRight, Qt::black);

@@ -290,6 +290,7 @@ QString TestWidget::changeMesh(QString fullname)
         m_mainNode = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
         m_mainNode->attachObject(mesh);
         meshName=name;
+        mesh->setMaterialName("NONE");
     }
     else
     {
@@ -297,8 +298,10 @@ QString TestWidget::changeMesh(QString fullname)
         mesh = m_sceneMgr->createEntity( name, name);
         m_sceneMgr->destroyEntity(meshName);
         m_mainNode->attachObject(mesh);
+        mesh->setMaterialName("NONE");
         meshName=name;
     }
 
     return Qname;
+
 }

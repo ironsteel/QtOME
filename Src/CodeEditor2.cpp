@@ -249,14 +249,21 @@ void CodeEditor2::getMaterialsList()
 {
     QTextCursor crs = this->document()->find("material");
     QString     str = crs.selectedText();
-    this->append(str);
+    this->append( str );
     crs.movePosition(QTextCursor::NextWord,  QTextCursor::MoveAnchor, 1);
     crs.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor, 1);
     str = crs.selectedText();
-    this->append(str);
+    this->append( str );
     crs.movePosition(QTextCursor::NextWord,  QTextCursor::MoveAnchor, 1);
     crs.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor, 1);
     str = crs.selectedText();
-    if(str == ":")
-        this->append( "Base Class" + str );
+    this->append( str );
+    crs.movePosition(QTextCursor::NextWord,  QTextCursor::MoveAnchor, 1);
+    crs.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor, 1);
+    str = crs.selectedText();
+    this->append( str );
+    crs.movePosition(QTextCursor::NextWord,  QTextCursor::MoveAnchor, 1);
+    crs.movePosition(QTextCursor::EndOfWord, QTextCursor::KeepAnchor, 1);
+    str = crs.selectedText();
+    this->append( str );
 }

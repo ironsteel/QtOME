@@ -4,6 +4,7 @@
 // --- Includes ---
 //
 #include "QOgreWidget.h"
+#include "MaterialManager.hpp"
 #include "SdkCameraMan.h"
 #include <QtGui/QSplashScreen>
 //
@@ -28,10 +29,12 @@ public:
 	  m_vp = NULL;
 	  m_mousePressed = false;
           meshName = "mesh1";
+          manager = new MaterialManager();
 	}
         ~TestWidget(void);
         void setSplash(QSplashScreen * splash);
         QString changeMesh(QString fullname);
+        MaterialManager       *manager;
 protected:
 	//
 	// ########## Protected functions ##########
@@ -61,6 +64,7 @@ protected:
         Ogre::SceneNode       *camTarget;
         Ogre::SceneNode       *sceneCenter;
         Ogre::String           meshName;
+
             //keeps track of mesh names for mesh replacing in changeMesh()
 	//
 	// ########## Private constants ##########
