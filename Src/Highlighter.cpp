@@ -71,14 +71,22 @@ Highlighter::Highlighter(QTextDocument *parent)
     highlightingRules.append(rule);
 
     ogreMaterialVariables = QRegExp("\\b(texture|anim_texture|cubic_texture|tex_coord_set|tex_address_mode|filtering|max_anisotropy|colour_op|alpha_rejection|colour_op_ex|colour_op_multipass_fallback|alpha_op_ex|env_map|scroll|scroll_anim|rotate|rotate_anim|scale|wave_xform)\\b");
-    rule.pattern = ogreMaterialVariables2;
+    rule.pattern = ogreMaterialVariables;
     rule.format = ogreMaterialVariablesFormat;
     highlightingRules.append(rule);
 
     ogreMaterialVariables = QRegExp("\\b(syntax|entry_point|profiles|target|param_named|param_named_auto)\\b");
-    rule.pattern = ogreMaterialVariables2;
+    rule.pattern = ogreMaterialVariables;
     rule.format = ogreMaterialVariablesFormat;
     highlightingRules.append(rule);
+
+    ogreMaterialValuesFormat.setForeground(Qt::red);
+    ogreMaterialValuesFormat.setFontWeight(QFont::Normal);
+    QRegExp ogreMaterialValues("\\b(on|off|true|false)\\b");
+    rule.pattern = ogreMaterialValues;
+    rule.format = ogreMaterialValuesFormat;
+    highlightingRules.append(rule);
+
 
 
 //! [1]

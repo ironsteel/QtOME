@@ -80,6 +80,7 @@ private:
     QTextCharFormat quotationFormat;
     QTextCharFormat functionFormat;
     QTextCharFormat ogreMaterialVariablesFormat;
+    QTextCharFormat ogreMaterialValuesFormat;
 };
 //! [0]
 
