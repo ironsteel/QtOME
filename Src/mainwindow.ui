@@ -72,8 +72,15 @@
     <addaction name="actionNext"/>
     <addaction name="actionPrevious"/>
    </widget>
+   <widget class="QMenu" name="menuMaterial">
+    <property name="title">
+     <string>Material</string>
+    </property>
+    <addaction name="action_Apply"/>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menuWindows"/>
+   <addaction name="menuMaterial"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockPreview">
@@ -130,7 +137,7 @@
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
@@ -139,12 +146,31 @@
     <bool>true</bool>
    </property>
    <attribute name="toolBarArea">
-    <enum>LeftToolBarArea</enum>
+    <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="separator"/>
+   <addaction name="action_Apply"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget">
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QListWidget" name="listWidget">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <action name="action_New">
    <property name="text">
@@ -211,6 +237,24 @@
     <string>Save All</string>
    </property>
   </action>
+  <action name="action_Apply">
+   <property name="icon">
+    <iconset resource="QtOME.qrc">
+     <normaloff>:/new/icons/apply.png</normaloff>:/new/icons/apply.png</iconset>
+   </property>
+   <property name="text">
+    <string>Apply</string>
+   </property>
+   <property name="toolTip">
+    <string>Applies material dynamically without saving the script</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+A</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -234,7 +278,9 @@
    </slots>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="QtOME.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>action_Quit</sender>

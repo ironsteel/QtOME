@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     MainWindow w;
 
     QSplashScreen *splash = new QSplashScreen;
-    splash->setPixmap(QPixmap(":/ics/splash"));
+    splash->setPixmap(QPixmap(":/splash"));
 
     Qt::Alignment topRight = Qt::AlignRight | Qt::AlignTop;
     splash->show();splash->showMessage(QObject::tr("Setting up the main window..."), topRight, Qt::black);
