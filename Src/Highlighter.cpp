@@ -51,27 +51,48 @@ Highlighter::Highlighter(QTextDocument *parent)
 
     keywordFormat.setForeground(Qt::darkBlue);
     keywordFormat.setFontWeight(QFont::Bold);
-    QStringList keywordPatterns;
-    keywordPatterns << "\\bchar\\b" << "\\bclass\\b" << "\\bconst\\b"
-                    << "\\bdouble\\b" << "\\benum\\b" << "\\bexplicit\\b"
-                    << "\\bfriend\\b" << "\\binline\\b" << "\\bint\\b"
-                    << "\\blong\\b" << "\\bnamespace\\b" << "\\boperator\\b"
-                    << "\\bprivate\\b" << "\\bprotected\\b" << "\\bpublic\\b"
-                    << "\\bshort\\b" << "\\bsignals\\b" << "\\bsigned\\b"
-                    << "\\bslots\\b" << "\\bstatic\\b" << "\\bstruct\\b"
-                    << "\\btemplate\\b" << "\\btypedef\\b" << "\\btypename\\b"
-                    << "\\bunion\\b" << "\\bunsigned\\b" << "\\bvirtual\\b"
-                    << "\\bvoid\\b" << "\\bvolatile\\b";
-    foreach (const QString &pattern, keywordPatterns) {
+    QStringList ogreMaterialKeywords;
+    ogreMaterialKeywords << "\\bmaterial\\b" << "\\bpass\\b" << "\\btechnique\\b" << "\\btexture_unit\\b"
+                        << "\\bvertex_program\\b" << "\\bfragment_program\\b";
+
+    foreach (const QString &pattern, ogreMaterialKeywords) {
         rule.pattern = QRegExp(pattern);
         rule.format = keywordFormat;
         highlightingRules.append(rule);
+
 //! [0] //! [1]
     }
+
+    ogreMaterialVariablesFormat.setForeground(Qt::darkYellow);
+    ogreMaterialVariablesFormat.setFontWeight(QFont::Normal);
+    QRegExp ogreMaterialVariables("\\b(ambient|diffuse|specular|emissive|scene_blend|depth_check|depth_writedepth_func|depth_bias|cull_hardware|cull_sofware|lighting|shading|fog_override|colour_write|max_lights|iteration)\\b");
+    rule.pattern = ogreMaterialVariables;
+    rule.format = ogreMaterialVariablesFormat;
+    highlightingRules.append(rule);
+
+    ogreMaterialVariables = QRegExp("\\b(texture|anim_texture|cubic_texture|tex_coord_set|tex_address_mode|filtering|max_anisotropy|colour_op|alpha_rejection|colour_op_ex|colour_op_multipass_fallback|alpha_op_ex|env_map|scroll|scroll_anim|rotate|rotate_anim|scale|wave_xform)\\b");
+    rule.pattern = ogreMaterialVariables;
+    rule.format = ogreMaterialVariablesFormat;
+    highlightingRules.append(rule);
+
+    ogreMaterialVariables = QRegExp("\\b(syntax|entry_point|profiles|target|param_named|param_named_auto)\\b");
+    rule.pattern = ogreMaterialVariables;
+    rule.format = ogreMaterialVariablesFormat;
+    highlightingRules.append(rule);
+
+    ogreMaterialValuesFormat.setForeground(Qt::red);
+    ogreMaterialValuesFormat.setFontWeight(QFont::Normal);
+    QRegExp ogreMaterialValues("\\b(on|off|true|false)\\b");
+    rule.pattern = ogreMaterialValues;
+    rule.format = ogreMaterialValuesFormat;
+    highlightingRules.append(rule);
+
+
+
 //! [1]
 
 //! [2]
-    classFormat.setFontWeight(QFont::Bold);
+    /*classFormat.setFontWeight(QFont::Bold);
     classFormat.setForeground(Qt::darkMagenta);
     rule.pattern = QRegExp("\\bQ[A-Za-z]+\\b");
     rule.format = classFormat;
@@ -102,7 +123,7 @@ Highlighter::Highlighter(QTextDocument *parent)
     highlightingRules.append(rule);
 //! [5]
 
-//! [6]
+//! [6]*/
     commentStartExpression = QRegExp("/\\*");
     commentEndExpression = QRegExp("\\*/");
 }
