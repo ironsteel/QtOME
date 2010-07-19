@@ -28,6 +28,7 @@ private slots:
     void loadFile();
     void saveMatScript();
     void importMesh();
+    void applyMaterial();
 };
 
 #endif // MAINWINDOW_H

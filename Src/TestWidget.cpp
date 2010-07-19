@@ -280,7 +280,6 @@ QString TestWidget::changeMesh(QString fullname)
         It++;
     }
 
-    //Ogre::ResourceGroupManager::initialiseResourceGroup("ImportedMeshes")
     Ogre::ResourceGroupManager::getSingleton().addResourceLocation( path ,"FileSystem","ImportedMeshes");
     Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("ImportedMeshes");
 
@@ -290,7 +289,7 @@ QString TestWidget::changeMesh(QString fullname)
         m_mainNode = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
         m_mainNode->attachObject(mesh);
         meshName=name;
-        mesh->setMaterialName("NONE");
+        mesh->setMaterialName("DefaultSettings");
     }
     else
     {
@@ -298,10 +297,22 @@ QString TestWidget::changeMesh(QString fullname)
         mesh = m_sceneMgr->createEntity( name, name);
         m_sceneMgr->destroyEntity(meshName);
         m_mainNode->attachObject(mesh);
-        mesh->setMaterialName("NONE");
+        mesh->setMaterialName("DefaultSettings");
         meshName=name;
     }
 
     return Qname;
+}
 
+void TestWidget::setMaterial(Ogre::MaterialPtr* mat)
+{
+    clearMaterial();
+    //if(tempMat)delete tempMat;
+    mesh->setMaterial(*mat);
+    tempMat = mat;
+}
+
+void TestWidget::clearMaterial()
+{
+    mesh->setMaterialName("DefaultSettings");
 }

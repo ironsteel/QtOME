@@ -426,10 +426,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_Apply</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>applyMaterial()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>583</x>
+     <y>345</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>loadFile()</slot>
   <slot>importMesh()</slot>
   <slot>saveMatScript()</slot>
+  <slot>applyMaterial()</slot>
  </slots>
 </ui>

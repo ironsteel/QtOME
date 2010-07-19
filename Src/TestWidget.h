@@ -33,7 +33,10 @@ public:
 	}
         ~TestWidget(void);
         void setSplash(QSplashScreen * splash);
+        void setMaterial(Ogre::MaterialPtr* mat);
+        void clearMaterial();
         QString changeMesh(QString fullname);
+
         MaterialManager       *manager;
 protected:
 	//
@@ -64,6 +67,7 @@ protected:
         Ogre::SceneNode       *camTarget;
         Ogre::SceneNode       *sceneCenter;
         Ogre::String           meshName;
+        Ogre::MaterialPtr     *tempMat;
 
             //keeps track of mesh names for mesh replacing in changeMesh()
 	//
