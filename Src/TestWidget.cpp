@@ -225,6 +225,9 @@ void TestWidget::setupScene(void) {
 	m_camera->setAspectRatio(Ogre::Real(m_vp->getActualWidth()) / Ogre::Real(m_vp->getActualHeight()));
 	
 	startTimer(20);
+
+        currentMaterial = Ogre::MaterialManager::getSingleton().getByName("DefaultSettings", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+        tempMat         = Ogre::MaterialManager::getSingleton().getByName("Material1",       Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 }
 
 void TestWidget::setSplash(QSplashScreen * splash)
@@ -289,7 +292,7 @@ QString TestWidget::changeMesh(QString fullname)
         m_mainNode = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
         m_mainNode->attachObject(mesh);
         meshName=name;
-        mesh->setMaterialName("DefaultSettings");
+        mesh->setMaterial(currentMaterial);
     }
     else
     {
@@ -297,22 +300,43 @@ QString TestWidget::changeMesh(QString fullname)
         mesh = m_sceneMgr->createEntity( name, name);
         m_sceneMgr->destroyEntity(meshName);
         m_mainNode->attachObject(mesh);
-        mesh->setMaterialName("DefaultSettings");
+        mesh->setMaterial(currentMaterial);
         meshName=name;
     }
 
     return Qname;
 }
 
-void TestWidget::setMaterial(Ogre::MaterialPtr* mat)
+void TestWidget::setMaterial(const Ogre::String &script)
 {
-    clearMaterial();
-    //if(tempMat)delete tempMat;
-    mesh->setMaterial(*mat);
-    tempMat = mat;
+    Ogre::LogManager::getSingleton().logMessage("Starting compilation of material script ...");
+
+    this->clearMaterial();
+
+    Ogre::MemoryDataStream *memoryStream = new Ogre::MemoryDataStream((void*)script.c_str(), script.length() * sizeof(char));
+    Ogre::DataStreamPtr dataStream(memoryStream);
+    Ogre::MaterialManager::getSingleton().parseScript(dataStream, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+    Ogre::StringVector lines = Ogre::StringUtil::split(script, "\n");
+
+    for(Ogre::StringVector::iterator line = lines.begin(); line != lines.end(); line++)
+    {
+        Ogre::StringVector params = Ogre::StringUtil::split(*line, " \t:");
+        if (params[0] == "material")
+        {
+            Ogre::String materialName = params[1];
+            currentMaterial = Ogre::MaterialManager::getSingleton().getByName(materialName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+            currentMaterial->compile();
+        }
+    }
+
+    mesh->setMaterial(currentMaterial);
+    Ogre::LogManager::getSingleton().logMessage("Finished compilation of material script ...");
 }
 
 void TestWidget::clearMaterial()
 {
-    mesh->setMaterialName("DefaultSettings");
+    mesh->setMaterial(tempMat);
+    // Sets the mesh material to the temp one then deletes the current
+    // We need to do this because only materials that are not used will be deleted
+    Ogre::MaterialManager::getSingletonPtr()->remove(currentMaterial->getHandle());
 }

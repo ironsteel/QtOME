@@ -19,7 +19,6 @@ SOURCES += main.cpp\
     QOgreWidget.cpp \
     Highlighter.cpp \
     CodeEditor.cpp \
-    CodeEditor2.cpp \
     MaterialManager.cpp
 
 HEADERS  += mainwindow.h \
@@ -28,7 +27,6 @@ HEADERS  += mainwindow.h \
     Highlighter.h \
     CodeEditor.h \
     SdkCameraMan.h \
-    CodeEditor2.h \
     MaterialManager.hpp
 
 FORMS    += mainwindow.ui
