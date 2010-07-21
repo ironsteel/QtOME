@@ -52,12 +52,13 @@
 #include <QTextLayout>
 #include <QPainter>
 #include <QAbstractTextDocumentLayout>
-
+#include <QMessageBox>
 //! [0]
 CodeEditor::CodeEditor(QWidget *parent)
 : QTextEdit(parent), c(0)
 {
     setupHighlighter();
+    //this->setTabChangesFocus(true);
 }
 //! [0]
 
@@ -103,6 +104,7 @@ void CodeEditor::insertCompletion(const QString& completion)
     tc.movePosition(QTextCursor::Left);
     tc.movePosition(QTextCursor::EndOfWord);
     tc.insertText(completion.right(extra));
+    tc.movePosition(QTextCursor::EndOfWord);
     setTextCursor(tc);
 }
 //! [4]
@@ -128,6 +130,7 @@ void CodeEditor::focusInEvent(QFocusEvent *e)
 //! [7]
 void CodeEditor::keyPressEvent(QKeyEvent *e)
 {
+
     if (c && c->popup()->isVisible()) {
         // The following keys are forwarded by the completer to the widget
        switch (e->key()) {
@@ -136,7 +139,7 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
        case Qt::Key_Escape:
        case Qt::Key_Tab:
        case Qt::Key_Backtab:
-            e->ignore(); 
+            e->ignore();
             return; // let the completer do default behavior
        default:
            break;
@@ -184,7 +187,7 @@ void CodeEditor::setupCurrentCompleter(const QString& wordListFile)
 
    QStringList wordindex = wordindexFromFile( wordListFile ); // Index of words for the autocompleter
    wordList = new QStringListModel(wordindex, currentCompleter);	
-
+   currentCompleter->setWrapAround(false);
    currentCompleter->setModel( wordList ); // Set the autocompleter's wordlist
    this->setCompleter(currentCompleter); // Set's autocomplete for the CodeEditor
 }
@@ -220,7 +223,10 @@ void CodeEditor::openFile(const QString& filename)
     matScriptFilename = filename;
 
     QFile fileForEdit(matScriptFilename);
-    fileForEdit.open(QFile::ReadOnly);
+    if (!fileForEdit.open(QFile::ReadOnly)){
+        QMessageBox::warning(this, tr("QtOME"), tr("Cannot open file!"));
+        return ;
+    }
     this->setText(fileForEdit.readAll());
     fileForEdit.close();
 
@@ -230,19 +236,22 @@ void CodeEditor::saveFile()
 {
     if ( matScriptFilename.isEmpty() ) {
           return;
-       }
+    }
 
     QString text = this->toPlainText();
-       QFile f( matScriptFilename );
-       if ( !f.open( QFile::WriteOnly ) ) {
 
-           return;
-       }
+    QFile f( matScriptFilename );
+    if ( !f.open( QFile::WriteOnly ) ) {
+        QMessageBox::warning(this, tr("QtOME"), tr("Cannot write to file!"));
+        return;
+    }
 
-       QTextStream t( &f );
-       t << text;
-       f.close();
+    QTextStream t( &f );
+    t << text;
+    f.close();
 }
+
+
 
 /**************************** Line Number Widget ***************************************
 *
