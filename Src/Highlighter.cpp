@@ -49,7 +49,7 @@ Highlighter::Highlighter(QTextDocument *parent)
 {
     HighlightingRule rule;
 
-    keywordFormat.setForeground(Qt::darkBlue);
+    keywordFormat.setForeground(Qt::darkGreen);
     keywordFormat.setFontWeight(QFont::Bold);
     QStringList ogreMaterialKeywords;
     ogreMaterialKeywords << "\\bmaterial\\b" << "\\bpass\\b" << "\\btechnique\\b" << "\\btexture_unit\\b"
@@ -65,7 +65,7 @@ Highlighter::Highlighter(QTextDocument *parent)
 
     ogreMaterialVariablesFormat.setForeground(Qt::darkYellow);
     ogreMaterialVariablesFormat.setFontWeight(QFont::Normal);
-    QRegExp ogreMaterialVariables("\\b(ambient|diffuse|specular|emissive|scene_blend|depth_check|depth_writedepth_func|depth_bias|cull_hardware|cull_sofware|lighting|shading|fog_override|colour_write|max_lights|iteration)\\b");
+    QRegExp ogreMaterialVariables("\\b(ambient|diffuse|specular|emissive|scene_blend|depth_check|depth_writedepth_func|depth_bias|cull_hardware|cull_software|lighting|shading|fog_override|colour_write|max_lights|iteration)\\b");
     rule.pattern = ogreMaterialVariables;
     rule.format = ogreMaterialVariablesFormat;
     highlightingRules.append(rule);
@@ -87,24 +87,36 @@ Highlighter::Highlighter(QTextDocument *parent)
     rule.format = ogreMaterialValuesFormat;
     highlightingRules.append(rule);
 
+    ogreMaterialValues = QRegExp("\\b(add|modulate|alpha_blend|clamp|one|zero|dest_colour|src_colour|one_minus_dest_colour|one_minus_src_colour|dest_alpha)\\b");
+    rule.pattern = ogreMaterialValues;
+    rule.format = ogreMaterialValuesFormat;
+    highlightingRules.append(rule);
+
+    ogreMaterialValues = QRegExp("\\b(sc_alpha|one_minus_dest_alpha|one_minus_src_alpha|always_fail|always_pass|less|less_equal|equal|not_equal|greater_equal|greater|clockwise|anticlockwise|none)\\b");
+    rule.pattern = ogreMaterialValues;
+    rule.format = ogreMaterialValuesFormat;
+    highlightingRules.append(rule);
+
+
+
 
 
 //! [1]
 
 //! [2]
-    /*classFormat.setFontWeight(QFont::Bold);
+    classFormat.setFontWeight(QFont::Bold);
     classFormat.setForeground(Qt::darkMagenta);
-    rule.pattern = QRegExp("\\bQ[A-Za-z]+\\b");
+    rule.pattern = QRegExp("\\b[0-9]+\\b");
     rule.format = classFormat;
     highlightingRules.append(rule);
 //! [2]
 
 //! [3]
-    singleLineCommentFormat.setForeground(Qt::red);
+    singleLineCommentFormat.setForeground(Qt::darkBlue);
     rule.pattern = QRegExp("//[^\n]*");
     rule.format = singleLineCommentFormat;
     highlightingRules.append(rule);
-
+/*
     multiLineCommentFormat.setForeground(Qt::red);
 //! [3]
 

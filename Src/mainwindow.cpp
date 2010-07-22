@@ -3,7 +3,7 @@
 #include <QtGui/QSplitter>
 #include <QtGui/QTabWidget>
 #include <QFileDialog>
-
+#include <QMessageBox>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -37,10 +37,16 @@ void MainWindow::keyReleaseEvent(QKeyEvent* e)
 
 void MainWindow::loadFile()
 {
-   QString fullFilePath = QFileDialog::getOpenFileName(this,
+
+    QString fullFilePath = QFileDialog::getOpenFileName(this,
        tr("Open Material Script"), "./", tr("Material scripts (*.material )"));
 
-   QString fileName = fullFilePath.section('/', -1);
+    if ( fullFilePath.isEmpty() ) { // If no file is loaded
+        QMessageBox::warning(this, tr("QtOME"), tr("No file selected!"));
+        return ;
+    }
+
+    QString fileName = fullFilePath.section('/', -1);
 
     ui->matEditor->openFile(fullFilePath);
     this->ui->subwindow->setWindowTitle(fileName);
@@ -60,8 +66,14 @@ void MainWindow::loadFile()
 
 void MainWindow::importMesh()
 {
+
     QString s = QFileDialog::getOpenFileName(this,
        tr("Import *.mesh file"), "./", tr("Meshes (*.mesh )"));
+
+    if(s.isEmpty()) { // If no file is loaded
+        return ;
+    }
+
     s=ui->OgreWidget->changeMesh(s);
     this->setWindowTitle(s);
 }

@@ -94,6 +94,7 @@ private:
     void setupHighlighter();
 
 
+
 private:
     Highlighter *highlighter; // Syntax highlighter
     QCompleter *c;
