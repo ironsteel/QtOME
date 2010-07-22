@@ -31,7 +31,7 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
-LIBS += -lOgreMain
+LIBS += -lOgreMain\
 
 RESOURCES += \
     QtOME.qrc
