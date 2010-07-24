@@ -59,7 +59,6 @@ Highlighter::Highlighter(QTextDocument *parent)
         rule.pattern = QRegExp(pattern);
         rule.format = keywordFormat;
         highlightingRules.append(rule);
-
 //! [0] //! [1]
     }
 
@@ -97,6 +96,35 @@ Highlighter::Highlighter(QTextDocument *parent)
     rule.format = ogreMaterialValuesFormat;
     highlightingRules.append(rule);
 
+    ogreMaterialValues = QRegExp("\\b(back|front|flat|gouraud|phong|linear|exp|exp2|once|once_per_light|point directional|spot)\\b");
+    rule.pattern = ogreMaterialValues;
+    rule.format = ogreMaterialValuesFormat;
+    highlightingRules.append(rule);
+
+    ogreMaterialValues = QRegExp("\\b(1d|2d|cubic|combinedUVW|separateUV|wrap|clamValues|mirrorTexture|bilinear|trilinear|anisotropic|replace)\\b");
+    rule.pattern = ogreMaterialValues;
+    rule.format = ogreMaterialValuesFormat;
+    highlightingRules.append(rule);
+
+    ogreMaterialValues = QRegExp("\\b(source1|source2|modulate|modulate_x2|modulate_x4|add_signed|add_smooth|subtract|blend_diffuse_alpha|blend_texture_alpha|blend_current_alpha)\\b");
+    rule.pattern = ogreMaterialValues;
+    rule.format = ogreMaterialValuesFormat;
+    highlightingRules.append(rule);
+
+    ogreMaterialValues = QRegExp("\\b(blend_manual|src_current|src_texture|src_diffuse|src_specular|src_manual|spherical|planar|cubic_reflection|cubic_normal|scroll_x|scroll_y)\\b");
+    rule.pattern = ogreMaterialValues;
+    rule.format = ogreMaterialValuesFormat;
+    highlightingRules.append(rule);
+
+    ogreMaterialValues = QRegExp("\\b(scale_x|scale_y|sine|triangle|square|sawtooth|inverse_sawtooth|shininess)\\b");
+    rule.pattern = ogreMaterialValues;
+    rule.format = ogreMaterialValuesFormat;
+    highlightingRules.append(rule);
+
+    ogreMaterialValues = QRegExp("\\b(asm|cg|hlsl|vs_1_1|vs_2_0|vs_2_x|vs_3_0|arbvp1|arbfp1|fp20|ps_1_1|ps_1_2|ps_1_3|ps_1_4|ps_3_0|ps_3_x)\\b");
+    rule.pattern = ogreMaterialValues;
+    rule.format = ogreMaterialValuesFormat;
+    highlightingRules.append(rule);
 
 
 
