@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QtGui/QSplashScreen>
-
 namespace Ui {
     class MainWindow;
 }
@@ -20,6 +19,7 @@ public:
 public:
     void setSplash(QSplashScreen * spl);
     Ui::MainWindow *ui;
+
 private:
     void keyPressEvent(QKeyEvent* e);
     void keyReleaseEvent(QKeyEvent* e);

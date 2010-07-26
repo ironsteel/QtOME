@@ -27,6 +27,22 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="subwindow_2">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
+       <property name="windowTitle">
+        <string>Subwindow</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="TextEdit" name="textEdit"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -37,7 +53,7 @@
      <x>0</x>
      <y>0</y>
      <width>1183</width>
-     <height>24</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -258,6 +274,11 @@
    <class>CodeEditor</class>
    <extends>QTextEdit</extends>
    <header>CodeEditor.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>TextEdit.h</header>
   </customwidget>
  </customwidgets>
  <resources>
