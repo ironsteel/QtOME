@@ -39,8 +39,8 @@
 **
 ****************************************************************************/
 
-#ifndef TEXTEDIT_H
-#define TEXTEDIT_H
+#ifndef CODEEDITOR_H
+#define CODEEDITOR_H
 #include "Highlighter.h"
 #include <QTextEdit>
 #include <QCompleter>
@@ -104,5 +104,5 @@ private:
 };
 //! [0]
 
-#endif // TEXTEDIT_H
+#endif // CODEEDITOR_H
 
