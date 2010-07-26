@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     ui->matEditor->setupCurrentCompleter(":/Build/Data/wordlist.txt");
 }
 
@@ -49,6 +50,7 @@ void MainWindow::loadFile()
     QString fileName = fullFilePath.section('/', -1);
 
     ui->matEditor->openFile(fullFilePath);
+    ui->textEdit->openFile(fullFilePath);
     this->ui->subwindow->setWindowTitle(fileName);
 
     //QStringList places = fullFilePath.split("/");

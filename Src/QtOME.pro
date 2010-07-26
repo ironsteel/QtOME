@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     QOgreWidget.cpp \
     Highlighter.cpp \
     CodeEditor.cpp \
-    MaterialManager.cpp
+    MaterialManager.cpp \
+    TextEdit.cpp
 
 HEADERS  += mainwindow.h \
     TestWidget.h \
@@ -27,11 +28,13 @@ HEADERS  += mainwindow.h \
     Highlighter.h \
     CodeEditor.h \
     SdkCameraMan.h \
-    MaterialManager.hpp
+    MaterialManager.hpp \
+    TextEdit.h
 
 FORMS    += mainwindow.ui
 
-LIBS += -lOgreMain
+LIBS += -lOgreMain\
+        -lqscintilla2
 
 RESOURCES += \
     QtOME.qrc
