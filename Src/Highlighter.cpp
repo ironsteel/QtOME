@@ -51,25 +51,21 @@ Highlighter::Highlighter(QTextDocument *parent)
 
     keywordFormat.setForeground(Qt::darkGreen);
     keywordFormat.setFontWeight(QFont::Bold);
-    QStringList ogreMaterialKeywords;
-    ogreMaterialKeywords << "\\bmaterial\\b" << "\\bpass\\b" << "\\btechnique\\b" << "\\btexture_unit\\b"
-                        << "\\bvertex_program\\b" << "\\bfragment_program\\b";
+    QRegExp ogreMaterialKeywords("\\b(abstract|material|pass|technique|texture_unit|vertex_program|fragment_program|vertex_program_ref|fragment_program_ref)\\b");
+    rule.pattern = ogreMaterialKeywords;
+    rule.format = keywordFormat;
+    highlightingRules.append(rule);
 
-    foreach (const QString &pattern, ogreMaterialKeywords) {
-        rule.pattern = QRegExp(pattern);
-        rule.format = keywordFormat;
-        highlightingRules.append(rule);
-//! [0] //! [1]
-    }
+
 
     ogreMaterialVariablesFormat.setForeground(Qt::darkYellow);
     ogreMaterialVariablesFormat.setFontWeight(QFont::Normal);
-    QRegExp ogreMaterialVariables("\\b(ambient|diffuse|specular|emissive|scene_blend|depth_check|depth_writedepth_func|depth_bias|cull_hardware|cull_software|lighting|shading|fog_override|colour_write|max_lights|iteration)\\b");
+    QRegExp ogreMaterialVariables("\\b(ambient|diffuse|specular|emissive|scene_blend|depth_write|depth_check|depth_writedepth_func|depth_bias|cull_hardware|cull_software|lighting|shading|fog_override|colour_write|max_lights|iteration)\\b");
     rule.pattern = ogreMaterialVariables;
     rule.format = ogreMaterialVariablesFormat;
     highlightingRules.append(rule);
 
-    ogreMaterialVariables = QRegExp("\\b(texture|anim_texture|cubic_texture|tex_coord_set|tex_address_mode|filtering|max_anisotropy|colour_op|alpha_rejection|colour_op_ex|colour_op_multipass_fallback|alpha_op_ex|env_map|scroll|scroll_anim|rotate|rotate_anim|scale|wave_xform)\\b");
+    ogreMaterialVariables = QRegExp("\\b(texture|source|anim_texture|cubic_texture|tex_coord_set|tex_address_mode|filtering|max_anisotropy|colour_op|alpha_rejection|colour_op_ex|colour_op_multipass_fallback|alpha_op_ex|env_map|scroll|scroll_anim|rotate|rotate_anim|scale|wave_xform)\\b");
     rule.pattern = ogreMaterialVariables;
     rule.format = ogreMaterialVariablesFormat;
     highlightingRules.append(rule);
@@ -129,17 +125,16 @@ Highlighter::Highlighter(QTextDocument *parent)
 
 
 
-//! [1]
 
-//! [2]
-    classFormat.setFontWeight(QFont::Bold);
-    classFormat.setForeground(Qt::darkMagenta);
+
+
+    digitFormat.setFontWeight(QFont::Bold);
+    digitFormat.setForeground(Qt::darkMagenta);
     rule.pattern = QRegExp("\\b[0-9]+\\b");
-    rule.format = classFormat;
+    rule.format = digitFormat;
     highlightingRules.append(rule);
-//! [2]
 
-//! [3]
+
     singleLineCommentFormat.setForeground(Qt::darkBlue);
     rule.pattern = QRegExp("//[^\n]*");
     rule.format = singleLineCommentFormat;
@@ -164,12 +159,12 @@ Highlighter::Highlighter(QTextDocument *parent)
 //! [5]
 
 //! [6]*/
-    commentStartExpression = QRegExp("/\\*");
-    commentEndExpression = QRegExp("\\*/");
+    //commentStartExpression = QRegExp("/\\*");
+    //commentEndExpression = QRegExp("\\*/");
 }
-//! [6]
 
-//! [7]
+
+
 void Highlighter::highlightBlock(const QString &text)
 {
     foreach (const HighlightingRule &rule, highlightingRules) {
@@ -181,18 +176,19 @@ void Highlighter::highlightBlock(const QString &text)
             index = expression.indexIn(text, index + length);
         }
     }
-//! [7] //! [8]
-    setCurrentBlockState(0);
-//! [8]
 
-//! [9]
-    int startIndex = 0;
+
+
+//setCurrentBlockState(0);
+
+
+
+    /*int startIndex = 0;
     if (previousBlockState() != 1)
         startIndex = commentStartExpression.indexIn(text);
 
-//! [9] //! [10]
-    while (startIndex >= 0) {
-//! [10] //! [11]
+
+
         int endIndex = commentEndExpression.indexIn(text, startIndex);
         int commentLength;
         if (endIndex == -1) {
@@ -203,7 +199,6 @@ void Highlighter::highlightBlock(const QString &text)
                             + commentEndExpression.matchedLength();
         }
         setFormat(startIndex, commentLength, multiLineCommentFormat);
-        startIndex = commentStartExpression.indexIn(text, startIndex + commentLength);
-    }
+        startIndex = commentStartExpression.indexIn(text, startIndex + commentLength);*/
 }
-//! [11]
+

@@ -88,6 +88,7 @@ protected:
 
 private slots:
     void insertCompletion(const QString &completion);
+    void codeIdentation();
 
 private:
     QString textUnderCursor() const;

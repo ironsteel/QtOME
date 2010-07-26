@@ -59,6 +59,10 @@ CodeEditor::CodeEditor(QWidget *parent)
 {
     setupHighlighter();
     //this->setTabChangesFocus(true);
+    this->document()->setIndentWidth(40);
+    this->setTabStopWidth(40);
+    //connect(this->document(), SIGNAL(blockCountChanged(int)), this, SLOT(codeIdentation()));
+
 }
 //! [0]
 
@@ -251,7 +255,26 @@ void CodeEditor::saveFile()
     f.close();
 }
 
+void CodeEditor::codeIdentation()
+{
+    //QRegExp openBrace("\\{");
+    //QRegExp closeBrace("\\}");
 
+    int state = 0;
+        for( int i=0 ; i<=document()->blockCount() ; i++ )
+        {
+            if( document()->findBlock(i).text().indexOf(QRegExp("\\{"))!=-1 )
+                state+=1;
+            if( document()->findBlock(i).text().indexOf(QRegExp("\\}"))!=-1 )
+                state+=1;
+            document()->findBlock(i).setUserState(state);
+        }
+        for(int i=0; i < textCursor().block().userState() ; i++)
+            textCursor().insertText(QString("\t"));
+
+
+
+}
 
 /**************************** Line Number Widget ***************************************
 *
