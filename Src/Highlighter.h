@@ -46,7 +46,6 @@
 
 #include <QHash>
 #include <QTextCharFormat>
-
 QT_BEGIN_NAMESPACE
 class QTextDocument;
 QT_END_NAMESPACE
