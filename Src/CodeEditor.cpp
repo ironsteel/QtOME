@@ -55,13 +55,21 @@
 #include <QMessageBox>
 //! [0]
 CodeEditor::CodeEditor(QWidget *parent)
-: QTextEdit(parent), c(0)
+: QPlainTextEdit(parent), c(0)
 {
+
     setupHighlighter();
     //this->setTabChangesFocus(true);
     this->document()->setIndentWidth(40);
     this->setTabStopWidth(40);
-    //connect(this->document(), SIGNAL(blockCountChanged(int)), this, SLOT(codeIdentation()));
+    lineNumberArea = new LineNumberArea(this);
+
+    connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth(int)));
+    connect(this, SIGNAL(updateRequest(QRect,int)), this, SLOT(updateLineNumberArea(QRect,int)));
+    connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightCurrentLine()));
+    updateLineNumberAreaWidth(0);
+
+
 
 }
 //! [0]
@@ -127,14 +135,13 @@ void CodeEditor::focusInEvent(QFocusEvent *e)
 {
     if (c)
         c->setWidget(this);
-    QTextEdit::focusInEvent(e);
+    QPlainTextEdit::focusInEvent(e);
 }
 //! [6]
 
 //! [7]
 void CodeEditor::keyPressEvent(QKeyEvent *e)
 {
-
     if (c && c->popup()->isVisible()) {
         // The following keys are forwarded by the completer to the widget
        switch (e->key()) {
@@ -152,7 +159,7 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
 
     bool isShortcut = ((e->modifiers() & Qt::ControlModifier) && e->key() == Qt::Key_E); // CTRL+E
     if (!c || !isShortcut) // dont process the shortcut when we have a completer
-        QTextEdit::keyPressEvent(e);
+        QPlainTextEdit::keyPressEvent(e);
 //! [7]
 
 //! [8]
@@ -164,7 +171,7 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
     bool hasModifier = (e->modifiers() != Qt::NoModifier) && !ctrlOrShift;
     QString completionPrefix = textUnderCursor();
 
-    if (!isShortcut && (hasModifier || e->text().isEmpty()|| completionPrefix.length() < 3 
+    if (!isShortcut && (hasModifier || e->text().isEmpty()|| completionPrefix.length() < 3
                       || eow.contains(e->text().right(1)))) {
         c->popup()->hide();
         return;
@@ -182,7 +189,7 @@ void CodeEditor::keyPressEvent(QKeyEvent *e)
 //! [8]
 void CodeEditor::setupHighlighter()
 {
-	highlighter = new Highlighter( this->document() );
+        highlighter = new Highlighter( this->document() );
 }
 
 void CodeEditor::setupCurrentCompleter(const QString& wordListFile)
@@ -190,7 +197,7 @@ void CodeEditor::setupCurrentCompleter(const QString& wordListFile)
    currentCompleter = new QCompleter(this);// Create autoCompleter object
 
    QStringList wordindex = wordindexFromFile( wordListFile ); // Index of words for the autocompleter
-   wordList = new QStringListModel(wordindex, currentCompleter);	
+   wordList = new QStringListModel(wordindex, currentCompleter);
    currentCompleter->setWrapAround(false);
    currentCompleter->setModel( wordList ); // Set the autocompleter's wordlist
    this->setCompleter(currentCompleter); // Set's autocomplete for the CodeEditor
@@ -227,11 +234,16 @@ void CodeEditor::openFile(const QString& filename)
     matScriptFilename = filename;
 
     QFile fileForEdit(matScriptFilename);
-    if (!fileForEdit.open(QFile::ReadOnly)){
+    if (!fileForEdit.open(QFile::ReadOnly)) {
         QMessageBox::warning(this, tr("QtOME"), tr("Cannot open file!"));
         return ;
     }
-    this->setText(fileForEdit.readAll());
+    this->setPlainText(fileForEdit.readAll());
+
+    QTextBlockFormat formatBlock1;
+    formatBlock1.setIndent(1);
+
+
     fileForEdit.close();
 
 }
@@ -255,61 +267,105 @@ void CodeEditor::saveFile()
     f.close();
 }
 
-void CodeEditor::codeIdentation()
+int CodeEditor::lineNumberAreaWidth()
 {
-    //QRegExp openBrace("\\{");
-    //QRegExp closeBrace("\\}");
+    int digits = 1;
+    int max = qMax(1, blockCount());
+    while (max >= 10) {
+        max /= 10;
+        ++digits;
+    }
 
-    int state = 0;
-        for( int i=0 ; i<=document()->blockCount() ; i++ )
-        {
-            if( document()->findBlock(i).text().indexOf(QRegExp("\\{"))!=-1 )
-                state+=1;
-            if( document()->findBlock(i).text().indexOf(QRegExp("\\}"))!=-1 )
-                state+=1;
-            document()->findBlock(i).setUserState(state);
-        }
-        for(int i=0; i < textCursor().block().userState() ; i++)
-            textCursor().insertText(QString("\t"));
+    int space = 4 + fontMetrics().width(QLatin1Char('9')) * digits;
 
+    return space;
+}
 
+//![extraAreaWidth]
+
+//![slotUpdateExtraAreaWidth]
+
+void CodeEditor::updateLineNumberAreaWidth(int /* newBlockCount */)
+{
+    setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
+}
+
+//![slotUpdateExtraAreaWidth]
+
+//![slotUpdateRequest]
+
+void CodeEditor::updateLineNumberArea(const QRect &rect, int dy)
+{
+    if (dy)
+        lineNumberArea->scroll(0, dy);
+    else
+        lineNumberArea->update(0, rect.y(), lineNumberArea->width(), rect.height());
+
+    if (rect.contains(viewport()->rect()))
+        updateLineNumberAreaWidth(0);
+}
+
+//![slotUpdateRequest]
+
+//![resizeEvent]
+
+void CodeEditor::resizeEvent(QResizeEvent *e)
+{
+    QPlainTextEdit::resizeEvent(e);
+
+    QRect cr = contentsRect();
+    lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
 
 }
 
-/**************************** Line Number Widget ***************************************
-*
-*                    Taken from Lumina's source: sourceedit.cpp
-*                    http://lumina.sourceforge.net/
-*
-****************************************************************************************/
+void CodeEditor::highlightCurrentLine()
+{
+     QList<QTextEdit::ExtraSelection> extraSelections;
 
-LineNumberWidget::LineNumberWidget(QTextEdit *_editor, QWidget *parent) : QWidget(parent){
-        editor = _editor;
-        setFixedWidth(fontMetrics().width(QLatin1String("000")));
-        connect(editor->document()->documentLayout(), SIGNAL(update(const QRectF &)), this, SLOT(update()));
-        connect(editor->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(update()));
+     if (!isReadOnly()) {
+         QTextEdit::ExtraSelection selection;
+
+         QColor lineColor = QColor(Qt::lightGray).lighter(120);
+
+         selection.format.setBackground(lineColor);
+         selection.format.setProperty(QTextFormat::FullWidthSelection, true);
+         selection.cursor = textCursor();
+         selection.cursor.clearSelection();
+         extraSelections.append(selection);
+     }
+
+     setExtraSelections(extraSelections);
+}
+
+void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
+{
+    QPainter painter(lineNumberArea);
+    painter.fillRect(event->rect(), Qt::lightGray);
+
+//![extraAreaPaintEvent_0]
+
+//![extraAreaPaintEvent_1]
+    QTextBlock block = firstVisibleBlock();
+    int blockNumber = block.blockNumber();
+    int top = (int) blockBoundingGeometry(block).translated(contentOffset()).top();
+    int bottom = top + (int) blockBoundingRect(block).height();
+//![extraAreaPaintEvent_1]
+
+//![extraAreaPaintEvent_2]
+    while (block.isValid() && top <= event->rect().bottom()) {
+        if (block.isVisible() && bottom >= event->rect().top()) {
+            QString number = QString::number(blockNumber + 1);
+            painter.setPen(Qt::black);
+            painter.drawText(0, top, lineNumberArea->width(), fontMetrics().height(),
+                             Qt::AlignCenter, number);
+
         }
 
-void LineNumberWidget::paintEvent(QPaintEvent *){
-        int contentsY = editor->verticalScrollBar()->value();
-        qreal pageBottom = contentsY + editor->viewport()->height();
-        int lineNumber = 1;
-        const QFontMetrics fm = fontMetrics();
-        const int ascent = fontMetrics().ascent() + 1; // height = ascent + descent + 1
+        block = block.next();
+        top = bottom;
+        bottom = top + (int) blockBoundingRect(block).height();
+        ++blockNumber;
+    }
+}
+//![extraAreaPaintEvent_2]
 
-        QPainter p(this);
-
-        for (QTextBlock block = editor->document()->begin();block.isValid();block = block.next(), ++lineNumber) {
-                QTextLayout *layout = block.layout();
-
-                const QRectF boundingRect = layout->boundingRect();
-                QPointF position = layout->position();
-                if (position.y() + boundingRect.height() < contentsY)
-                        continue;
-                if (position.y() > pageBottom)
-                        break;
-
-                const QString txt = QString::number(lineNumber);
-                p.drawText(width() - fm.width(txt), qRound(position.y()) - contentsY + ascent, txt);
-                }
-        }

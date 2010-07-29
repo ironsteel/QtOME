@@ -42,38 +42,18 @@
 #ifndef CODEEDITOR_H
 #define CODEEDITOR_H
 #include "Highlighter.h"
-#include <QTextEdit>
 #include <QCompleter>
 #include <QFile>
-/**************************** Line Number Widget ***************************************
-*
-*                    Taken from Lumina's source: sourceedit.h
-*                    http://lumina.sourceforge.net/
-*
-****************************************************************************************/
+#include <QPlainTextEdit>
 
-
-class LineNumberWidget : public QWidget{
-        Q_OBJECT
-public:
-        LineNumberWidget(QTextEdit *editor, QWidget *parent = 0);
-protected:
-        virtual void paintEvent(QPaintEvent *);
-
-private:
-        QTextEdit *editor;
-};
-//---------------------------------------------------------------------------------------
-
-
-//! [0]
-class CodeEditor : public QTextEdit
+//-----------------CodeEditor class definition------------------------------
+class CodeEditor : public QPlainTextEdit
 {
     Q_OBJECT
-
 public:
     CodeEditor(QWidget *parent = 0);
     ~CodeEditor();
+
 
     void setCompleter(QCompleter *c);
     QCompleter *completer() const;
@@ -81,29 +61,57 @@ public:
     void setupCurrentCompleter(const QString& wordListFile);
     void openFile(const QString& filename);
     void saveFile();
+    void lineNumberAreaPaintEvent(QPaintEvent *event);
+    int lineNumberAreaWidth();
+
 
 protected:
     void keyPressEvent(QKeyEvent *e);
     void focusInEvent(QFocusEvent *e);
+    void resizeEvent(QResizeEvent *event);
+
+
 
 private slots:
     void insertCompletion(const QString &completion);
-    void codeIdentation();
+    void updateLineNumberAreaWidth(int newBlockCount);
+    void updateLineNumberArea(const QRect &, int);
+    void highlightCurrentLine();
 
 private:
     QString textUnderCursor() const;
     void setupHighlighter();
-
-
 
 private:
     Highlighter *highlighter; // Syntax highlighter
     QCompleter *c;
     QCompleter *currentCompleter;// Auto completer
     QAbstractItemModel *wordList; // wordlist for the autocompleter
-    QString matScriptFilename;
+    QString matScriptFilename; // Material script file name
+    QWidget *lineNumberArea;
 };
-//! [0]
+//-------------------------------------------------------------------------------
 
+
+//-------------------------Line numbering widget class defenition---------
+class LineNumberArea : public QWidget
+{
+public:
+    LineNumberArea(CodeEditor *editor) : QWidget(editor) {
+        codeEditor = editor;
+    }
+
+    QSize sizeHint() const {
+        return QSize(codeEditor->lineNumberAreaWidth(), 0);
+    }
+
+protected:
+    void paintEvent(QPaintEvent *event) {
+        codeEditor->lineNumberAreaPaintEvent(event);
+    }
+
+private:
+    CodeEditor *codeEditor;
+};
+//------------------------------------------------------------------------
 #endif // CODEEDITOR_H
-
