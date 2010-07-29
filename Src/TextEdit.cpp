@@ -20,11 +20,12 @@
 #include "TextEdit.h"
 #include "Highlighter.h"
 TextEdit::TextEdit(QWidget *pard)
-        : QsciScintilla(pard)
+    : QsciScintilla(pard)
 {
     initSettings();
     setSyntaxHighlighter("cpp");
     this->setTabWidth(4);
+
 
 }
 
@@ -354,7 +355,7 @@ void TextEdit::setSyntaxHighlighter(QString style) {
 
     this->setLexer(lexer);
 
-    if (styleSyntax != "none") {
+    /*if (styleSyntax != "none") {
         apis = new QsciAPIs(lexer);
         apis->load(QApplication::applicationDirPath() + "/apis/" + styleSyntax + ".api");
         //qDebug() << QApplication::applicationDirPath() + "/apis/" + styleSyntax + ".api";
@@ -362,7 +363,18 @@ void TextEdit::setSyntaxHighlighter(QString style) {
         lexer->setAPIs(apis);
         this->setMarginsFont(defaultFont);
         lexer->setFont(defaultFont);
-    }
+    }*/
+
+
+	if (styleSyntax != "none") {
+		apis = new QsciAPIs(lexer);
+	//	apis->load("./cpp.api");
+		apis->add("material");
+		apis->prepare();
+		lexer->setAPIs(apis);
+		this->setMarginsFont(defaultFont);
+		lexer->setFont(defaultFont);
+	}
 
     this->setMatchedBraceForegroundColor(QColor("#0000ff"));
     this->setMatchedBraceBackgroundColor(QColor("#ffff55"));
