@@ -18,13 +18,13 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "TextEdit.h"
-#include "Highlighter.h"
 TextEdit::TextEdit(QWidget *pard)
     : QsciScintilla(pard)
 {
     initSettings();
     setSyntaxHighlighter("cpp");
     this->setTabWidth(4);
+
 
 
 }
@@ -49,7 +49,7 @@ void TextEdit::initSettings() {
 
     //this->setMarginLineNumbers(0, true);
     //this->setMarginWidth(0, QString("---------"));
-    this->setMarginWidth(0, 42);
+    this->setMarginWidth(0, 30);
     this->setMarginSensitivity(1, true);
     
     //this->setProperty("marker","2");
@@ -66,12 +66,13 @@ void TextEdit::initSettings() {
     this->setUtf8(true);
     this->selectAll(true);
 
+    //this->setAutoCompletionSource(QsciScintilla::AcsAPIs);
+    this->setAutoCompletionThreshold(2);
+    //this->setAutoCompletionCaseSensitivity(true);
+    //this->setAutoCompletionShowSingle(true);
+    //this->setAutoCompletionFillupsEnabled(true);
     this->setAutoCompletionSource(QsciScintilla::AcsAPIs);
-
-    //this->setAutoCompletionThreshold(3);
-    this->setAutoCompletionCaseSensitivity(true);
-    this->setAutoCompletionShowSingle(true);
-    this->setAutoCompletionFillupsEnabled(true);
+    //this->autoCompleteFromAll();
 
     #ifdef Q_WS_WIN
     defaultFont.setFamily("Courier New");
@@ -132,9 +133,10 @@ void TextEdit::setSyntaxHighlighter(QString style) {
         //lexer->setFont(fontBold, 6);
 
         lexer->setFont(fontBold, 10);
+        lexer->setColor(QColor(Qt::green).lighter(40), 16);
         lexer->setColor(QColor("#008080"), 3);
         lexer->setColor(QColor("#804000"), 9);
-        lexer->setColor(QColor("#0000ff"), 5);
+        lexer->setColor(QColor(Qt::blue), 5);
         lexer->setColor(QColor("#ff8000"), 4);
         lexer->setColor(QColor("#000080"), 10);
         lexer->setColor(QColor("#000080"), 8);
@@ -353,12 +355,12 @@ void TextEdit::setSyntaxHighlighter(QString style) {
 //        lexer->setFont(defaultFont);
     }
 
-    this->setLexer(lexer);
+    //this->setLexer(lexer);
 
     /*if (styleSyntax != "none") {
         apis = new QsciAPIs(lexer);
-        apis->load(QApplication::applicationDirPath() + "/apis/" + styleSyntax + ".api");
-        //qDebug() << QApplication::applicationDirPath() + "/apis/" + styleSyntax + ".api";
+        apis->load(QApplication::applicationDirPath()  + "/" + styleSyntax + ".api");
+        qDebug() << QApplication::applicationDirPath() + "/" + styleSyntax + ".api";
         apis->prepare();
         lexer->setAPIs(apis);
         this->setMarginsFont(defaultFont);
@@ -366,15 +368,18 @@ void TextEdit::setSyntaxHighlighter(QString style) {
     }*/
 
 
-	if (styleSyntax != "none") {
-		apis = new QsciAPIs(lexer);
-	//	apis->load("./cpp.api");
-		apis->add("material");
-		apis->prepare();
-		lexer->setAPIs(apis);
-		this->setMarginsFont(defaultFont);
-		lexer->setFont(defaultFont);
-	}
+        //if (styleSyntax != "none") {
+				apis = new QsciAPIs(lexer);
+                //apis->load("./cpp.api");
+                apis->add("material"); // add words to the api
+                apis->add("pass");
+                apis->add("blah");
+				apis->prepare(); 
+				lexer->setAPIs(apis);
+                this->setMarginsFont(defaultFont);
+                lexer->setFont(defaultFont);
+        //}
+        this->setLexer(lexer);
 
     this->setMatchedBraceForegroundColor(QColor("#0000ff"));
     this->setMatchedBraceBackgroundColor(QColor("#ffff55"));
