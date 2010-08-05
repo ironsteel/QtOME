@@ -130,8 +130,8 @@ void CgEdit::setSyntaxHighlighter() {
         apis->add(*It);
         It++;
     }
-
     b = QString(lexer->keywords(2)).split(' ');
+    TYPES = b;
     It = b.begin();
     while(It != b.end())
     {
@@ -193,4 +193,31 @@ void CgEdit::openFile(const QString &filename)
     }
     this->setText(fileForEdit.readAll());
     fileForEdit.close();
+}
+
+QStringList CgEdit::scan()
+{
+    QStringList List;
+    QStringList Text = QString(this->text()).split(' ', QString::SkipEmptyParts);
+
+    QStringList::Iterator It = Text.begin();
+    while(It != Text.end() )
+    {
+        if(this->listHasString(TYPES,*It))List.append(*It);
+        It++;
+    }
+
+    return List;
+}
+
+bool CgEdit::listHasString(QStringList list, QString string)
+{
+    QStringList::Iterator It = list.begin();
+    while(It != list.end())
+    {
+        if(*It == string)return true;
+        It++;
+    }
+
+    return false;
 }

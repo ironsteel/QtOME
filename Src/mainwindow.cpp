@@ -62,10 +62,6 @@ void MainWindow::loadFile()
     //Ogre::ResourceGroupManager::getSingleton().addResourceLocation( pathOnly.toStdString() ,"FileSystem","ImportedMaterials");
     //Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("ImportedMaterials");
 
-    ui->listWidget->clear();
-    QStringList materials = ui->OgreWidget->manager->getMaterialList();
-    ui->listWidget->addItems(materials);
-
 }
 
 void MainWindow::importMesh()
@@ -89,7 +85,11 @@ void MainWindow::saveMatScript()
 
 void MainWindow::applyMaterial()
 {
-    ui->OgreWidget->clearMaterial();
+    /*ui->OgreWidget->clearMaterial();
     QString mat = this->ui->matEditor->toPlainText();
-    ui->OgreWidget->setMaterial(mat.toStdString(),QString(this->ui->VP->text()).toStdString(),QString(this->ui->FP->text()).toStdString());
+    ui->OgreWidget->setMaterial(mat.toStdString(),QString(this->ui->VP->text()).toStdString(),QString(this->ui->FP->text()).toStdString());*/
+
+    ui->listWidget->clear();
+    QStringList materials = ui->VP->scan();   //ui->OgreWidget->manager->getMaterialList();
+    ui->listWidget->addItems(materials);
 }

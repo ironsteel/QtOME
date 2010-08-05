@@ -30,13 +30,14 @@
 #include <Qsci/qsciapis.h>
 #include <QDir>
 #include <QApplication>
+#include <vector>
 
 #include "CgLexer.h"
 
 class CgEdit : public QsciScintilla
 {
 Q_OBJECT
-public:
+public:QStringList scan();
     CgEdit(QWidget *pard = 0);
     virtual ~CgEdit();
     void setSyntaxHighlighter();
@@ -45,11 +46,31 @@ public:
     QString matScriptFilename;
 private:
     void initSettings();
+    bool listHasString(QStringList list, QString string);
     QsciLexer *lexer;
     QString styleSyntax;
     QFont defaultFont;
     QsciAPIs *apis;
+
+    QStringList TYPES;
 protected:
     void keyPressEvent(QKeyEvent *event);
+private slots:
+
 };
+
+// structures for holding the cg programs
+/*struct Structure
+{
+    QString name;
+    struct Parameters
+    {
+        QString type;
+        QString name;
+        QString passtype;
+    };
+
+    vector<Parameters> parameters;
+};*/
+
 #endif // CgEdit_H
