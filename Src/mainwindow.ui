@@ -43,6 +43,26 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="subwindow_3">
+       <property name="windowTitle">
+        <string>Subwindow</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="CgEdit" name="VP"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="subwindow_4">
+       <property name="windowTitle">
+        <string>Subwindow</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="CgEdit" name="FP"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -53,7 +73,7 @@
      <x>0</x>
      <y>0</y>
      <width>1183</width>
-     <height>23</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -279,6 +299,11 @@
    <class>TextEdit</class>
    <extends>QTextEdit</extends>
    <header>TextEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CgEdit</class>
+   <extends>QTextEdit</extends>
+   <header>CgEdit.h</header>
   </customwidget>
  </customwidgets>
  <resources>

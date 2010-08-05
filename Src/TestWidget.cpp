@@ -228,6 +228,11 @@ void TestWidget::setupScene(void) {
 
         currentMaterial = Ogre::MaterialManager::getSingleton().getByName("DefaultSettings", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
         tempMat         = Ogre::MaterialManager::getSingleton().getByName("Material1",       Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+        vp = Ogre::HighLevelGpuProgramManager::getSingleton().createProgram(
+                "CustomShadowCasterVp", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,"cg", Ogre::GPT_VERTEX_PROGRAM);
+        fp = Ogre::HighLevelGpuProgramManager::getSingleton().createProgram(
+                "CustomShadowCasterFp", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,"cg", Ogre::GPT_FRAGMENT_PROGRAM);
 }
 
 void TestWidget::setSplash(QSplashScreen * splash)
@@ -307,7 +312,7 @@ QString TestWidget::changeMesh(QString fullname)
     return Qname;
 }
 
-void TestWidget::setMaterial(const Ogre::String &script)
+void TestWidget::setMaterial(const Ogre::String &script, const Ogre::String &VP , const Ogre::String &FP )
 {
     Ogre::LogManager::getSingleton().logMessage("Starting compilation of material script ...");
 
@@ -329,14 +334,54 @@ void TestWidget::setMaterial(const Ogre::String &script)
         }
     }
 
+    Ogre::String customCasterMatVp =
+            "void customCasterVp(float4 position : POSITION,\n"
+            "out float4 oPosition : POSITION,\n"
+            "uniform float4x4 worldViewProj)\n"
+            "{\n"
+            "   oPosition = mul(worldViewProj, position);\n"
+            "}\n";
+    Ogre::String customCasterMatFp =
+            "void customCasterFp(\n"
+            "out float4 oColor : COLOR)\n"
+            "{\n"
+            "   oColor = float4(1,0,0,1); // just a test\n"
+            "}\n";
+
+    if(!(VP==""))this->setVertexProgram(VP);
+    if(!(FP==""))this->setFragmentProgram(FP);
+
     mesh->setMaterial(currentMaterial);
     Ogre::LogManager::getSingleton().logMessage("Finished compilation of material script ...");
+}
+
+void TestWidget::setVertexProgram(const Ogre::String &VpSource)
+{
+    vp->setSource(VpSource);
+    vp->setParameter("profiles", "vs_1_1 arbvp1");
+    vp->setParameter("entry_point", "customCasterVp");
+    vp->load();
+
+    Ogre::Pass* p = currentMaterial->getTechnique(0)->getPass(0);
+    p->setVertexProgram("CustomShadowCasterVp");
+    p->getVertexProgramParameters()->setNamedAutoConstant("worldViewProj", Ogre::GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);
+}
+
+void TestWidget::setFragmentProgram(const Ogre::String &FpSource)
+{
+    fp->setSource(FpSource);
+    fp->setParameter("profiles", "ps_1_1 arbfp1");
+    fp->setParameter("entry_point", "customCasterFp");
+    fp->load();
+
+    Ogre::Pass* p = currentMaterial->getTechnique(0)->getPass(0);
+    p->setFragmentProgram("CustomShadowCasterFp");
 }
 
 void TestWidget::clearMaterial()
 {
     mesh->setMaterial(tempMat);
     // Sets the mesh material to the temp one then deletes the current
-    // We need to do this because only materials that are not used will be deleted
+    // We need to do this because only materials that are not being used will be deleted
     Ogre::MaterialManager::getSingletonPtr()->remove(currentMaterial->getHandle());
 }

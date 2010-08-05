@@ -4,6 +4,7 @@
 #include <QtGui/QTabWidget>
 #include <QFileDialog>
 #include <QMessageBox>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -11,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     ui->matEditor->setupCurrentCompleter(":/Build/Data/wordlist.txt");
+    ui->subwindow_3->setWindowTitle("VP");
 }
 
 void MainWindow::setSplash(QSplashScreen * spl)
@@ -89,5 +91,5 @@ void MainWindow::applyMaterial()
 {
     ui->OgreWidget->clearMaterial();
     QString mat = this->ui->matEditor->toPlainText();
-    ui->OgreWidget->setMaterial(mat.toStdString());
+    ui->OgreWidget->setMaterial(mat.toStdString(),QString(this->ui->VP->text()).toStdString(),QString(this->ui->FP->text()).toStdString());
 }

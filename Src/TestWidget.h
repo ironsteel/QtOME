@@ -33,7 +33,7 @@ public:
         }
         ~TestWidget(void);
         void setSplash(QSplashScreen * splash);
-        void setMaterial(const Ogre::String &script);
+        void setMaterial(const Ogre::String &script, const Ogre::String &VP = "", const Ogre::String &FP = "");
         void clearMaterial();
         QString changeMesh(QString fullname);
 
@@ -42,6 +42,8 @@ protected:
 	//
 	// ########## Protected functions ##########
 	//
+        void setVertexProgram(const Ogre::String& VpSource);
+        void setFragmentProgram(const Ogre::String& FpSource);
 	void resizeEvent(QResizeEvent *e);
 	void paintEvent(QPaintEvent *e);
 	void timerEvent(QTimerEvent *e);
@@ -69,6 +71,9 @@ protected:
         Ogre::String           meshName;
         Ogre::MaterialPtr      tempMat;
         Ogre::MaterialPtr      currentMaterial;
+
+        Ogre::HighLevelGpuProgramPtr vp;
+        Ogre::HighLevelGpuProgramPtr fp;
 
             //keeps track of mesh names for mesh replacing in changeMesh()
 	//

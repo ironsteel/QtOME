@@ -51,7 +51,7 @@ void TextEdit::initSettings() {
     //this->setMarginWidth(0, QString("---------"));
     this->setMarginWidth(0, 30);
     this->setMarginSensitivity(1, true);
-    
+
     //this->setProperty("marker","2");
     //this->setMarginMarkerMask(1, 1);
     this->markerDefine(QsciScintilla::RightTriangle);
@@ -369,13 +369,13 @@ void TextEdit::setSyntaxHighlighter(QString style) {
 
 
         //if (styleSyntax != "none") {
-				apis = new QsciAPIs(lexer);
+                                apis = new QsciAPIs(lexer);
                 //apis->load("./cpp.api");
                 apis->add("material"); // add words to the api
                 apis->add("pass");
                 apis->add("blah");
-				apis->prepare(); 
-				lexer->setAPIs(apis);
+                                apis->prepare();
+                                lexer->setAPIs(apis);
                 this->setMarginsFont(defaultFont);
                 lexer->setFont(defaultFont);
         //}
