@@ -89,25 +89,18 @@ void CgEdit::setSyntaxHighlighter() {
     styleSyntax = "cg";
     lexer = new CgLexer(this);
 
-    //lexer->setColor(QColor(255,0,0), 5);
-
     QFont fontBold;
     fontBold.setFamily("Courier New");
     fontBold.setPointSize(10);
     fontBold.setWeight(500);
-
     QFont fontNormal;
     fontNormal.setFamily("Courier New");
     fontNormal.setPointSize(10);
-
     QFont fontItalic;
     fontItalic.setFamily("Courier New");
     fontItalic.setPointSize(10);
     fontItalic.setItalic(true);
-
     lexer->setFont(fontBold, 5);
-    //lexer->setFont(fontBold, 6);
-
     lexer->setFont(fontBold, 10);
     lexer->setColor(QColor("#BB8000"), 16);
     lexer->setColor(QColor("#008080"), 3);
@@ -118,7 +111,6 @@ void CgEdit::setSyntaxHighlighter() {
     lexer->setColor(QColor("#000080"), 8);
     lexer->setColor(QColor("#008000"), 6);//808080
     lexer->setColor(QColor("#008000"), 7);//008000
-
     lexer->setFont(fontBold, 4);
 
     apis = new QsciAPIs(lexer);
