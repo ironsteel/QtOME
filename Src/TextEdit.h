@@ -69,7 +69,7 @@ Q_OBJECT
 public:
     TextEdit(QWidget *pard = 0);
     virtual ~TextEdit();
-    void setSyntaxHighlighter(QString style);
+    void setSyntaxHighlighter();
     QString syntaxHighlighter();
     void openFile(const QString& filename);
     QString matScriptFilename;
