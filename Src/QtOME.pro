@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     Highlighter.cpp \
     CodeEditor.cpp \
     MaterialManager.cpp \
-    TextEdit.cpp
+    TextEdit.cpp \
+    CgLexer.cpp \
+    CgEdit.cpp
 
 HEADERS  += mainwindow.h \
     TestWidget.h \
@@ -29,7 +31,9 @@ HEADERS  += mainwindow.h \
     CodeEditor.h \
     SdkCameraMan.h \
     MaterialManager.hpp \
-    TextEdit.h
+    TextEdit.h \
+    CgLexer.h \
+    CgEdit.h
 
 FORMS    += mainwindow.ui
 
