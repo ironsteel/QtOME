@@ -49,9 +49,9 @@ void MainWindow::loadFile()
 
     QString fileName = fullFilePath.section('/', -1);
 
-    ui->matEditor->openFile(fullFilePath);
+    //ui->matEditor->openFile(fullFilePath);
     ui->textEdit->openFile(fullFilePath);
-    this->ui->subwindow->setWindowTitle(fileName);
+    this->ui->subwindow_2->setWindowTitle(fileName);
 
     //QStringList places = fullFilePath.split("/");
     //places.pop_back();
@@ -88,6 +88,8 @@ void MainWindow::saveMatScript()
 void MainWindow::applyMaterial()
 {
     ui->OgreWidget->clearMaterial();
-    QString mat = this->ui->matEditor->toPlainText();
+    QString mat = this->ui->textEdit->text();
+    //QString mat = this->ui->matEditor->toPlainText();
     ui->OgreWidget->setMaterial(mat.toStdString());
+
 }
