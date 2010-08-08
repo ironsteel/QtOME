@@ -18,13 +18,13 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "TextEdit.h"
+#include "Lexers/OgreMaterialLexer.h"
 TextEdit::TextEdit(QWidget *pard)
     : QsciScintilla(pard)
 {
     initSettings();
-    setSyntaxHighlighter("cpp");
+    setSyntaxHighlighter();
     this->setTabWidth(4);
-
 
 
 }
@@ -57,6 +57,7 @@ void TextEdit::initSettings() {
     this->markerDefine(QsciScintilla::RightTriangle);
     this->setMarkerBackgroundColor(QColor("#00ff00"));
 
+    //[0] AutoIndent Settings
     this->setIndentationGuides(true);
     this->setTabIndents(true);
     this->setBackspaceUnindents(false);
@@ -66,13 +67,14 @@ void TextEdit::initSettings() {
     this->setUtf8(true);
     this->selectAll(true);
 
-    //this->setAutoCompletionSource(QsciScintilla::AcsAPIs);
+
     this->setAutoCompletionThreshold(2);
-    //this->setAutoCompletionCaseSensitivity(true);
+    setAutoCompletionSource(QsciScintilla::AcsAPIs);
     //this->setAutoCompletionShowSingle(true);
     //this->setAutoCompletionFillupsEnabled(true);
-    this->setAutoCompletionSource(QsciScintilla::AcsAPIs);
-    //this->autoCompleteFromAll();
+
+
+
 
     #ifdef Q_WS_WIN
     defaultFont.setFamily("Courier New");
@@ -88,299 +90,31 @@ void TextEdit::initSettings() {
     this->setFont(defaultFont);
 }
 
-void TextEdit::setSyntaxHighlighter(QString style) {
-    styleSyntax = style;
-
-    if (styleSyntax == "none")
-        lexer = 0;
-
-    if (styleSyntax == "bash") {
-        lexer = new QsciLexerBash(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "batch") {
-        lexer = new QsciLexerBatch(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "cmake") {
-        lexer = new QsciLexerCMake(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "cpp") {
-        lexer = new QsciLexerCPP(this);
+void TextEdit::setSyntaxHighlighter() {
 
 
-        //lexer->setColor(QColor(255,0,0), 5);
+    styleSyntax = "material script";
 
-        QFont fontBold;
-        fontBold.setFamily("Courier New");
-        fontBold.setPointSize(10);
-        fontBold.setWeight(100);
-
-        QFont fontNormal;
-        fontNormal.setFamily("Courier New");
-        fontNormal.setPointSize(10);
-
-        QFont fontItalic;
-        fontItalic.setFamily("Courier New");
-        fontItalic.setPointSize(10);
-        fontItalic.setItalic(true);
-
-        lexer->setFont(fontBold, 5);
-        //lexer->setFont(fontBold, 6);
-
-        lexer->setFont(fontBold, 10);
-        lexer->setColor(QColor(Qt::green).lighter(40), 16);
-        lexer->setColor(QColor("#008080"), 3);
-        lexer->setColor(QColor("#804000"), 9);
-        lexer->setColor(QColor(Qt::blue), 5);
-        lexer->setColor(QColor("#ff8000"), 4);
-        lexer->setColor(QColor("#000080"), 10);
-        lexer->setColor(QColor("#000080"), 8);
-        lexer->setColor(QColor("#008000"), 6);//808080
-        lexer->setColor(QColor("#008000"), 7);//008000
-
-        lexer->setFont(fontBold, 4);
-
-        //lexer->setFont(fontKeywords, 5);
-    }
-
-    if (styleSyntax == "csharp") {
-        lexer = new QsciLexerCSharp(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "css") {
-        lexer = new QsciLexerCSS(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "d") {
-        lexer = new QsciLexerBatch(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "diff") {
-        lexer = new QsciLexerDiff(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "fortran77") {
-        lexer = new QsciLexerFortran77(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "html") {
-        lexer = new QsciLexerHTML(this);
-//        lexer->setFont(defaultFont);
-
-        QFont fontBold;
-        fontBold.setFamily("Courier New");
-        fontBold.setPointSize(10);
-        fontBold.setWeight(100);
-
-        QFont fontNormal;
-        fontNormal.setFamily("Courier New");
-        fontNormal.setPointSize(10);
-
-        QFont fontItalic;
-        fontItalic.setFamily("Courier New");
-        fontItalic.setPointSize(10);
-        fontItalic.setItalic(true);
+    lexer = new OgreMaterialLexer(this);
 
 
-        //lexer->setFont(fontBold, 5);
-        //lexer->setFont(fontBold, 10);
-        lexer->setColor(QColor("#000080"), 123);
-        lexer->setFont(fontBold, 123);
-        lexer->setFont(fontBold, 121);
-        lexer->setColor(QColor("#0000ff"), 121);
-        //lexer->setFont(fontBold, 18);
-        lexer->setColor(QColor("#ff0000"), 18);
-        lexer->setColor(QColor("#000080"), 127);
-        lexer->setColor(QColor("#ff8000"), 122);
-        lexer->setColor(QColor("#808080"), 119);
-        lexer->setColor(QColor("#808080"), 120);
-        lexer->setColor(QColor("#008000"), 124);
-        lexer->setColor(QColor("#008000"), 125);
-        lexer->setColor(QColor("#8000ff"), 1);//#8000ff
-        lexer->setColor(QColor("#ff0000"), 3);//#8000ff
-        lexer->setColor(QColor("#8000ff"), 6);//#8000ff
-        lexer->setFont(fontBold, 6);
-        lexer->setColor(QColor("#8000ff"), 7);//#8000ff
-        lexer->setFont(fontBold, 7);
-        //lexer->setFont(fontBold, 0);
+
+   apis = new QsciAPIs(lexer);
 
 
-    }
-
-    if (styleSyntax == "java") {
-        lexer = new QsciLexerJava(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "javascript") {
-        lexer = new QsciLexerJavaScript(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "lua") {
-        lexer = new QsciLexerLua(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "pascal") {
-        lexer = new QsciLexerPascal(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "perl") {
-        lexer = new QsciLexerPerl(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "php") {
-        lexer = new QsciLexerHTML(this);
-//        lexer->setFont(defaultFont);
-
-        QFont fontBold;
-        fontBold.setFamily("Courier New");
-        fontBold.setPointSize(10);
-        fontBold.setWeight(100);
-
-        QFont fontNormal;
-        fontNormal.setFamily("Courier New");
-        fontNormal.setPointSize(10);
-
-        QFont fontItalic;
-        fontItalic.setFamily("Courier New");
-        fontItalic.setPointSize(10);
-        fontItalic.setItalic(true);
-
-        //lexer->setFont(fontBold, 5);
-        //lexer->setFont(fontBold, 10);
-        lexer->setColor(QColor("#000080"), 123);
-        lexer->setFont(fontNormal, 123);
-        lexer->setFont(fontBold, 121);
-        lexer->setColor(QColor("#0000ff"), 121);
-        //lexer->setFont(fontBold, 18);
-        lexer->setColor(QColor("#ff0000"), 18);
-        lexer->setColor(QColor("#000080"), 127);
-        lexer->setFont(fontNormal, 127);
-        lexer->setEolFill(true, 127);
-
-        lexer->setColor(QColor("#ff8000"), 122);
-        lexer->setColor(QColor("#808080"), 119);
-        lexer->setColor(QColor("#808080"), 120);
-        lexer->setColor(QColor("#008000"), 124);
-        lexer->setFont(fontNormal, 124);
-        lexer->setColor(QColor("#008000"), 125);
-        lexer->setFont(fontNormal, 125);
-        lexer->setColor(QColor("#8000ff"), 1);//#8000ff
-        lexer->setColor(QColor("#ff0000"), 3);//#8000ff
-        lexer->setColor(QColor("#8000ff"), 6);//#8000ff
-        lexer->setFont(fontBold, 6);
-        lexer->setColor(QColor("#8000ff"), 7);//#8000ff
-        lexer->setFont(fontBold, 7);
-        //lexer->setFont(fontBold, 0);
+   apis->load("./mat.api");
+// apis->add("pass");
+// apis->add("\\sblah");
+// apis->add("env_map.spherical");
 
 
-    }
-
-    if (styleSyntax == "postscript") {
-        lexer = new QsciLexerPostScript(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "pov") {
-        lexer = new QsciLexerPOV(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "properties") {
-        lexer = new QsciLexerProperties(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "python") {
-        lexer = new QsciLexerPython(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "ruby") {
-        lexer = new QsciLexerRuby(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "spice") {
-        lexer = new QsciLexerSpice(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "sql") {
-        lexer = new QsciLexerSQL(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "tcl") {
-        lexer = new QsciLexerTCL(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "tex") {
-        lexer = new QsciLexerTeX(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "verilog") {
-        lexer = new QsciLexerVerilog(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "vhdl") {
-        lexer = new QsciLexerVHDL(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "xml") {
-        lexer = new QsciLexerXML(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    if (styleSyntax == "yaml") {
-        lexer = new QsciLexerYAML(this);
-//        lexer->setFont(defaultFont);
-    }
-
-    //this->setLexer(lexer);
-
-    /*if (styleSyntax != "none") {
-        apis = new QsciAPIs(lexer);
-        apis->load(QApplication::applicationDirPath()  + "/" + styleSyntax + ".api");
-        qDebug() << QApplication::applicationDirPath() + "/" + styleSyntax + ".api";
-        apis->prepare();
-        lexer->setAPIs(apis);
-        this->setMarginsFont(defaultFont);
-        lexer->setFont(defaultFont);
-    }*/
+   apis->prepare();
+   lexer->setAPIs(apis);
+   this->setMarginsFont(defaultFont);
+   lexer->setFont(defaultFont);
 
 
-        //if (styleSyntax != "none") {
-				apis = new QsciAPIs(lexer);
-                //apis->load("./cpp.api");
-                apis->add("material"); // add words to the api
-                apis->add("pass");
-                apis->add("blah");
-				apis->prepare(); 
-				lexer->setAPIs(apis);
-                this->setMarginsFont(defaultFont);
-                lexer->setFont(defaultFont);
-        //}
-        this->setLexer(lexer);
-
+    this->setLexer(lexer);
     this->setMatchedBraceForegroundColor(QColor("#0000ff"));
     this->setMatchedBraceBackgroundColor(QColor("#ffff55"));
     this->setUnmatchedBraceForegroundColor(QColor("#ff0000"));
@@ -393,13 +127,14 @@ QString TextEdit::syntaxHighlighter() {
 }
 
 void TextEdit::keyPressEvent(QKeyEvent *event) {
+
     QMessageBox ms;
     ms.setText(tr("%1").arg(event->key()));
     //ms.exec(); //47 d68
     //qDebug() << event->key() << Qt::Key_Enter;
     switch (event->key()) {
-        case Qt::Key_Space:
-            if (event->modifiers() & Qt::ControlModifier) {
+    case Qt::Key_Space:
+           if (event->modifiers() & Qt::ControlModifier) {
                 this->autoCompleteFromAPIs();
             } else {
                 QsciScintilla::keyPressEvent(event);
@@ -415,17 +150,21 @@ void TextEdit::keyPressEvent(QKeyEvent *event) {
         default:
             QsciScintilla::keyPressEvent(event);
     }
+
+
 }
+
 
 void TextEdit::openFile(const QString &filename)
 {
     matScriptFilename = filename;
 
     QFile fileForEdit(matScriptFilename);
-    if (!fileForEdit.open(QFile::ReadOnly)){
+    if (!fileForEdit.open(QFile::ReadOnly)) {
         QMessageBox::warning(this, tr("QtOME"), tr("Cannot open file!"));
         return ;
     }
     this->setText(fileForEdit.readAll());
     fileForEdit.close();
 }
+
