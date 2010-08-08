@@ -21,8 +21,7 @@ SOURCES += main.cpp\
     CodeEditor.cpp \
     MaterialManager.cpp \
     TextEdit.cpp \
-    CgLexer.cpp \
-    CgEdit.cpp
+    Lexers/OgreMaterialLexer.cpp
 
 HEADERS  += mainwindow.h \
     TestWidget.h \
@@ -32,8 +31,7 @@ HEADERS  += mainwindow.h \
     SdkCameraMan.h \
     MaterialManager.hpp \
     TextEdit.h \
-    CgLexer.h \
-    CgEdit.h
+    Lexers/OgreMaterialLexer.h
 
 FORMS    += mainwindow.ui
 

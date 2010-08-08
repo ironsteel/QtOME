@@ -4,7 +4,6 @@
 #include <QtGui/QTabWidget>
 #include <QFileDialog>
 #include <QMessageBox>
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -12,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     ui->matEditor->setupCurrentCompleter(":/Build/Data/wordlist.txt");
-    ui->subwindow_3->setWindowTitle("VP");
 }
 
 void MainWindow::setSplash(QSplashScreen * spl)
@@ -51,9 +49,9 @@ void MainWindow::loadFile()
 
     QString fileName = fullFilePath.section('/', -1);
 
-    ui->matEditor->openFile(fullFilePath);
+    //ui->matEditor->openFile(fullFilePath);
     ui->textEdit->openFile(fullFilePath);
-    this->ui->subwindow->setWindowTitle(fileName);
+    this->ui->subwindow_2->setWindowTitle(fileName);
 
     //QStringList places = fullFilePath.split("/");
     //places.pop_back();
@@ -61,6 +59,10 @@ void MainWindow::loadFile()
 
     //Ogre::ResourceGroupManager::getSingleton().addResourceLocation( pathOnly.toStdString() ,"FileSystem","ImportedMaterials");
     //Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("ImportedMaterials");
+
+    ui->listWidget->clear();
+    QStringList materials = ui->OgreWidget->manager->getMaterialList();
+    ui->listWidget->addItems(materials);
 
 }
 
@@ -85,11 +87,9 @@ void MainWindow::saveMatScript()
 
 void MainWindow::applyMaterial()
 {
-    /*ui->OgreWidget->clearMaterial();
-    QString mat = this->ui->matEditor->toPlainText();
-    ui->OgreWidget->setMaterial(mat.toStdString(),QString(this->ui->VP->text()).toStdString(),QString(this->ui->FP->text()).toStdString());*/
+    ui->OgreWidget->clearMaterial();
+    QString mat = this->ui->textEdit->text();
+    //QString mat = this->ui->matEditor->toPlainText();
+    ui->OgreWidget->setMaterial(mat.toStdString());
 
-    ui->listWidget->clear();
-    QStringList materials = ui->VP->scan();   //ui->OgreWidget->manager->getMaterialList();
-    ui->listWidget->addItems(materials);
 }
