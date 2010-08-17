@@ -43,7 +43,6 @@ void MainWindow::loadFile()
        tr("Open Material Script"), "./", tr("Material scripts (*.material )"));
 
     if ( fullFilePath.isEmpty() ) { // If no file is loaded
-        QMessageBox::warning(this, tr("QtOME"), tr("No file selected!"));
         return ;
     }
 
@@ -51,7 +50,7 @@ void MainWindow::loadFile()
 
     //ui->matEditor->openFile(fullFilePath);
     ui->textEdit->openFile(fullFilePath);
-    this->ui->subwindow_2->setWindowTitle(fileName);
+    this->ui->subwindow_2->setWindowTitle("Material Editor: " + fileName);
 
     //QStringList places = fullFilePath.split("/");
     //places.pop_back();
@@ -87,9 +86,40 @@ void MainWindow::saveMatScript()
 
 void MainWindow::applyMaterial()
 {
+
+    QString mat = this->removeWhiteSpaceCharacters();
+
+    if (mat.isEmpty() == true) {
+        return ;
+    }
+
     ui->OgreWidget->clearMaterial();
-    QString mat = this->ui->textEdit->text();
-    //QString mat = this->ui->matEditor->toPlainText();
     ui->OgreWidget->setMaterial(mat.toStdString());
+
+}
+
+
+QString MainWindow::removeWhiteSpaceCharacters()
+{
+    QString materialSource = this->ui->textEdit->text();
+
+    // Split the source into separate lines
+    QStringList materialSplited = materialSource.split(QRegExp("\n"), QString::SkipEmptyParts);
+
+    for (int lineNumber = 0; lineNumber < materialSplited.size(); ++lineNumber) {
+
+        QString line = materialSplited.at(lineNumber);
+
+        // Remove whitespace characters from the current line
+        QString trimmedLine = line.trimmed();
+
+        if (trimmedLine.isEmpty() == true) {
+            // This replaces the line with whitespace characters
+            // with an empty line
+            materialSplited.replace(lineNumber, trimmedLine);
+        }
+    }
+
+    return materialSplited.join("\n");
 
 }

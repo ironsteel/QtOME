@@ -24,6 +24,11 @@ private:
     void keyPressEvent(QKeyEvent* e);
     void keyReleaseEvent(QKeyEvent* e);
 
+    // Remove white space characters from empty new lines
+    // This is done becouse Ogre hangs if the material script
+    // has new line with whitespace characters only
+    QString removeWhiteSpaceCharacters();
+
 private slots:
     void loadFile();
     void saveMatScript();
