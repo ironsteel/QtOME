@@ -32,7 +32,7 @@
 #include <QApplication>
 #include <vector>
 
-#include "CgLexer.h"
+#include "Lexers/CgLexer.h"
 
 class CgEdit : public QsciScintilla
 {
