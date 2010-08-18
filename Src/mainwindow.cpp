@@ -9,8 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    ui->matEditor->setupCurrentCompleter(":/Build/Data/wordlist.txt");
+    ui->subwindow_3->setWindowTitle("VP");
 }
 
 void MainWindow::setSplash(QSplashScreen * spl)
@@ -87,9 +86,12 @@ void MainWindow::saveMatScript()
 
 void MainWindow::applyMaterial()
 {
-    ui->OgreWidget->clearMaterial();
+    
     QString mat = this->ui->textEdit->text();
-    //QString mat = this->ui->matEditor->toPlainText();
-    ui->OgreWidget->setMaterial(mat.toStdString());
+    if (mat.isEmpty()) {
+	return ;
+    }
+    ui->OgreWidget->clearMaterial();
+    ui->OgreWidget->setMaterial(mat.toStdString(),QString(this->ui->VP->text()).toStdString(),QString(this->ui->FP->text()).toStdString());
 
 }
