@@ -17,8 +17,6 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     TestWidget.cpp \
     QOgreWidget.cpp \
-    Highlighter.cpp \
-    CodeEditor.cpp \
     MaterialManager.cpp \
     TextEdit.cpp \
     Lexers/OgreMaterialLexer.cpp \
@@ -28,8 +26,6 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     TestWidget.h \
     QOgreWidget.h \
-    Highlighter.h \
-    CodeEditor.h \
     SdkCameraMan.h \
     MaterialManager.hpp \
     TextEdit.h \

@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->matEditor->setupCurrentCompleter(":/Build/Data/wordlist.txt");
+
 }
 
 void MainWindow::setSplash(QSplashScreen * spl)
@@ -48,7 +48,7 @@ void MainWindow::loadFile()
 
     QString fileName = fullFilePath.section('/', -1);
 
-    //ui->matEditor->openFile(fullFilePath);
+
     ui->textEdit->openFile(fullFilePath);
     this->ui->subwindow_2->setWindowTitle("Material Editor: " + fileName);
 
@@ -81,7 +81,7 @@ void MainWindow::importMesh()
 
 void MainWindow::saveMatScript()
 {
-    this->ui->matEditor->saveFile();
+    //this->ui->matEditor->saveFile();
 }
 
 void MainWindow::applyMaterial()
