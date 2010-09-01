@@ -7,6 +7,7 @@
 #include <QChar>
 #include <QKeyEvent>
 
+
 //
 // --- Functions ---
 //
@@ -104,6 +105,8 @@ void TestWidget::wheelEvent(QWheelEvent* w)
 ///
 void TestWidget::createScene(void)
 {
+
+
         splash->showMessage(QObject::tr("Creating Scene..."), topRight, Qt::black);
         m_sceneMgr->setAmbientLight(Ogre::ColourValue(0.6, 0.6, 0.6));
 
@@ -155,6 +158,8 @@ void TestWidget::createScene(void)
 
         sceneCenter = m_sceneMgr->getRootSceneNode()->createChildSceneNode();
         sceneCenter->attachObject(center);
+
+
 
         splash->finish(this);
         delete splash;
@@ -233,6 +238,15 @@ void TestWidget::setupScene(void) {
                 "CustomShadowCasterVp", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,"cg", Ogre::GPT_VERTEX_PROGRAM);
         fp = Ogre::HighLevelGpuProgramManager::getSingleton().createProgram(
                 "CustomShadowCasterFp", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,"cg", Ogre::GPT_FRAGMENT_PROGRAM);
+
+        // Get the default log
+        mLog = Ogre::LogManager::getSingletonPtr()->getDefaultLog();
+
+        // Add the listener to the current log
+        mLog->addListener(mLogListener);
+
+
+
 }
 
 void TestWidget::setSplash(QSplashScreen * splash)
@@ -385,3 +399,4 @@ void TestWidget::clearMaterial()
     // We need to do this because only materials that are not being used will be deleted
     Ogre::MaterialManager::getSingletonPtr()->remove(currentMaterial->getHandle());
 }
+
