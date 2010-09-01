@@ -10,6 +10,14 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->logPanel->setReadOnly(true);
+    ui->logPanel->setFont(QFont("Monospace", 8, 2));
+
+    connect(ui->OgreWidget->mLogListener, SIGNAL(logMessageUpdated()),
+            this, SLOT(writeToLogPanel()));
+	
+
+
 
 }
 
@@ -81,7 +89,7 @@ void MainWindow::importMesh()
 
 void MainWindow::saveMatScript()
 {
-    //this->ui->matEditor->saveFile();
+    this->ui->textEdit->saveFile();
 }
 
 void MainWindow::applyMaterial()
@@ -122,4 +130,9 @@ QString MainWindow::removeWhiteSpaceCharacters()
 
     return materialSplited.join("\n");
 
+}
+
+void MainWindow::writeToLogPanel()
+{
+    ui->logPanel->appendPlainText(ui->OgreWidget->mLogListener->getLogMsg());
 }
