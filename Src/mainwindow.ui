@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1183</width>
-    <height>691</height>
+    <width>1447</width>
+    <height>785</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,6 +55,16 @@
       </widget>
      </widget>
     </item>
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>LogPanel:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPlainTextEdit" name="logPanel"/>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -62,7 +72,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1183</width>
+     <width>1447</width>
      <height>23</height>
     </rect>
    </property>
@@ -271,6 +281,13 @@
     <bool>true</bool>
    </property>
   </action>
+  <action name="actionGetParams">
+   <property name="text">
+    <string>getParams</string>
+   </property>
+  </action>
+  <zorder>dockWidget_3</zorder>
+  <zorder>dockWidget_2</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -279,6 +296,9 @@
    <extends>QWidget</extends>
    <header>TestWidget.h</header>
    <container>1</container>
+   <slots>
+    <slot>getGPUParams()</slot>
+   </slots>
   </customwidget>
   <customwidget>
    <class>TextEdit</class>
@@ -419,6 +439,22 @@
     </hint>
     <hint type="destinationlabel">
      <x>583</x>
+     <y>345</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Save</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveMatScript()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>591</x>
      <y>345</y>
     </hint>
    </hints>
