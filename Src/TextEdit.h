@@ -42,7 +42,9 @@ public:
     void setSyntaxHighlighter();
     QString syntaxHighlighter();
     void openFile(const QString& filename);
+    void saveFile();
     QString matScriptFilename;
+
 private:
     void initSettings();
     QsciLexer *lexer;
