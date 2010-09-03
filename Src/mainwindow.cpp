@@ -10,7 +10,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->matEditor->setupCurrentCompleter(":/Build/Data/wordlist.txt");
+    ui->logPanel->setReadOnly(true);
+    ui->logPanel->setFont(QFont("Monospace", 8, 2));
+
+    connect(ui->OgreWidget->mLogListener, SIGNAL(logMessageUpdated()),
+            this, SLOT(writeToLogPanel()));
+	
+
+
+
 }
 
 void MainWindow::setSplash(QSplashScreen * spl)
@@ -48,7 +56,7 @@ void MainWindow::loadFile()
 
     QString fileName = fullFilePath.section('/', -1);
 
-    //ui->matEditor->openFile(fullFilePath);
+
     ui->textEdit->openFile(fullFilePath);
     this->ui->subwindow_2->setWindowTitle("Material Editor: " + fileName);
 
@@ -81,7 +89,7 @@ void MainWindow::importMesh()
 
 void MainWindow::saveMatScript()
 {
-    this->ui->matEditor->saveFile();
+    this->ui->textEdit->saveFile();
 }
 
 void MainWindow::applyMaterial()
@@ -122,4 +130,9 @@ QString MainWindow::removeWhiteSpaceCharacters()
 
     return materialSplited.join("\n");
 
+}
+
+void MainWindow::writeToLogPanel()
+{
+    ui->logPanel->appendPlainText(ui->OgreWidget->mLogListener->getLogMsg());
 }

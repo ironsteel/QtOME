@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtGui/QSplashScreen>
+
 namespace Ui {
     class MainWindow;
 }
@@ -14,11 +15,13 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
 
+
     ~MainWindow();
 
 public:
     void setSplash(QSplashScreen * spl);
     Ui::MainWindow *ui;
+
 
 private:
     void keyPressEvent(QKeyEvent* e);
@@ -34,6 +37,9 @@ private slots:
     void saveMatScript();
     void importMesh();
     void applyMaterial();
+
+    // This slot is used to write a message to the logPanel
+    void writeToLogPanel();
 };
 
 #endif // MAINWINDOW_H

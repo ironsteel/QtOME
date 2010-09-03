@@ -168,3 +168,25 @@ void TextEdit::openFile(const QString &filename)
     fileForEdit.close();
 }
 
+void TextEdit::saveFile()
+{
+    if(matScriptFilename.isEmpty() == true) {
+        return ;
+    }
+
+    QString text = this->text();
+
+    QFile file(matScriptFilename);
+
+    if (!file.open(QFile::WriteOnly)) {
+        QMessageBox::warning(this, tr("QtOME"), tr("Cannot write to file!"));
+        return ;
+    }
+
+    QTextStream textStream(&file);
+
+    textStream << text;
+
+    file.close();
+
+}
