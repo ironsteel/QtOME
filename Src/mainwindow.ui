@@ -14,56 +14,72 @@
    <string>QtOME</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_5">
     <item>
-     <widget class="QMdiArea" name="mdiArea">
-      <widget class="QWidget" name="subwindow_2">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::ClickFocus</enum>
-       </property>
-       <property name="windowTitle">
-        <string>Subwindow</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="TextEdit" name="textEdit"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="subwindow_3">
-       <property name="windowTitle">
-        <string>Subwindow</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
-        <item>
-         <widget class="CgEdit" name="VP"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="subwindow_4">
-       <property name="windowTitle">
-        <string>Subwindow</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_6">
-        <item>
-         <widget class="CgEdit" name="FP"/>
-        </item>
-       </layout>
-      </widget>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>LogPanel:</string>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
       </property>
+      <widget class="QMdiArea" name="mdiArea">
+       <widget class="QWidget" name="subwindow_2">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
+        <property name="windowTitle">
+         <string>Subwindow</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="TextEdit" name="textEdit"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="subwindow_3">
+        <property name="windowTitle">
+         <string>Subwindow</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <widget class="CgEdit" name="VP"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="subwindow_4">
+        <property name="windowTitle">
+         <string>Subwindow</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <widget class="CgEdit" name="FP"/>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="widget" native="true">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>LogPanel:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPlainTextEdit" name="logPanel">
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>200</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
-    </item>
-    <item>
-     <widget class="QPlainTextEdit" name="logPanel"/>
     </item>
    </layout>
   </widget>
@@ -73,7 +89,7 @@
      <x>0</x>
      <y>0</y>
      <width>1447</width>
-     <height>23</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -180,11 +196,14 @@
    <addaction name="action_Apply"/>
   </widget>
   <widget class="QDockWidget" name="dockWidget">
+   <property name="windowTitle">
+    <string>Material Manager</string>
+   </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_2">
-    <layout class="QVBoxLayout" name="verticalLayout_3">
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QListWidget" name="listWidget">
        <property name="minimumSize">
@@ -286,8 +305,6 @@
     <string>getParams</string>
    </property>
   </action>
-  <zorder>dockWidget_3</zorder>
-  <zorder>dockWidget_2</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>

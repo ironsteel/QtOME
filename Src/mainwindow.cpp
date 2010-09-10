@@ -15,10 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->OgreWidget->mLogListener, SIGNAL(logMessageUpdated()),
             this, SLOT(writeToLogPanel()));
-	
-
-
-
 }
 
 void MainWindow::setSplash(QSplashScreen * spl)

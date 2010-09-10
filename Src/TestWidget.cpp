@@ -348,20 +348,6 @@ void TestWidget::setMaterial(const Ogre::String &script, const Ogre::String &VP 
         }
     }
 
-    Ogre::String customCasterMatVp =
-            "void customCasterVp(float4 position : POSITION,\n"
-            "out float4 oPosition : POSITION,\n"
-            "uniform float4x4 worldViewProj)\n"
-            "{\n"
-            "   oPosition = mul(worldViewProj, position);\n"
-            "}\n";
-    Ogre::String customCasterMatFp =
-            "void customCasterFp(\n"
-            "out float4 oColor : COLOR)\n"
-            "{\n"
-            "   oColor = float4(1,0,0,1); // just a test\n"
-            "}\n";
-
     if(!(VP==""))this->setVertexProgram(VP);
     if(!(FP==""))this->setFragmentProgram(FP);
 
