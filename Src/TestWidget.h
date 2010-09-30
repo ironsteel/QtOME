@@ -39,7 +39,7 @@ public:
         }
         ~TestWidget(void);
         void setSplash(QSplashScreen * splash);
-        void setMaterial(const Ogre::String &script, const Ogre::String &VP = "", const Ogre::String &FP = "");
+        void setMaterial(const Ogre::String &script,const Ogre::String& matName, const Ogre::String &VP = "", const Ogre::String &FP = "");
         void clearMaterial();
         QString changeMesh(QString fullname);
 

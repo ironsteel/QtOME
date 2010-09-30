@@ -507,6 +507,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>listWidget</sender>
+   <signal>itemDoubleClicked(QListWidgetItem*)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setCurrentMatName(QListWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1309</x>
+     <y>220</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>723</x>
+     <y>392</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>loadFile()</slot>
@@ -514,5 +530,6 @@
   <slot>saveMatScript()</slot>
   <slot>applyMaterial()</slot>
   <slot>newProject()</slot>
+  <slot>setCurrentMatName(QListWidgetItem*)</slot>
  </slots>
 </ui>

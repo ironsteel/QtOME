@@ -326,7 +326,7 @@ QString TestWidget::changeMesh(QString fullname)
     return Qname;
 }
 
-void TestWidget::setMaterial(const Ogre::String &script, const Ogre::String &VP , const Ogre::String &FP )
+void TestWidget::setMaterial(const Ogre::String &script,const Ogre::String& matName, const Ogre::String &VP, const Ogre::String &FP )
 {
     Ogre::LogManager::getSingleton().logMessage("Starting compilation of material script ...");
 
@@ -343,7 +343,8 @@ void TestWidget::setMaterial(const Ogre::String &script, const Ogre::String &VP 
         if (params[0] == "material")
         {
             Ogre::String materialName = params[1];
-            currentMaterial = Ogre::MaterialManager::getSingleton().getByName(materialName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+            //currentMaterial = Ogre::MaterialManager::getSingleton().getByName(materialName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+            currentMaterial = Ogre::MaterialManager::getSingleton().getByName(matName);
             currentMaterial->compile();
         }
     }

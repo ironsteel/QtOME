@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->OgreWidget->mLogListener, SIGNAL(logMessageUpdated()),
             this, SLOT(writeToLogPanel()));
     connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this , SLOT(materialSelected()));
+    currMatName = "DefaultSettings";
 }
 
 void MainWindow::setSplash(QSplashScreen * spl)
@@ -97,7 +98,7 @@ void MainWindow::applyMaterial()
         return ;
     }
 
-    ui->OgreWidget->setMaterial(mat.toStdString());
+    ui->OgreWidget->setMaterial(mat.toStdString(), currMatName.toStdString());
 
 }
 
@@ -151,4 +152,10 @@ void MainWindow::materialSelected()
    Ogre::LogManager::getSingleton().logMessage(matFileName.toStdString());
 
    ui->textEdit->openFile(matFileName);
+}
+
+void MainWindow::setCurrentMatName(QListWidgetItem *item)
+{
+    currMatName = item->text();
+
 }

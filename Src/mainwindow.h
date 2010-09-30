@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtGui/QSplashScreen>
+#include <QListWidgetItem>
 
 namespace Ui {
     class MainWindow;
@@ -32,6 +33,8 @@ private:
     // has new line with whitespace characters only
     QString removeWhiteSpaceCharacters();
 
+    QString currMatName;
+
 private slots:
     void loadFile();
     void saveMatScript();
@@ -39,6 +42,7 @@ private slots:
     void applyMaterial();
     void newProject();
     void materialSelected();
+    void setCurrentMatName(QListWidgetItem* item);
 
     // This slot is used to write a message to the logPanel
     void writeToLogPanel();
