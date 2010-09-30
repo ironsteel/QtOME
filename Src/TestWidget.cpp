@@ -362,6 +362,7 @@ void TestWidget::setVertexProgram(const Ogre::String &VpSource)
     vp->setParameter("entry_point", "customCasterVp");
     vp->load();
 
+
     Ogre::Pass* p = currentMaterial->getTechnique(0)->getPass(0);
     p->setVertexProgram("CustomShadowCasterVp");
     p->getVertexProgramParameters()->setNamedAutoConstant("worldViewProj", Ogre::GpuProgramParameters::ACT_WORLDVIEWPROJ_MATRIX);

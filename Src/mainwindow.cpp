@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->OgreWidget->mLogListener, SIGNAL(logMessageUpdated()),
             this, SLOT(writeToLogPanel()));
+    connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this , SLOT(materialSelected()));
 }
 
 void MainWindow::setSplash(QSplashScreen * spl)
@@ -52,20 +53,19 @@ void MainWindow::loadFile()
 
     QString fileName = fullFilePath.section('/', -1);
 
-
     ui->textEdit->openFile(fullFilePath);
     this->ui->subwindow_2->setWindowTitle("Material Editor: " + fileName);
 
-    //QStringList places = fullFilePath.split("/");
-    //places.pop_back();
-    //QString pathOnly = places.join("/");
+    QStringList places = fullFilePath.split("/");
+    places.pop_back();
+    QString pathOnly = places.join("/");
 
-    //Ogre::ResourceGroupManager::getSingleton().addResourceLocation( pathOnly.toStdString() ,"FileSystem","ImportedMaterials");
-    //Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("ImportedMaterials");
+    Ogre::ResourceGroupManager::getSingleton().addResourceLocation( pathOnly.toStdString() ,"FileSystem","mm");
+    Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("mm");
 
     ui->listWidget->clear();
-    QStringList materials = ui->OgreWidget->manager->getMaterialList();
-    ui->listWidget->addItems(materials);
+   // QStringList materials = ui->OgreWidget->manager->getMaterialList();
+    //ui->listWidget->addItems(materials);
 
 }
 
@@ -97,7 +97,6 @@ void MainWindow::applyMaterial()
         return ;
     }
 
-    ui->OgreWidget->clearMaterial();
     ui->OgreWidget->setMaterial(mat.toStdString());
 
 }
@@ -131,4 +130,25 @@ QString MainWindow::removeWhiteSpaceCharacters()
 void MainWindow::writeToLogPanel()
 {
     ui->logPanel->appendPlainText(ui->OgreWidget->mLogListener->getLogMsg());
+}
+
+void MainWindow::newProject()
+{
+    QString Path = QFileDialog::getExistingDirectory(this);
+    Ogre::LogManager::getSingleton().logMessage(Path.toStdString());
+
+    ui->listWidget->clear();
+    QStringList materials = ui->OgreWidget->manager->getMaterialList(Path);
+    ui->listWidget->addItems(materials);
+}
+
+void MainWindow::materialSelected()
+{
+    QString matName = ui->listWidget->currentItem()->text();
+
+   QString matFileName = ui->OgreWidget->manager->getFileName(matName);
+
+   Ogre::LogManager::getSingleton().logMessage(matFileName.toStdString());
+
+   ui->textEdit->openFile(matFileName);
 }

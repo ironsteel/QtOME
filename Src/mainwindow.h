@@ -37,6 +37,8 @@ private slots:
     void saveMatScript();
     void importMesh();
     void applyMaterial();
+    void newProject();
+    void materialSelected();
 
     // This slot is used to write a message to the logPanel
     void writeToLogPanel();
