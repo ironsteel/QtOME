@@ -4,6 +4,7 @@
 #include <QtGui/QTabWidget>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QTreeWidgetItem>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -17,6 +18,10 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(writeToLogPanel()));
     connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this , SLOT(materialSelected()));
     currMatName = "DefaultSettings";
+    ui->workspaceTree->setColumnCount(1);
+    ui->workspaceTree->setHeaderLabel("Materials");
+
+
 }
 
 void MainWindow::setSplash(QSplashScreen * spl)
@@ -141,6 +146,10 @@ void MainWindow::newProject()
     ui->listWidget->clear();
     QStringList materials = ui->OgreWidget->manager->getMaterialList(Path);
     ui->listWidget->addItems(materials);
+
+    this->populateWorkSpaceTree(materials);
+
+
 }
 
 void MainWindow::materialSelected()
@@ -158,4 +167,28 @@ void MainWindow::setCurrentMatName(QListWidgetItem *item)
 {
     currMatName = item->text();
 
+}
+
+void MainWindow::populateWorkSpaceTree(const QStringList &itemNames)
+{
+    for(int count = 0; count < itemNames.size(); ++count) {
+        QTreeWidgetItem *matItem = new QTreeWidgetItem(ui->workspaceTree);
+        QString parentName = itemNames.at(count);
+        matItem->setText(0, parentName);
+        Ogre::MaterialPtr parMat = Ogre::MaterialManager::getSingleton().getByName(parentName.toStdString());
+
+        unsigned short numTech = parMat.getPointer()->getNumTechniques();
+
+        for (int countTech = 0; countTech < numTech; ++countTech) {
+            Ogre::Technique *parTech = parMat.getPointer()->getTechnique(countTech);
+            int numPass = parTech->getNumPasses();
+            QTreeWidgetItem *techItem = new QTreeWidgetItem(matItem);
+            techItem->setText(0, "technique");
+
+            for (int countPass = 0; countPass < numPass; ++countPass) {
+                QTreeWidgetItem *passItem = new QTreeWidgetItem(techItem);
+                passItem->setText(0, "pass");
+            }
+        }
+    }
 }

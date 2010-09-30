@@ -22,6 +22,7 @@ public:
 public:
     void setSplash(QSplashScreen * spl);
     Ui::MainWindow *ui;
+    void populateWorkSpaceTree(const QStringList &itemNames);
 
 
 private:
