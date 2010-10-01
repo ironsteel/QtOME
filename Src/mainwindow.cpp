@@ -17,9 +17,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->OgreWidget->mLogListener, SIGNAL(logMessageUpdated()),
             this, SLOT(writeToLogPanel()));
     connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this , SLOT(materialSelected()));
+    connect(ui->workspaceTree, SIGNAL(itemClicked(QTreeWidgetItem*,int)),
+            this, SLOT(workspaceItemSelected()));
     currMatName = "DefaultSettings";
     ui->workspaceTree->setColumnCount(1);
     ui->workspaceTree->setHeaderLabel("Materials");
+
 
 
 }
@@ -104,7 +107,6 @@ void MainWindow::applyMaterial()
     }
 
     ui->OgreWidget->setMaterial(mat.toStdString(), currMatName.toStdString());
-
 }
 
 
@@ -150,6 +152,9 @@ void MainWindow::newProject()
     this->populateWorkSpaceTree(materials);
 
 
+
+
+
 }
 
 void MainWindow::materialSelected()
@@ -175,6 +180,7 @@ void MainWindow::populateWorkSpaceTree(const QStringList &itemNames)
         QTreeWidgetItem *matItem = new QTreeWidgetItem(ui->workspaceTree);
         QString parentName = itemNames.at(count);
         matItem->setText(0, parentName);
+        matItem->setText(1, "material");
         Ogre::MaterialPtr parMat = Ogre::MaterialManager::getSingleton().getByName(parentName.toStdString());
 
         unsigned short numTech = parMat.getPointer()->getNumTechniques();
@@ -191,4 +197,23 @@ void MainWindow::populateWorkSpaceTree(const QStringList &itemNames)
             }
         }
     }
+}
+
+void MainWindow::workspaceItemSelected()
+{
+    QTreeWidgetItem *selection = ui->workspaceTree->currentItem();
+
+    QString itemType = selection->text(1);
+    if (itemType == "material") {
+        QString itemName = selection->text(0);
+        Ogre::LogManager::getSingleton().logMessage(itemName.toStdString());
+
+        QString materialItemFileName = ui->OgreWidget->manager->getFileName(itemName);
+        Ogre::LogManager::getSingleton().logMessage(materialItemFileName.toStdString());
+        ui->textEdit->openFile(materialItemFileName);
+        currMatName = itemName;
+
+    }
+
+    Ogre::LogManager::getSingleton().logMessage(itemType.toStdString());
 }
