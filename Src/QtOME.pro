@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     Lexers/OgreMaterialLexer.cpp \
     CgEdit.cpp \
     Lexers/CgLexer.cpp \
-    MyLogListener.cpp
+    MyLogListener.cpp \
+    WorkspaceWidget.cpp
 
 HEADERS  += mainwindow.h \
     TestWidget.h \
@@ -33,7 +34,8 @@ HEADERS  += mainwindow.h \
     Lexers/OgreMaterialLexer.h \
     CgEdit.h \
     Lexers/CgLexer.h \
-    MyLogListener.h
+    MyLogListener.h \
+    WorkspaceWidget.hpp
 
 FORMS    += mainwindow.ui
 

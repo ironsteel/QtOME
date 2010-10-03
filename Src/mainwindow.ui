@@ -89,7 +89,7 @@
      <x>0</x>
      <y>0</y>
      <width>1447</width>
-     <height>23</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -197,13 +197,34 @@
   </widget>
   <widget class="QDockWidget" name="dockWidget">
    <property name="windowTitle">
-    <string>Material Manager</string>
+    <string>Workspace Browser</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_2">
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout_8">
+     <item>
+      <widget class="WorkspaceWidget" name="workspaceTree">
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget_2">
+   <property name="windowTitle">
+    <string>Properties</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
       <widget class="QListWidget" name="listWidget">
        <property name="minimumSize">
@@ -212,27 +233,6 @@
          <height>0</height>
         </size>
        </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
-  <widget class="QDockWidget" name="dockWidget_2">
-   <property name="windowTitle">
-    <string>Workspace</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_3">
-    <layout class="QVBoxLayout" name="verticalLayout_3">
-     <item>
-      <widget class="QTreeWidget" name="workspaceTree">
-       <column>
-        <property name="text">
-         <string notr="true">1</string>
-        </property>
-       </column>
       </widget>
      </item>
     </layout>
@@ -347,6 +347,11 @@
    <class>CgEdit</class>
    <extends>QTextEdit</extends>
    <header>CgEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>WorkspaceWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>WorkspaceWidget.hpp</header>
   </customwidget>
  </customwidgets>
  <resources>
