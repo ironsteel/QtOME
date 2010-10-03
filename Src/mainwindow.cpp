@@ -22,9 +22,6 @@ MainWindow::MainWindow(QWidget *parent) :
     currMatName = "DefaultSettings";
     ui->workspaceTree->setColumnCount(1);
     ui->workspaceTree->setHeaderLabel("Materials");
-
-
-
 }
 
 void MainWindow::setSplash(QSplashScreen * spl)
@@ -47,7 +44,6 @@ void MainWindow::keyReleaseEvent(QKeyEvent* e)
 {
     if(e->key() == Qt::Key_Shift)
         ui->OgreWidget->sdkCam->setShift(false);
-
 }
 
 void MainWindow::loadFile()
@@ -151,10 +147,6 @@ void MainWindow::newProject()
 
     this->populateWorkSpaceTree(materials);
 
-
-
-
-
 }
 
 void MainWindow::materialSelected()
@@ -185,15 +177,34 @@ void MainWindow::populateWorkSpaceTree(const QStringList &itemNames)
 
         unsigned short numTech = parMat.getPointer()->getNumTechniques();
 
-        for (int countTech = 0; countTech < numTech; ++countTech) {
+        for (int countTech = 0; countTech < numTech; ++countTech)
+        {
             Ogre::Technique *parTech = parMat.getPointer()->getTechnique(countTech);
             int numPass = parTech->getNumPasses();
             QTreeWidgetItem *techItem = new QTreeWidgetItem(matItem);
-            techItem->setText(0, "technique");
+            techItem->setText(0, QString("technique(")+QString(Ogre::String(parTech->getName()).c_str())+QString(")"));
 
-            for (int countPass = 0; countPass < numPass; ++countPass) {
+            for (int countPass = 0; countPass < numPass; ++countPass)
+            {
                 QTreeWidgetItem *passItem = new QTreeWidgetItem(techItem);
-                passItem->setText(0, "pass");
+                Ogre::Pass* pass = parTech->getPass(countPass);
+                passItem->setText(0, QString("pass(")+QString(Ogre::String(pass->getName()).c_str())+QString(")"));
+
+                if(pass->hasVertexProgram())
+                {
+                    QTreeWidgetItem *vpItem = new QTreeWidgetItem(passItem);
+                    vpItem->setText(0,Ogre::String(pass->getVertexProgramName()).c_str());
+                }
+                if(pass->hasFragmentProgram())
+                {
+                    QTreeWidgetItem *fpItem = new QTreeWidgetItem(passItem);
+                    fpItem->setText(0,Ogre::String(pass->getFragmentProgramName()).c_str());
+                }
+                if(pass->hasGeometryProgram())
+                {
+                    QTreeWidgetItem *gpItem = new QTreeWidgetItem(passItem);
+                    gpItem->setText(0,Ogre::String(pass->getGeometryProgramName()).c_str());
+                }
             }
         }
     }
