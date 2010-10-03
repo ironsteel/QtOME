@@ -157,6 +157,14 @@ void TextEdit::keyPressEvent(QKeyEvent *event) {
 
 void TextEdit::openFile(const QString &filename)
 {
+
+    if (matScriptFilename != filename) {
+        this->saveModified();
+    } else if (matScriptFilename == filename) {
+        return ;
+    }
+
+
     matScriptFilename = filename;
 
     QFile fileForEdit(matScriptFilename);
@@ -165,7 +173,9 @@ void TextEdit::openFile(const QString &filename)
         return ;
     }
     this->setText(fileForEdit.readAll());
+    this->setModified(false);
     fileForEdit.close();
+
 }
 
 void TextEdit::saveFile()
@@ -188,5 +198,26 @@ void TextEdit::saveFile()
     textStream << text;
 
     file.close();
+
+}
+
+void TextEdit::saveModified()
+{
+    QString fileNameShort = this->matScriptFilename.section(QRegExp("/"), -1);
+
+    QMessageBox::StandardButton userChoice;
+    if (this->isModified()) {
+        userChoice = QMessageBox::warning(this, tr("QtOME"),
+                                          tr("Script file '%1' has been modified.\n"
+                                             "Do you want to save your changes ?").arg(fileNameShort),
+                                          QMessageBox::Save | QMessageBox::Discard  );
+
+        if (userChoice == QMessageBox::Save) {
+            this->saveFile();
+            return ;
+        }
+    }
+
+    return ;
 
 }

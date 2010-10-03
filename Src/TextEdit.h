@@ -43,14 +43,16 @@ public:
     QString syntaxHighlighter();
     void openFile(const QString& filename);
     void saveFile();
-    QString matScriptFilename;
+
 
 private:
+    void saveModified();
     void initSettings();
     QsciLexer *lexer;
     QString styleSyntax;
     QFont defaultFont;
     QsciAPIs *apis;
+    QString matScriptFilename;
 protected:
     void keyPressEvent(QKeyEvent *event);
 };
