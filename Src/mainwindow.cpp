@@ -221,7 +221,7 @@ void MainWindow::workspaceItemSelected()
 
         QString materialItemFileName = ui->OgreWidget->manager->getFileName(itemName);
         Ogre::LogManager::getSingleton().logMessage(materialItemFileName.toStdString());
-        ui->textEdit->openFile(materialItemFileName);
+        ui->textEdit->openFile(materialItemFileName, itemName);
         currMatName = itemName;
 
     }
