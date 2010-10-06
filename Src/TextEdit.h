@@ -41,7 +41,7 @@ public:
     virtual ~TextEdit();
     void setSyntaxHighlighter();
     QString syntaxHighlighter();
-    void openFile(const QString& filename);
+    void openFile(const QString& filename, const QString &materialName = "");
     void saveFile();
 
 

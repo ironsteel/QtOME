@@ -155,12 +155,13 @@ void TextEdit::keyPressEvent(QKeyEvent *event) {
 }
 
 
-void TextEdit::openFile(const QString &filename)
+void TextEdit::openFile(const QString &filename, const QString &materialName)
 {
 
     if (matScriptFilename != filename) {
         this->saveModified();
     } else if (matScriptFilename == filename) {
+        this->findFirst(materialName, false, true, true, false, true, 0, 0);
         return ;
     }
 
@@ -174,6 +175,7 @@ void TextEdit::openFile(const QString &filename)
     }
     this->setText(fileForEdit.readAll());
     this->setModified(false);
+    this->findFirst(materialName, false, true, true, false, true, 0, 0);
     fileForEdit.close();
 
 }
