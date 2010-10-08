@@ -15,7 +15,8 @@ public:
     virtual QString description(int style) const;
     virtual const char* keywords(int set) const;
     virtual QStringList autoCompletionWordSeparators() const;
-
+	virtual const char* blockStartKeyword(int *style) const;
+//	virtual const char* lexer() const;
 };
 
 #endif

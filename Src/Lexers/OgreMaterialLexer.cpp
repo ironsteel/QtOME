@@ -18,15 +18,14 @@ OgreMaterialLexer::~OgreMaterialLexer()
 {
 }
 
-
-const char *OgreMaterialLexer::language() const
+const char* OgreMaterialLexer::language() const
 {
-    return "OgreMaterial";
+	return "OgreMaterialScript";
 }
 
 QString OgreMaterialLexer::description(int style) const
 {
-    return QString("no Style");
+    return QString("No Style");
 }
 
 const char *OgreMaterialLexer::keywords(int set) const
@@ -118,3 +117,14 @@ QStringList OgreMaterialLexer::autoCompletionWordSeparators() const
 
     return wl;
 }
+
+const char* OgreMaterialLexer::blockStartKeyword(int *style) const
+{
+	if (style)
+		*style = Keyword;
+
+	return "material technique pass texture_unit " 
+		   "fragment_program vertex_program geometry_program fragment_program_ref "
+		   "vertex_program_ref geometry_program_ref default_params";
+}
+
