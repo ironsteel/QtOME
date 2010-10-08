@@ -140,6 +140,9 @@ void MainWindow::newProject()
 {
     QString Path = QFileDialog::getExistingDirectory(this);
     Ogre::LogManager::getSingleton().logMessage(Path.toStdString());
+	
+	if(Path.isEmpty())
+		return ;
 
     ui->listWidget->clear();
     QStringList materials = ui->OgreWidget->manager->getMaterialList(Path);
@@ -158,6 +161,7 @@ void MainWindow::materialSelected()
    Ogre::LogManager::getSingleton().logMessage(matFileName.toStdString());
 
    ui->textEdit->openFile(matFileName);
+   
 }
 
 void MainWindow::setCurrentMatName(QListWidgetItem *item)
@@ -233,6 +237,7 @@ void MainWindow::workspaceItemSelected(QTreeWidgetItem* Item)
         Ogre::LogManager::getSingleton().logMessage(materialItemFileName.toStdString());
         ui->textEdit->openFile(materialItemFileName, itemName);
         currMatName = itemName;
+		ui->subwindow_2->setWindowTitle("Material Script: " + materialItemFileName.section('/', -1));
     }
     if(itemType == "VertexProgram" && Item->text(2)==currMatName)
     {
