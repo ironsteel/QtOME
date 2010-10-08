@@ -17,8 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->OgreWidget->mLogListener, SIGNAL(logMessageUpdated()),
             this, SLOT(writeToLogPanel()));
     connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this , SLOT(materialSelected()));
-    connect(ui->workspaceTree, SIGNAL(itemClicked(QTreeWidgetItem*,int)),
-            this, SLOT(workspaceItemSelected()));
+    connect(ui->workspaceTree, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
+            this, SLOT(workspaceItemSelected(QTreeWidgetItem*)));
     currMatName = "DefaultSettings";
     ui->workspaceTree->setColumnCount(1);
     ui->workspaceTree->setHeaderLabel("Materials");
@@ -113,8 +113,8 @@ QString MainWindow::removeWhiteSpaceCharacters()
     // Split the source into separate lines
     QStringList materialSplited = materialSource.split(QRegExp("\n"), QString::SkipEmptyParts);
 
-    for (int lineNumber = 0; lineNumber < materialSplited.size(); ++lineNumber) {
-
+    for (int lineNumber = 0; lineNumber < materialSplited.size(); ++lineNumber)
+    {
         QString line = materialSplited.at(lineNumber);
 
         // Remove whitespace characters from the current line
@@ -168,7 +168,8 @@ void MainWindow::setCurrentMatName(QListWidgetItem *item)
 
 void MainWindow::populateWorkSpaceTree(const QStringList &itemNames)
 {
-    for(int count = 0; count < itemNames.size(); ++count) {
+    for(int count = 0; count < itemNames.size(); ++count)
+    {
         QTreeWidgetItem *matItem = new QTreeWidgetItem(ui->workspaceTree);
         QString parentName = itemNames.at(count);
         matItem->setText(0, parentName);
@@ -189,16 +190,25 @@ void MainWindow::populateWorkSpaceTree(const QStringList &itemNames)
                 QTreeWidgetItem *passItem = new QTreeWidgetItem(techItem);
                 Ogre::Pass* pass = parTech->getPass(countPass);
                 passItem->setText(0, QString("pass(")+QString(Ogre::String(pass->getName()).c_str())+QString(")"));
+                passItem->setText(1, QString("pass"));
 
                 if(pass->hasVertexProgram())
                 {
                     QTreeWidgetItem *vpItem = new QTreeWidgetItem(passItem);
                     vpItem->setText(0,Ogre::String(pass->getVertexProgramName()).c_str());
+                    vpItem->setText(1,QString("VertexProgram"));
+                    vpItem->setText(2,QString(parentName));
+                    vpItem->setText(3,QString(countTech));
+                    vpItem->setText(4,QString(countPass));
                 }
                 if(pass->hasFragmentProgram())
                 {
                     QTreeWidgetItem *fpItem = new QTreeWidgetItem(passItem);
                     fpItem->setText(0,Ogre::String(pass->getFragmentProgramName()).c_str());
+                    fpItem->setText(1,QString("FragmentProgram"));
+                    fpItem->setText(2,QString(parentName));
+                    fpItem->setText(3,QString(countTech));
+                    fpItem->setText(4,QString(countPass));
                 }
                 if(pass->hasGeometryProgram())
                 {
@@ -210,20 +220,37 @@ void MainWindow::populateWorkSpaceTree(const QStringList &itemNames)
     }
 }
 
-void MainWindow::workspaceItemSelected()
+void MainWindow::workspaceItemSelected(QTreeWidgetItem* Item)
 {
-    QTreeWidgetItem *selection = ui->workspaceTree->currentItem();
+    QString itemType = Item->text(1);
 
-    QString itemType = selection->text(1);
-    if (itemType == "material") {
-        QString itemName = selection->text(0);
+    if(itemType == "material")
+    {
+        QString itemName = Item->text(0);
         Ogre::LogManager::getSingleton().logMessage(itemName.toStdString());
 
         QString materialItemFileName = ui->OgreWidget->manager->getFileName(itemName);
         Ogre::LogManager::getSingleton().logMessage(materialItemFileName.toStdString());
         ui->textEdit->openFile(materialItemFileName, itemName);
         currMatName = itemName;
-
+    }
+    if(itemType == "VertexProgram" && Item->text(2)==currMatName)
+    {
+        Ogre::MaterialPtr Mat = Ogre::MaterialManager::getSingleton().getByName(currMatName.toStdString());
+        int numTech = Item->text(3).toInt();
+        int numPass = Item->text(4).toInt();
+        Ogre::Pass* pass = Mat->getTechnique(numTech)->getPass(numPass);
+        QString f = ui->OgreWidget->manager->getWorkDir()+'/'+pass->getVertexProgram()->getSourceFile().c_str();
+        ui->VP->openFile(f);
+    }
+    if(itemType == "FragmentProgram" && Item->text(2)==currMatName)
+    {
+        Ogre::MaterialPtr Mat = Ogre::MaterialManager::getSingleton().getByName(currMatName.toStdString());
+        int numTech = Item->text(3).toInt();
+        int numPass = Item->text(4).toInt();
+        Ogre::Pass* pass = Mat->getTechnique(numTech)->getPass(numPass);
+        QString f = ui->OgreWidget->manager->getWorkDir()+'/'+pass->getFragmentProgram()->getSourceFile().c_str();
+        ui->FP->openFile(f);
     }
 
     Ogre::LogManager::getSingleton().logMessage(itemType.toStdString());

@@ -12,12 +12,14 @@ public:
     MaterialManager();
     QStringList getMaterialList(const QString & Path);
     QString     getFileName(const QString& Material);
+    QString     getWorkDir();
 
 private:
     std::vector<Ogre::Material*>   mats;
     Ogre::MaterialPtr              currentMaterial;
     int                            count;
     QMap<QString,QString>          fileNames;
+    QString                        workDir;
 
 };
 

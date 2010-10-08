@@ -116,7 +116,7 @@
    </widget>
    <widget class="QMenu" name="menuMaterial">
     <property name="title">
-     <string>Material</string>
+     <string>&amp;Material</string>
     </property>
     <addaction name="action_Apply"/>
    </widget>
@@ -206,6 +206,21 @@
     <layout class="QVBoxLayout" name="verticalLayout_8">
      <item>
       <widget class="WorkspaceWidget" name="workspaceTree">
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
+       <property name="headerHidden">
+        <bool>true</bool>
+       </property>
+       <property name="expandsOnDoubleClick">
+        <bool>false</bool>
+       </property>
        <column>
         <property name="text">
          <string notr="true">1</string>
@@ -267,14 +282,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
-   </property>
-  </action>
-  <action name="action_Cascade">
-   <property name="text">
-    <string>&amp;Cascade</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Tab</string>
    </property>
   </action>
   <action name="actionNext">
@@ -379,22 +386,6 @@
    <signal>triggered()</signal>
    <receiver>mdiArea</receiver>
    <slot>tileSubWindows()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>741</x>
-     <y>354</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_Cascade</sender>
-   <signal>triggered()</signal>
-   <receiver>mdiArea</receiver>
-   <slot>cascadeSubWindows()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
