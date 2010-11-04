@@ -213,3 +213,18 @@ bool CgEdit::listHasString(QStringList list, QString string)
 
     return false;
 }
+
+void CgEdit::setShaderName(const QString &name)
+{
+    this->shaderName = name;
+}
+
+const QString CgEdit::getShaderName() const
+{
+    return this->shaderName;
+}
+
+const QString CgEdit::getShaderSource()
+{
+    return  this->matScriptFilename.section("/", -1);
+}
