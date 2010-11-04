@@ -1,17 +1,90 @@
-env_map spherical
-env_map none
-env_map planar
-env_map cubic_normal
-env_map cubic_reflection
+lod_distances
+receive_shadows on
+receive_shadows off
+transparency_casts_shadows on
+transparency_casts_shadows off
+set_texture_alias
+scheme
+lod_index
+ambient
+diffuse
+specular
+emissive
+scene_blend add
+scene_blend modulate
+scene_blend alpha_blend
+scene_blend colour_blend
+scene_blend
+depth_check on
+depth_check off
+depth_write on
+depth_write off
+depth_func
+depth_bias
+alpha_rejection
 cull_hardware clockwise
 cull_hardware anticlockwise
 cull_hardware none
 cull_software back
 cull_software front
 cull_software none
-point_sprites on
-point_sprites off
 lighting on
 lighting off
+shading flat
+shading gouraud
+shading phong
+polygon_mode solid
+polygon_mode wireframe
+polygon_mode points
+fog_override
 colour_write on
 colour_write off
+start_light
+max_lights
+iteration
+point_size
+point_sprites on
+point_sprites off
+point_size_attenuation
+point_size_min
+point_size_max
+texture_alias
+texture
+anim_texture
+cubic_texture
+tex_coord_set
+tex_address_mode
+tex_border_colour
+filtering none
+filtering bilinear
+filtering trilinear
+filtering anisotropic
+max_anisotropy
+mipmap_bias
+colour_op replace
+colour_op add
+colour_op modulate
+colour_op alpha_blend
+colour_op_ex
+colour_op_multipass_fallback
+env_map off
+env_map spherical
+env_map planar
+env_map cubic_reflection
+env_map cubic_normal
+alpha_op_ex
+env_map off
+env_map spherical
+env_map planar
+env_map cubic_reflection
+env_map cubic_normal
+scroll
+scroll_anim
+rotate
+rotate_anim
+scale
+wave_xform
+transform
+param_indexed
+param_indexed_auto
+param_named

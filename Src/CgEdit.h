@@ -44,6 +44,9 @@ public:QStringList scan();
     QString syntaxHighlighter();
     void openFile(const QString& filename);
     QString matScriptFilename;
+    const QString getShaderName() const;
+    void setShaderName(const QString &name);
+    const QString getShaderSource();
 private:
     void initSettings();
     bool listHasString(QStringList list, QString string);
@@ -51,6 +54,7 @@ private:
     QString styleSyntax;
     QFont defaultFont;
     QsciAPIs *apis;
+    QString shaderName;
 
     QStringList TYPES;
 protected:
