@@ -18,6 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "CgEdit.h"
+#include "OGRE/OgreGpuProgramManager.h"
 CgEdit::CgEdit(QWidget *pard)
     : QsciScintilla(pard)
 {
@@ -227,4 +228,17 @@ const QString CgEdit::getShaderName() const
 const QString CgEdit::getShaderSource()
 {
     return  this->matScriptFilename.section("/", -1);
+}
+
+void CgEdit::clearData()
+{
+
+    Ogre::GpuProgramPtr program;
+    if (!this->shaderName.isEmpty()) {
+        program = Ogre::GpuProgramManager::getSingletonPtr()->getByName(shaderName.toStdString());
+        program->setSourceFile(getShaderSource().toStdString());
+        program->reload();
+    }
+    this->clear();
+    this->shaderName = "";
 }

@@ -47,6 +47,7 @@ public:QStringList scan();
     const QString getShaderName() const;
     void setShaderName(const QString &name);
     const QString getShaderSource();
+    void clearData();
 private:
     void initSettings();
     bool listHasString(QStringList list, QString string);

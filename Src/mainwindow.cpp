@@ -19,6 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->listWidget, SIGNAL(doubleClicked(QModelIndex)), this , SLOT(materialSelected()));
     connect(ui->workspaceTree, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
             this, SLOT(workspaceItemSelected(QTreeWidgetItem*)));
+
+
     currMatName = "DefaultSettings";
     ui->workspaceTree->setColumnCount(1);
     ui->workspaceTree->setHeaderLabel("Materials");
@@ -96,6 +98,7 @@ void MainWindow::saveMatScript()
 void MainWindow::applyMaterial()
 {
     Ogre::GpuProgramPtr vProgram;
+    Ogre::GpuProgramPtr fProgram;
     if (!ui->VP->getShaderName().isEmpty()) {
          vProgram =
                 Ogre::GpuProgramManager::getSingleton().getByName(ui->VP->getShaderName().toStdString());
@@ -104,6 +107,14 @@ void MainWindow::applyMaterial()
         //vProgram->setSourceFile(ui->VP->getShaderSource().toStdString());
         vProgram->reload();
     }
+
+    if (!ui->FP->getShaderName().isEmpty()) {
+        fProgram =
+                Ogre::GpuProgramManager::getSingleton().getByName(ui->FP->getShaderName().toStdString());
+        fProgram->setSource(ui->FP->text().toStdString());
+        fProgram->reload();
+    }
+
     QString mat = this->removeWhiteSpaceCharacters();
 
     if (mat.isEmpty() == true) {
@@ -245,17 +256,22 @@ void MainWindow::workspaceItemSelected(QTreeWidgetItem* Item)
         Ogre::LogManager::getSingleton().logMessage(materialItemFileName.toStdString());
         ui->textEdit->openFile(materialItemFileName, itemName);
         currMatName = itemName;
-		ui->subwindow_2->setWindowTitle("Material Script: " + materialItemFileName.section('/', -1));
+        ui->subwindow_2->setWindowTitle("Material Script: " + materialItemFileName.section('/', -1));
+
+        /* Clear the shader source editors
+         * when switching to a different material */
+        ui->VP->clearData();
+        ui->FP->clearData();
     }
     if(itemType == "VertexProgram" && Item->text(2)==currMatName)
     {
-		this->applyMaterial();
+        this->applyMaterial();
         Ogre::MaterialPtr Mat = Ogre::MaterialManager::getSingleton().getByName(currMatName.toStdString());
         int numTech = Item->text(3).toInt();
         int numPass = Item->text(4).toInt();
         Ogre::Pass* pass = Mat->getTechnique(numTech)->getPass(numPass);
         QString f = ui->OgreWidget->manager->getWorkDir()+'/'+pass->getVertexProgram()->getSourceFile().c_str();
-		Ogre::LogManager::getSingleton().logMessage(f.toStdString());
+        Ogre::LogManager::getSingleton().logMessage(f.toStdString());
         ui->VP->openFile(f);
         ui->VP->setShaderName(Item->text(0));
     }
@@ -266,8 +282,8 @@ void MainWindow::workspaceItemSelected(QTreeWidgetItem* Item)
         int numPass = Item->text(4).toInt();
         Ogre::Pass* pass = Mat->getTechnique(numTech)->getPass(numPass);
         QString f = ui->OgreWidget->manager->getWorkDir()+'/'+pass->getFragmentProgram()->getSourceFile().c_str();
-		Ogre::LogManager::getSingleton().logMessage(f.toStdString());
-		ui->FP->openFile(f);
+        Ogre::LogManager::getSingleton().logMessage(f.toStdString());
+        ui->FP->openFile(f);
         ui->FP->setShaderName(Item->text(0));
     }
 
