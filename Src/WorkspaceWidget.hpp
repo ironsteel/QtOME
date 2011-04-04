@@ -9,7 +9,7 @@ class WorkspaceWidget : public QTreeWidget
     Q_OBJECT
 public:
     explicit WorkspaceWidget(QWidget *parent = 0);
-    //void     mousePressEvent ( QMouseEvent * event );
+    void     mousePressEvent ( QMouseEvent * event );
 
 signals:
 
