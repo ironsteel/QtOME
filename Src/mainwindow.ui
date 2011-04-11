@@ -37,23 +37,33 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="subwindow_3">
+       <widget class="QWidget" name="wVP">
         <property name="windowTitle">
          <string>Subwindow</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_7">
          <item>
-          <widget class="CgEdit" name="VP"/>
+          <widget class="GLSLEdit" name="VP"/>
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="subwindow_4">
+       <widget class="QWidget" name="wFP">
         <property name="windowTitle">
          <string>Subwindow</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
-          <widget class="CgEdit" name="FP"/>
+          <widget class="GLSLEdit" name="FP"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="subwindow">
+        <property name="windowTitle">
+         <string>Subwindow</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_9">
+         <item>
+          <widget class="QTextEdit" name="textEdit_2"/>
          </item>
         </layout>
        </widget>
@@ -351,9 +361,9 @@
    <header>TextEdit.h</header>
   </customwidget>
   <customwidget>
-   <class>CgEdit</class>
+   <class>GLSLEdit</class>
    <extends>QTextEdit</extends>
-   <header>CgEdit.h</header>
+   <header>GLSLEdit.h</header>
   </customwidget>
   <customwidget>
    <class>WorkspaceWidget</class>

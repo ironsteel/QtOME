@@ -17,19 +17,19 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "CgEdit.h"
+#include "GLSLEdit.h"
 #include "OGRE/OgreGpuProgramManager.h"
-CgEdit::CgEdit(QWidget *pard)
+GLSLEdit::GLSLEdit(QWidget *pard)
     : QsciScintilla(pard)
 {
     initSettings();
 }
 
-CgEdit::~CgEdit() {
+GLSLEdit::~GLSLEdit() {
 
 }
 
-void CgEdit::initSettings() {
+void GLSLEdit::initSettings() {
 
     this->setCaretLineBackgroundColor(QColor("#e4e4e4"));
     this->setCaretLineVisible(true);
@@ -64,7 +64,7 @@ void CgEdit::initSettings() {
     this->selectAll(true);
     this->setSyntaxHighlighter();
     //this->setAutoCompletionSource(QsciScintilla::AcsAPIs);
-    this->setAutoCompletionThreshold(2);
+    this->setAutoCompletionThreshold(4);
     //this->setAutoCompletionCaseSensitivity(true);
     //this->setAutoCompletionShowSingle(true);
     //this->setAutoCompletionFillupsEnabled(true);
@@ -85,10 +85,10 @@ void CgEdit::initSettings() {
     this->setFont(defaultFont);
 }
 
-void CgEdit::setSyntaxHighlighter() {
+void GLSLEdit::setSyntaxHighlighter() {
 
-    styleSyntax = "cg";
-    lexer = new CgLexer(this);
+    styleSyntax = "glsl";
+    lexer = new GLSLLexer(this);
 
     QFont fontBold;
     fontBold.setFamily("Courier New");
@@ -103,7 +103,8 @@ void CgEdit::setSyntaxHighlighter() {
     fontItalic.setItalic(true);
     lexer->setFont(fontBold, 5);
     lexer->setFont(fontBold, 10);
-    lexer->setColor(QColor("#BB8000"), 16);
+    lexer->setFont(fontBold, 6);
+    lexer->setColor(QColor("#008000"), 16);
     lexer->setColor(QColor("#008080"), 3);
     lexer->setColor(QColor("#804000"), 9);
     lexer->setColor(QColor(Qt::blue).darker(200),  5);
@@ -111,7 +112,7 @@ void CgEdit::setSyntaxHighlighter() {
     lexer->setColor(QColor("#000080"),10);
     lexer->setColor(QColor("#000080"), 8);
     lexer->setColor(QColor("#008000"), 6);//808080
-    lexer->setColor(QColor("#008000"), 7);//008000
+    lexer->setColor(QColor(Qt::red).dark(), 7);//008000
     lexer->setFont(fontBold, 4);
 
     apis = new QsciAPIs(lexer);
@@ -123,8 +124,29 @@ void CgEdit::setSyntaxHighlighter() {
         apis->add(*It);
         It++;
     }
-    b = QString(lexer->keywords(2)).split(' ');
     TYPES = b;
+    b = QString(lexer->keywords(2)).split(' ');
+    It = b.begin();
+    while(It != b.end())
+    {
+        apis->add(*It);
+        It++;
+    }
+    b = QString(lexer->keywords(3)).split(' ');
+    It = b.begin();
+    while(It != b.end())
+    {
+        apis->add(*It);
+        It++;
+    }
+    b = QString(lexer->keywords(4)).split(' ');
+    It = b.begin();
+    while(It != b.end())
+    {
+        apis->add(*It);
+        It++;
+    }
+    b = QString(lexer->keywords(5)).split(' ');
     It = b.begin();
     while(It != b.end())
     {
@@ -146,11 +168,11 @@ void CgEdit::setSyntaxHighlighter() {
     this->setFont(defaultFont);
 }
 
-QString CgEdit::syntaxHighlighter() {
+QString GLSLEdit::syntaxHighlighter() {
     return styleSyntax;
 }
 
-void CgEdit::keyPressEvent(QKeyEvent *event) {
+void GLSLEdit::keyPressEvent(QKeyEvent *event) {
     QMessageBox ms;
     ms.setText(tr("%1").arg(event->key()));
     //ms.exec(); //47 d68
@@ -175,7 +197,7 @@ void CgEdit::keyPressEvent(QKeyEvent *event) {
     }
 }
 
-void CgEdit::openFile(const QString &filename)
+void GLSLEdit::openFile(const QString &filename)
 {
     matScriptFilename = filename;
 
@@ -188,7 +210,7 @@ void CgEdit::openFile(const QString &filename)
     fileForEdit.close();
 }
 
-QStringList CgEdit::scan()
+QStringList GLSLEdit::scan()
 {
     QStringList List;
     QStringList Text = QString(this->text()).split(' ', QString::SkipEmptyParts);
@@ -203,7 +225,7 @@ QStringList CgEdit::scan()
     return List;
 }
 
-bool CgEdit::listHasString(QStringList list, QString string)
+bool GLSLEdit::listHasString(QStringList list, QString string)
 {
     QStringList::Iterator It = list.begin();
     while(It != list.end())
@@ -215,22 +237,22 @@ bool CgEdit::listHasString(QStringList list, QString string)
     return false;
 }
 
-void CgEdit::setShaderName(const QString &name)
+void GLSLEdit::setShaderName(const QString &name)
 {
     this->shaderName = name;
 }
 
-const QString CgEdit::getShaderName() const
+const QString GLSLEdit::getShaderName() const
 {
     return this->shaderName;
 }
 
-const QString CgEdit::getShaderSource()
+const QString GLSLEdit::getShaderSource()
 {
     return  this->matScriptFilename.section("/", -1);
 }
 
-void CgEdit::clearData()
+void GLSLEdit::clearData()
 {
 
     Ogre::GpuProgramPtr program;

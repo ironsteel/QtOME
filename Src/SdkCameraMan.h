@@ -28,6 +28,7 @@
 
  This is modified version of the original file.
  The main change is the use of Qt's mouse events in place of OIS's.
+ Only orbit camera was ported.
 
  -----------------------------------------------------------------------------
  */

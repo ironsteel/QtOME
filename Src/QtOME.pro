@@ -20,10 +20,10 @@ SOURCES += main.cpp\
     MaterialManager.cpp \
     TextEdit.cpp \
     Lexers/OgreMaterialLexer.cpp \
-    CgEdit.cpp \
-    Lexers/CgLexer.cpp \
+    Lexers/GLSLLexer.cpp \
     MyLogListener.cpp \
-    WorkspaceWidget.cpp
+    WorkspaceWidget.cpp \
+    GLSLEdit.cpp
 
 HEADERS  += mainwindow.h \
     TestWidget.h \
@@ -32,10 +32,10 @@ HEADERS  += mainwindow.h \
     MaterialManager.hpp \
     TextEdit.h \
     Lexers/OgreMaterialLexer.h \
-    CgEdit.h \
-    Lexers/CgLexer.h \
+    Lexers/GLSLLexer.h \
     MyLogListener.h \
-    WorkspaceWidget.hpp
+    WorkspaceWidget.hpp \
+    GLSLEdit.h
 
 FORMS    += mainwindow.ui
 

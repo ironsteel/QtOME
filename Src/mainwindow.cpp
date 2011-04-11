@@ -24,6 +24,9 @@ MainWindow::MainWindow(QWidget *parent) :
     currMatName = "DefaultSettings";
     ui->workspaceTree->setColumnCount(1);
     ui->workspaceTree->setHeaderLabel("Materials");
+
+    ui->wFP->setWindowTitle("Fragment Shader Editor");
+    ui->wVP->setWindowTitle("Vertex Shader Editor");
 }
 
 void MainWindow::setSplash(QSplashScreen * spl)
@@ -117,7 +120,7 @@ void MainWindow::applyMaterial()
 
     QString mat = this->removeWhiteSpaceCharacters();
 
-    if (mat.isEmpty() == true) {
+    if (mat.isEmpty()) {
         return ;
     }
 
