@@ -107,7 +107,6 @@ void MainWindow::applyMaterial()
                 Ogre::GpuProgramManager::getSingleton().getByName(ui->VP->getShaderName().toStdString());
         Ogre::LogManager::getSingleton().logMessage(vProgram->getName());
         vProgram->setSource(ui->VP->text().toStdString());
-        //vProgram->setSourceFile(ui->VP->getShaderSource().toStdString());
         vProgram->reload();
     }
 
@@ -162,9 +161,9 @@ void MainWindow::newProject()
 {
     QString Path = QFileDialog::getExistingDirectory(this);
     Ogre::LogManager::getSingleton().logMessage(Path.toStdString());
-	
-	if(Path.isEmpty())
-		return ;
+
+    if(Path.isEmpty())
+        return ;
 
     ui->listWidget->clear();
     QStringList materials = ui->OgreWidget->manager->getMaterialList(Path);

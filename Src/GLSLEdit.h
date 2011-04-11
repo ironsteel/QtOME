@@ -43,6 +43,8 @@ public:QStringList scan();
     void setSyntaxHighlighter();
     QString syntaxHighlighter();
     void openFile(const QString& filename);
+    void saveFile();
+    void saveModified();
     QString matScriptFilename;
     const QString getShaderName() const;
     void setShaderName(const QString &name);

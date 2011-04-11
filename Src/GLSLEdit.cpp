@@ -202,12 +202,51 @@ void GLSLEdit::openFile(const QString &filename)
     matScriptFilename = filename;
 
     QFile fileForEdit(matScriptFilename);
-    if (!fileForEdit.open(QFile::ReadOnly)){
+    if (!fileForEdit.open(QFile::ReadOnly)) {
         QMessageBox::warning(this, tr("QtOME"), tr("Cannot open file!"));
         return ;
     }
     this->setText(fileForEdit.readAll());
     fileForEdit.close();
+}
+
+void GLSLEdit::saveFile()
+{
+    if(matScriptFilename.isEmpty() == true) {
+        return ;
+    }
+
+    QString text = this->text();
+
+    QFile file(matScriptFilename);
+
+    if (!file.open(QFile::WriteOnly)) {
+        QMessageBox::warning(this, tr("QtOME"), tr("Cannot write to file!"));
+        return ;
+    }
+
+    QTextStream textStream(&file);
+
+    textStream << text;
+
+    file.close();
+}
+
+void GLSLEdit::saveModified()
+{
+    QString shaderSrcFilename = this->getShaderSource();
+    QMessageBox::StandardButton userChoice;
+    userChoice = QMessageBox::warning(this, tr("QtOME"),
+                                      tr("Shader program file '%1' has been modified.\n"
+                                         "Do you want to save your changes ?").arg(shaderSrcFilename),
+                                          QMessageBox::Save | QMessageBox::Discard  );
+
+    if (userChoice == QMessageBox::Save) {
+       this->saveFile();
+       return;
+    }
+
+    return;
 }
 
 QStringList GLSLEdit::scan()
@@ -257,6 +296,9 @@ void GLSLEdit::clearData()
 
     Ogre::GpuProgramPtr program;
     if (!this->shaderName.isEmpty()) {
+        if(this->isModified()) {
+            this->saveModified();
+        }
         program = Ogre::GpuProgramManager::getSingletonPtr()->getByName(shaderName.toStdString());
         program->setSourceFile(getShaderSource().toStdString());
         program->reload();
