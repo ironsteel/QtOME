@@ -221,7 +221,7 @@ void GLSLEdit::saveFile()
     QFile file(matScriptFilename);
 
     if (!file.open(QFile::WriteOnly)) {
-        QMessageBox::warning(this, tr("QtOME"), tr("Cannot write to file!"));
+        QMessageBox::warning(this, tr("QtOME"), tr("Cannot write to file!")+matScriptFilename);
         return ;
     }
 

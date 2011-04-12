@@ -47,6 +47,7 @@ private slots:
     void materialSelected();
     void setCurrentMatName(QListWidgetItem* item);
     void workspaceItemSelected(QTreeWidgetItem* Item);
+    void saveAll();
 
     // This slot is used to write a message to the logPanel
     void writeToLogPanel();

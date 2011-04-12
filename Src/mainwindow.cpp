@@ -291,3 +291,10 @@ void MainWindow::workspaceItemSelected(QTreeWidgetItem* Item)
 
     Ogre::LogManager::getSingleton().logMessage(itemType.toStdString());
 }
+
+void MainWindow::saveAll()
+{
+    ui->textEdit->saveFile();
+    ui->VP->saveFile();
+    ui->FP->saveFile();
+}

@@ -99,7 +99,7 @@
      <x>0</x>
      <y>0</y>
      <width>1447</width>
-     <height>24</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -282,6 +282,9 @@
    <property name="text">
     <string>&amp;Save</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="action_Tile">
    <property name="text">
@@ -317,7 +320,10 @@
   </action>
   <action name="actionSave_All">
    <property name="text">
-    <string>Save All</string>
+    <string>S&amp;ave All</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="action_Apply">
@@ -535,6 +541,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionSave_All</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveAll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>723</x>
+     <y>392</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>loadFile()</slot>
@@ -543,5 +565,6 @@
   <slot>applyMaterial()</slot>
   <slot>newProject()</slot>
   <slot>setCurrentMatName(QListWidgetItem*)</slot>
+  <slot>saveAll()</slot>
  </slots>
 </ui>

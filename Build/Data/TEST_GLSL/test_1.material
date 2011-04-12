@@ -1,7 +1,7 @@
-//vertex_program GLSL/vsTest glsl
-//{
-//	source Test_1.vert
-//}
+vertex_program GLSL/vsTest glsl
+{
+	source Test_1.vert
+}
 
 fragment_program GLSL/fsTest glsl
 {
@@ -14,17 +14,14 @@ material Mat
 	{
 		pass
 		{
-//			vertex_program_ref GLSL/vsTest
-//			{
-//
-//			}
+			vertex_program_ref GLSL/vsTest
+			{
 
+			}
 			fragment_program_ref GLSL/fsTest
 			{
-				param_named_auto Time time_0_1_packed 0.5
+				
 			}
-
 		}
-
 	}
 }

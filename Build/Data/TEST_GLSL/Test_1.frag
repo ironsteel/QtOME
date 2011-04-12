@@ -1,9 +1,7 @@
 // Red Shader
 vec4 gl_FragColor;
-varying float Time;
 
 void main()
 {
-	//T = abs(T);
-	gl_FragColor = vec4(abs(Time), 0.0, 0.0, 0.0);
+	gl_FragColor = vec4(0.5, 0.5, 0.0, 0.0) ;
 }
