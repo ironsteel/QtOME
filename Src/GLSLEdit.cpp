@@ -279,6 +279,7 @@ bool GLSLEdit::listHasString(QStringList list, QString string)
 void GLSLEdit::setShaderName(const QString &name)
 {
     this->shaderName = name;
+    this->setWindowTitle(name);
 }
 
 const QString GLSLEdit::getShaderName() const
