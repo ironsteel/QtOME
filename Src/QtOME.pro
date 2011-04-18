@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     Lexers/GLSLLexer.cpp \
     MyLogListener.cpp \
     WorkspaceWidget.cpp \
-    GLSLEdit.cpp
+    GLSLEdit.cpp \
+    NewMaterialDialog.cpp
 
 HEADERS  += mainwindow.h \
     TestWidget.h \
@@ -35,9 +36,11 @@ HEADERS  += mainwindow.h \
     Lexers/GLSLLexer.h \
     MyLogListener.h \
     WorkspaceWidget.hpp \
-    GLSLEdit.h
+    GLSLEdit.h \
+    NewMaterialDialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    NewMaterialDialog.ui
 
 LIBS += -lOgreMain\
         -lqscintilla2

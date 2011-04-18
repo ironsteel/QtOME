@@ -5,8 +5,9 @@
 #include <QStringList>
 #include <QString>
 #include <QMap>
+#include <OGRE/OgreSingleton.h>
 
-class MaterialManager
+class MaterialManager : public Ogre::Singleton<MaterialManager>
 {
 public:
     MaterialManager();

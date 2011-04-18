@@ -1,5 +1,7 @@
 #include "MaterialManager.hpp"
 
+template<> MaterialManager* Ogre::Singleton<MaterialManager>::ms_Singleton = 0;
+
 MaterialManager::MaterialManager()
 {
     count = 0;

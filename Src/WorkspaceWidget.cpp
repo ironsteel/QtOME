@@ -5,6 +5,9 @@
 WorkspaceWidget::WorkspaceWidget(QWidget *parent) :
     QTreeWidget(parent)
 {
+    this->actionNewMaterial = new QAction("New Material", this);
+    connect(actionNewMaterial,SIGNAL(triggered()),
+            this, SLOT(showDialog()));
 }
 
 void WorkspaceWidget::mousePressEvent(QMouseEvent *event)
@@ -19,7 +22,8 @@ void WorkspaceWidget::mousePressEvent(QMouseEvent *event)
             Ogre::LogManager::getSingleton().logMessage("Item type: " + itemType.toStdString());
         }
         QMenu *contextMenu = new QMenu(this);
-        contextMenu->addAction("New Action");
+
+        contextMenu->addAction(actionNewMaterial);
         contextMenu->popup(QWidget::mapToGlobal(cursorPos));
         return;
     }
@@ -27,3 +31,11 @@ void WorkspaceWidget::mousePressEvent(QMouseEvent *event)
 
 }
 
+void WorkspaceWidget::showDialog()
+{
+    NewMaterialDialog *newMaterial = new NewMaterialDialog(this);
+    newMaterial->show();
+    MaterialManager *matMgr = MaterialManager::getSingletonPtr();
+    Ogre::LogManager::getSingleton().logMessage("Working dir: " + matMgr->getWorkDir().toStdString());
+
+}
