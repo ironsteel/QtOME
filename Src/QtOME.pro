@@ -17,18 +17,33 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     TestWidget.cpp \
     QOgreWidget.cpp \
-    Highlighter.cpp \
-    CodeEditor.cpp
+    MaterialManager.cpp \
+    TextEdit.cpp \
+    Lexers/OgreMaterialLexer.cpp \
+    Lexers/GLSLLexer.cpp \
+    MyLogListener.cpp \
+    WorkspaceWidget.cpp \
+    GLSLEdit.cpp \
+    NewMaterialDialog.cpp
 
 HEADERS  += mainwindow.h \
     TestWidget.h \
     QOgreWidget.h \
-    Highlighter.h \
-    CodeEditor.h
+    SdkCameraMan.h \
+    MaterialManager.hpp \
+    TextEdit.h \
+    Lexers/OgreMaterialLexer.h \
+    Lexers/GLSLLexer.h \
+    MyLogListener.h \
+    WorkspaceWidget.hpp \
+    GLSLEdit.h \
+    NewMaterialDialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    NewMaterialDialog.ui
 
-LIBS += -lOgreMain
+LIBS += -lOgreMain\
+        -lqscintilla2
 
 RESOURCES += \
     QtOME.qrc

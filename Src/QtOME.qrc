@@ -1,5 +1,9 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource prefix="/">
-	<file>../Build/Data/wordlist.txt</file>
-</qresource>
+<RCC>
+    <qresource prefix="/">
+        <file>../Build/Data/wordlist.txt</file>
+        <file alias="splash">icons/splash.png</file>
+    </qresource>
+    <qresource prefix="/new">
+        <file>icons/apply.png</file>
+    </qresource>
 </RCC>

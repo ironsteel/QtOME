@@ -1,0 +1,27 @@
+vertex_program GLSL/vsTest glsl
+{
+	source Test_1.vert
+}
+
+fragment_program GLSL/fsTest glsl
+{
+	source Test_1.frag
+}
+
+material Mat
+{
+	technique GLSL
+	{
+		pass
+		{
+			vertex_program_ref GLSL/vsTest
+			{
+
+			}
+			fragment_program_ref GLSL/fsTest
+			{
+				
+			}
+		}
+	}
+}
