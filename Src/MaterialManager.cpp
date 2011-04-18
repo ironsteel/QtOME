@@ -37,7 +37,6 @@ QStringList MaterialManager::getMaterialList(const QString & Path)
 QString MaterialManager::getFileName(const QString &Material)
 {
     return fileNames[Material];
-    //return QString(fileNames.size());
 }
 
 QString MaterialManager::getWorkDir()

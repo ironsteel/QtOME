@@ -14,7 +14,7 @@ MOC_DIR =../QtOME-Objects
 UI_DIR=../QtOME-Objects
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    mainwindow.cpp \
     TestWidget.cpp \
     QOgreWidget.cpp \
     MaterialManager.cpp \

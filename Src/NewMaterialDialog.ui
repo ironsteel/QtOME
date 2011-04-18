@@ -28,10 +28,16 @@
        <item>
         <widget class="QLineEdit" name="materialName">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>180</width>
+           <height>0</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -40,19 +46,44 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
+        <widget class="QCheckBox" name="vertexBool">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Vertex Shader Name</string>
+          <string>Vertex Shader</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLineEdit" name="vertexShaderName">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>180</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>180</width>
+           <height>0</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -61,19 +92,38 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
+        <widget class="QCheckBox" name="fragmentBool">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>Fragment Shader Name</string>
+          <string>Fragment Shader</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLineEdit" name="fragmentShaderName">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>180</width>
+           <height>0</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -151,8 +201,42 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>vertexBool</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>NewMaterialDialog</receiver>
+   <slot>activateVertex(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>21</x>
+     <y>76</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>99</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fragmentBool</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>NewMaterialDialog</receiver>
+   <slot>activateFragmet(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>21</x>
+     <y>122</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>99</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>activateOkButton(QString)</slot>
+  <slot>activateFragmet(bool)</slot>
+  <slot>activateVertex(bool)</slot>
  </slots>
 </ui>

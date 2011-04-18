@@ -28,7 +28,6 @@ void WorkspaceWidget::mousePressEvent(QMouseEvent *event)
         return;
     }
     QTreeWidget::mousePressEvent(event);
-
 }
 
 void WorkspaceWidget::showDialog()
@@ -37,5 +36,4 @@ void WorkspaceWidget::showDialog()
     newMaterial->show();
     MaterialManager *matMgr = MaterialManager::getSingletonPtr();
     Ogre::LogManager::getSingleton().logMessage("Working dir: " + matMgr->getWorkDir().toStdString());
-
 }
