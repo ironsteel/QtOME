@@ -6,56 +6,76 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1168</width>
-    <height>692</height>
+    <width>1447</width>
+    <height>785</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>QtOME</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_5">
     <item>
-     <widget class="QSplitter" name="splitter_2">
+     <widget class="QSplitter" name="splitter">
       <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+       <enum>Qt::Vertical</enum>
       </property>
-      <widget class="QSplitter" name="splitter">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
+      <widget class="QMdiArea" name="mdiArea">
+       <widget class="QWidget" name="subwindow_2">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
+        <property name="windowTitle">
+         <string>Subwindow</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="TextEdit" name="textEdit"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="wVP">
+        <property name="windowTitle">
+         <string>Subwindow</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <widget class="GLSLEdit" name="VP"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="wFP">
+        <property name="windowTitle">
+         <string>Subwindow</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <widget class="GLSLEdit" name="FP"/>
+         </item>
+        </layout>
+       </widget>
       </widget>
-     </widget>
-    </item>
-    <item>
-     <widget class="QMdiArea" name="mdiArea">
-      <widget class="QWidget" name="subwindow">
-       <property name="windowTitle">
-        <string>Subwindow</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_7">
+      <widget class="QWidget" name="widget" native="true">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="CodeEditor" name="textEdit_3"/>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>LogPanel:</string>
+          </property>
+         </widget>
         </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="subwindow_2">
-       <property name="windowTitle">
-        <string>Subwindow</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_8">
         <item>
-         <widget class="CodeEditor" name="textEdit_4"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="subwindow_3">
-       <property name="windowTitle">
-        <string>Subwindow</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="CodeEditor" name="textEdit_2"/>
+         <widget class="QPlainTextEdit" name="logPanel">
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>200</height>
+           </size>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -68,7 +88,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1168</width>
+     <width>1447</width>
      <height>24</height>
     </rect>
    </property>
@@ -78,7 +98,11 @@
     </property>
     <addaction name="action_New"/>
     <addaction name="action_Open"/>
+    <addaction name="separator"/>
+    <addaction name="actionImport"/>
+    <addaction name="separator"/>
     <addaction name="action_Save"/>
+    <addaction name="actionSave_All"/>
     <addaction name="separator"/>
     <addaction name="action_Quit"/>
    </widget>
@@ -90,8 +114,15 @@
     <addaction name="actionNext"/>
     <addaction name="actionPrevious"/>
    </widget>
+   <widget class="QMenu" name="menuMaterial">
+    <property name="title">
+     <string>&amp;Material</string>
+    </property>
+    <addaction name="action_Apply"/>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menuWindows"/>
+   <addaction name="menuMaterial"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockPreview">
@@ -162,7 +193,65 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="separator"/>
+   <addaction name="action_Apply"/>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget">
+   <property name="windowTitle">
+    <string>Workspace Browser</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_8">
+     <item>
+      <widget class="WorkspaceWidget" name="workspaceTree">
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
+       <property name="headerHidden">
+        <bool>true</bool>
+       </property>
+       <property name="expandsOnDoubleClick">
+        <bool>false</bool>
+       </property>
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget_2">
+   <property name="windowTitle">
+    <string>Properties</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QListWidget" name="listWidget">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <action name="action_New">
    <property name="text">
@@ -183,6 +272,9 @@
    <property name="text">
     <string>&amp;Save</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="action_Tile">
    <property name="text">
@@ -193,14 +285,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
-   </property>
-  </action>
-  <action name="action_Cascade">
-   <property name="text">
-    <string>&amp;Cascade</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Tab</string>
    </property>
   </action>
   <action name="actionNext">
@@ -219,6 +303,42 @@
     <string>Ctrl+Shift+Backtab</string>
    </property>
   </action>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import</string>
+   </property>
+  </action>
+  <action name="actionSave_All">
+   <property name="text">
+    <string>S&amp;ave All</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="action_Apply">
+   <property name="icon">
+    <iconset resource="QtOME.qrc">
+     <normaloff>:/new/icons/apply.png</normaloff>:/new/icons/apply.png</iconset>
+   </property>
+   <property name="text">
+    <string>Apply</string>
+   </property>
+   <property name="toolTip">
+    <string>Applies material dynamically without saving the script</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+A</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionGetParams">
+   <property name="text">
+    <string>getParams</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -227,14 +347,32 @@
    <extends>QWidget</extends>
    <header>TestWidget.h</header>
    <container>1</container>
+   <slots>
+    <slot>getGPUParams()</slot>
+   </slots>
   </customwidget>
   <customwidget>
-   <class>CodeEditor</class>
+   <class>TextEdit</class>
    <extends>QTextEdit</extends>
-   <header>CodeEditor.h</header>
+   <header>TextEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>GLSLEdit</class>
+   <extends>QTextEdit</extends>
+   <header>GLSLEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>WorkspaceWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>WorkspaceWidget.hpp</header>
+   <slots>
+    <slot>showDialog()</slot>
+   </slots>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="QtOME.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>action_Quit</sender>
@@ -253,34 +391,114 @@
    </hints>
   </connection>
   <connection>
-   <sender>action_Tile</sender>
+   <sender>action_Open</sender>
    <signal>triggered()</signal>
-   <receiver>mdiArea</receiver>
-   <slot>tileSubWindows()</slot>
+   <receiver>MainWindow</receiver>
+   <slot>loadFile()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>741</x>
-     <y>354</y>
+     <x>583</x>
+     <y>345</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>action_Cascade</sender>
+   <sender>actionImport</sender>
    <signal>triggered()</signal>
-   <receiver>mdiArea</receiver>
-   <slot>cascadeSubWindows()</slot>
+   <receiver>MainWindow</receiver>
+   <slot>importMesh()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>741</x>
-     <y>354</y>
+     <x>583</x>
+     <y>345</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Apply</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>applyMaterial()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>583</x>
+     <y>345</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Save</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveMatScript()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>591</x>
+     <y>345</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_New</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>newProject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>723</x>
+     <y>392</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>listWidget</sender>
+   <signal>itemDoubleClicked(QListWidgetItem*)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>setCurrentMatName(QListWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1309</x>
+     <y>220</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>723</x>
+     <y>392</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSave_All</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>saveAll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>723</x>
+     <y>392</y>
     </hint>
    </hints>
   </connection>
@@ -289,6 +507,22 @@
    <signal>triggered()</signal>
    <receiver>mdiArea</receiver>
    <slot>activateNextSubWindow()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>741</x>
+     <y>354</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Tile</sender>
+   <signal>triggered()</signal>
+   <receiver>mdiArea</receiver>
+   <slot>tileSubWindows()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -317,4 +551,13 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>loadFile()</slot>
+  <slot>importMesh()</slot>
+  <slot>saveMatScript()</slot>
+  <slot>applyMaterial()</slot>
+  <slot>newProject()</slot>
+  <slot>setCurrentMatName(QListWidgetItem*)</slot>
+  <slot>saveAll()</slot>
+ </slots>
 </ui>
