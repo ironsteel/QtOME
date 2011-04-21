@@ -19,7 +19,8 @@ public:
 public slots:
     void accept();
     void activateOkButton(QString text);
-
+    void activateVertex(bool enabled);
+    void activateFragmet(bool enabled);
 private:
     Ui::NewMaterialDialog *ui;
     QString materialName;
