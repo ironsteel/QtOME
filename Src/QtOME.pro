@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     MyLogListener.cpp \
     WorkspaceWidget.cpp \
     GLSLEdit.cpp \
-    NewMaterialDialog.cpp
+    NewMaterialDialog.cpp \
+    QtOmeLogPanel.cpp
 
 HEADERS  += mainwindow.h \
     TestWidget.h \
@@ -37,7 +38,8 @@ HEADERS  += mainwindow.h \
     MyLogListener.h \
     WorkspaceWidget.hpp \
     GLSLEdit.h \
-    NewMaterialDialog.h
+    NewMaterialDialog.h \
+    QtOmeLogPanel.h
 
 FORMS    += mainwindow.ui \
     NewMaterialDialog.ui

@@ -100,6 +100,7 @@ void MainWindow::saveMatScript()
 
 void MainWindow::applyMaterial()
 {
+    ui->logPanel->clear();
     Ogre::GpuProgramPtr vProgram;
     Ogre::GpuProgramPtr fProgram;
     if (!ui->VP->getShaderName().isEmpty()) {
@@ -154,7 +155,11 @@ QString MainWindow::removeWhiteSpaceCharacters()
 
 void MainWindow::writeToLogPanel()
 {
-    ui->logPanel->appendPlainText(ui->OgreWidget->mLogListener->getLogMsg());
+    MyLogListener *listener = ui->OgreWidget->mLogListener;
+    Ogre::LogMessageLevel level = listener->getLogMessageLevel();
+    QString msg = listener->getLogMsg();
+    ui->logPanel->appendLogMessage(msg, level);
+
 }
 
 void MainWindow::newProject()

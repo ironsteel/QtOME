@@ -26,8 +26,10 @@ signals:
    void logMessageUpdated();
 public:
     QString getLogMsg();
+    Ogre::LogMessageLevel getLogMessageLevel();
 private:
     QString logMesg;
+    Ogre::LogMessageLevel messageLevel;
 };
 
 #endif // MYLOGLISTENER_H
