@@ -42,6 +42,7 @@ void NewMaterialDialog::accept()
         QTextStream file(&matFile);
         file << "material " << ui->materialName->text() << "\n{\n\t\n}";
         matFile.close();
+        this->close();
     }
     else if (workDir.isEmpty()) {
         Ogre::LogManager::getSingleton().logMessage("Workspace not set!");
