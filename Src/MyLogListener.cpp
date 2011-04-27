@@ -14,8 +14,9 @@ void MyLogListener::messageLogged(const Ogre::String &message,
                                   bool maskDebug,
                                   const Ogre::String &logName)
 {
+
     logMesg = QString(message.c_str());
-    Q_UNUSED(lml);
+    this->messageLevel = lml;
     Q_UNUSED(maskDebug);
     Q_UNUSED(logName);
 
@@ -25,4 +26,9 @@ void MyLogListener::messageLogged(const Ogre::String &message,
 QString MyLogListener::getLogMsg()
 {
     return logMesg;
+}
+
+Ogre::LogMessageLevel MyLogListener::getLogMessageLevel()
+{
+    return messageLevel;
 }

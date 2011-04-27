@@ -90,7 +90,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPlainTextEdit" name="logPanel">
+         <widget class="QtOmeLogPanel" name="logPanel">
           <property name="baseSize">
            <size>
             <width>0</width>
@@ -111,7 +111,7 @@
      <x>0</x>
      <y>0</y>
      <width>1447</width>
-     <height>25</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -390,6 +390,11 @@
    <slots>
     <slot>showDialog()</slot>
    </slots>
+  </customwidget>
+  <customwidget>
+   <class>QtOmeLogPanel</class>
+   <extends>QTextEdit</extends>
+   <header>QtOmeLogPanel.h</header>
   </customwidget>
  </customwidgets>
  <resources>
