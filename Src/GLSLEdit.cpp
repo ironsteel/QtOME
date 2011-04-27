@@ -39,13 +39,13 @@ void GLSLEdit::initSettings() {
 
     this->setFolding(QsciScintilla::BoxedTreeFoldStyle);
 
-    //this->setMarginType(1, QsciScintilla::NumberMargin);
+    this->setMarginType(1, QsciScintilla::NumberMargin);
     //this->setMarginMarkerMask(10, 10);
     //this->setMarginsBackgroundColor(QColor("#e4e4e4"));
 
     //this->setMarginLineNumbers(0, true);
-    //this->setMarginWidth(0, QString("---------"));
-    this->setMarginWidth(0, 30);
+    //this->setMarginWidth(0, QString("--"));
+    //this->setMarginWidth(0, 15);
     this->setMarginSensitivity(1, true);
     
     //this->setProperty("marker","2");
@@ -70,6 +70,7 @@ void GLSLEdit::initSettings() {
     //this->setAutoCompletionFillupsEnabled(true);
     this->setAutoCompletionSource(QsciScintilla::AcsAPIs);
     //this->autoCompleteFromAll();
+    this->setLineWidth(80);
 
 #ifdef Q_WS_WIN
     defaultFont.setFamily("Courier New");
