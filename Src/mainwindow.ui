@@ -14,7 +14,7 @@
    <string>QtOME</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_5">
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <property name="margin">
      <number>0</number>
     </property>
@@ -23,23 +23,23 @@
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
-      <widget class="QMdiArea" name="mdiArea">
-       <widget class="QWidget" name="subwindow_2">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
-        </property>
-        <property name="windowTitle">
-         <string>Subwindow</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <property name="spacing">
-          <number>3</number>
-         </property>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="currentIndex">
+        <number>2</number>
+       </property>
+       <widget class="QWidget" name="wMat">
+        <attribute name="title">
+         <string>Tab 1</string>
+        </attribute>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
          <property name="margin">
-          <number>1</number>
+          <number>0</number>
          </property>
          <item>
           <widget class="TextEdit" name="textEdit"/>
@@ -47,15 +47,12 @@
         </layout>
        </widget>
        <widget class="QWidget" name="wVP">
-        <property name="windowTitle">
-         <string>Subwindow</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_7">
-         <property name="spacing">
-          <number>2</number>
-         </property>
+        <attribute name="title">
+         <string>Tab 2</string>
+        </attribute>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="margin">
-          <number>1</number>
+          <number>0</number>
          </property>
          <item>
           <widget class="GLSLEdit" name="VP"/>
@@ -63,15 +60,12 @@
         </layout>
        </widget>
        <widget class="QWidget" name="wFP">
-        <property name="windowTitle">
-         <string>Subwindow</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_6">
-         <property name="spacing">
-          <number>2</number>
-         </property>
+        <attribute name="title">
+         <string>Page</string>
+        </attribute>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
          <property name="margin">
-          <number>1</number>
+          <number>0</number>
          </property>
          <item>
           <widget class="GLSLEdit" name="FP"/>
@@ -537,54 +531,6 @@
     <hint type="destinationlabel">
      <x>723</x>
      <y>392</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionNext</sender>
-   <signal>triggered()</signal>
-   <receiver>mdiArea</receiver>
-   <slot>activateNextSubWindow()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>741</x>
-     <y>354</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_Tile</sender>
-   <signal>triggered()</signal>
-   <receiver>mdiArea</receiver>
-   <slot>tileSubWindows()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>741</x>
-     <y>354</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionPrevious</sender>
-   <signal>triggered()</signal>
-   <receiver>mdiArea</receiver>
-   <slot>activatePreviousSubWindow()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>741</x>
-     <y>354</y>
     </hint>
    </hints>
   </connection>

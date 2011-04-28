@@ -64,7 +64,7 @@ void MainWindow::loadFile()
     QString fileName = fullFilePath.section('/', -1);
 
     ui->textEdit->openFile(fullFilePath);
-    this->ui->subwindow_2->setWindowTitle("Material Editor: " + fileName);
+    this->ui->wMat->setWindowTitle("Material Editor: " + fileName);
 
     QStringList places = fullFilePath.split("/");
     places.pop_back();
@@ -263,7 +263,7 @@ void MainWindow::workspaceItemSelected(QTreeWidgetItem* Item)
         Ogre::LogManager::getSingleton().logMessage(materialItemFileName.toStdString());
         ui->textEdit->openFile(materialItemFileName, itemName);
         currMatName = itemName;
-        ui->subwindow_2->setWindowTitle("Material Script: " + materialItemFileName.section('/', -1));
+        ui->wMat->setWindowTitle("Material Script: " + materialItemFileName.section('/', -1));
 
         /* Clear the shader source editors
          * when switching to a different material */
