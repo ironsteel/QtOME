@@ -14,7 +14,7 @@
    <string>QtOME</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <property name="margin">
      <number>0</number>
     </property>
@@ -23,55 +23,25 @@
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
-      <widget class="QTabWidget" name="tabWidget">
+      <widget class="TestWidget" name="OgreWidget" native="true">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="currentIndex">
-        <number>2</number>
+       <property name="sizeIncrement">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
        </property>
-       <widget class="QWidget" name="wMat">
-        <attribute name="title">
-         <string>Tab 1</string>
-        </attribute>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <property name="margin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="TextEdit" name="textEdit"/>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="wVP">
-        <attribute name="title">
-         <string>Tab 2</string>
-        </attribute>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <property name="margin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="GLSLEdit" name="VP"/>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="wFP">
-        <attribute name="title">
-         <string>Page</string>
-        </attribute>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <property name="margin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="GLSLEdit" name="FP"/>
-         </item>
-        </layout>
-       </widget>
+       <property name="font">
+        <font>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
       </widget>
       <widget class="QWidget" name="widget" native="true">
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -168,32 +138,13 @@
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents">
+   <widget class="QWidget" name="wMat">
     <layout class="QVBoxLayout" name="verticalLayout_4">
      <property name="margin">
       <number>0</number>
      </property>
      <item>
-      <widget class="TestWidget" name="OgreWidget" native="true">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="sizeIncrement">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
-      </widget>
+      <widget class="TextEdit" name="textEdit"/>
      </item>
     </layout>
    </widget>
@@ -278,6 +229,44 @@
       </widget>
      </item>
     </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget_3">
+   <property name="windowTitle">
+    <string>Vertex Shader</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="wVP">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="margin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="GLSLEdit" name="VP"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget_4">
+   <property name="windowTitle">
+    <string>Feagment Shader</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="wFP">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="margin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="GLSLEdit" name="FP"/>
+     </item>
+    </layout>
+    <zorder>tabWidget</zorder>
+    <zorder>FP</zorder>
    </widget>
   </widget>
   <action name="action_New">
