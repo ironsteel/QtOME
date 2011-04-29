@@ -25,8 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->workspaceTree->setColumnCount(1);
     ui->workspaceTree->setHeaderLabel("Materials");
 
-    ui->wFP->setWindowTitle("Fragment Shader Editor");
-    ui->wVP->setWindowTitle("Vertex Shader Editor");
+    tabifyDockWidget(ui->vDock, ui->fDock);
+    tabifyDockWidget(ui->workspaceDock, ui->propertiesDock);
 }
 
 void MainWindow::setSplash(QSplashScreen * spl)
