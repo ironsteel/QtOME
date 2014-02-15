@@ -20,7 +20,7 @@ QStringList MaterialManager::getMaterialList(const QString & Path)
     while (materialIterator.hasMoreElements())
     {
         count++;
-        ptr = (materialIterator.peekNextValue().staticCast<Ogre::Material>();
+        ptr = materialIterator.peekNextValue().staticCast<Ogre::Material>();
         mats.push_back(ptr.getPointer());
         if(!ptr.getPointer()->getOrigin().empty())
         {
