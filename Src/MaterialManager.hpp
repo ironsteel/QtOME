@@ -1,7 +1,7 @@
 #ifndef MATERIALMANAGER_HPP
 #define MATERIALMANAGER_HPP
 
-#include <OGRE/Ogre.h>
+#include <OGRE/OgreMaterialManager.h>
 #include <QStringList>
 #include <QString>
 #include <QMap>

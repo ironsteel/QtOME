@@ -45,10 +45,10 @@ void NewMaterialDialog::accept()
         this->close();
     }
     else if (workDir.isEmpty()) {
-        Ogre::LogManager::getSingleton().logMessage("Workspace not set!");
+        //Ogre::LogManager::getSingleton().logMessage("Workspace not set!");
     }
     else if (matMgr->getFileName(ui->materialName->text())!="") {
-        Ogre::LogManager::getSingleton().logMessage("Material exists!");
+        //Ogre::LogManager::getSingleton().logMessage("Material exists!");
     }
 }
 

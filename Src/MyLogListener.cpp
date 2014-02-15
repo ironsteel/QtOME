@@ -12,7 +12,7 @@ MyLogListener::~MyLogListener()
 void MyLogListener::messageLogged(const Ogre::String &message,
                                   Ogre::LogMessageLevel lml,
                                   bool maskDebug,
-                                  const Ogre::String &logName)
+                                  const Ogre::String &logName, bool &)
 {
 
     logMesg = QString(message.c_str());

@@ -19,7 +19,7 @@ public:
    virtual void messageLogged(const Ogre::String &message,
                                Ogre::LogMessageLevel lml,
                                bool maskDebug,
-                               const Ogre::String &logName);
+                               const Ogre::String &logName, bool&);
 signals:
    // This signal is emited when
    // a new log message is created

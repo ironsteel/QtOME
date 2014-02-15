@@ -1,6 +1,6 @@
 #include "MaterialManager.hpp"
 
-template<> MaterialManager* Ogre::Singleton<MaterialManager>::ms_Singleton = 0;
+template<> MaterialManager* Ogre::Singleton<MaterialManager>::msSingleton = 0;
 
 MaterialManager::MaterialManager()
 {
@@ -16,12 +16,11 @@ QStringList MaterialManager::getMaterialList(const QString & Path)
 
     Ogre::ResourceGroupManager::getSingleton().addResourceLocation(Path.toStdString() ,"FileSystem","Mats");
     Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("Mats");
-
     Ogre::ResourceManager::ResourceMapIterator materialIterator = Ogre::MaterialManager::getSingletonPtr()->getResourceIterator();
     while (materialIterator.hasMoreElements())
     {
         count++;
-        ptr = (static_cast<Ogre::MaterialPtr>(materialIterator.peekNextValue()));
+        ptr = (materialIterator.peekNextValue().staticCast<Ogre::Material>();
         mats.push_back(ptr.getPointer());
         if(!ptr.getPointer()->getOrigin().empty())
         {

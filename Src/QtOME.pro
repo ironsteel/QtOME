@@ -45,7 +45,8 @@ FORMS    += mainwindow.ui \
     NewMaterialDialog.ui
 
 LIBS += -lOgreMain\
-        -lqscintilla2
+        -lqscintilla2\ 
+        -lboost_system
 
 RESOURCES += \
     QtOME.qrc

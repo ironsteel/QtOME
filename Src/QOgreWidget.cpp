@@ -140,11 +140,11 @@ void QOgreWidget::configure(void) {
 #endif
 	if (!m_ogreRoot->restoreConfig()) {
 		// setup a renderer
-		Ogre::RenderSystemList::const_iterator renderers = m_ogreRoot->getAvailableRenderers().begin();
-		//assert(!renderers.empty()); // we need at least one renderer to do anything useful
+		Ogre::RenderSystemList renderers = m_ogreRoot->getAvailableRenderers();
+		assert(!renderers.empty()); // we need at least one renderer to do anything useful
 		
 		//Ogre::RenderSystem *renderSystem = chooseRenderer(renderers);
-		Ogre::RenderSystem *renderSystem = *renderers;
+		Ogre::RenderSystem *renderSystem = *(renderers.begin());
 		assert(renderSystem); // user might pass back a null renderer, which would be bad!
 		
 		m_ogreRoot->setRenderSystem(renderSystem);
